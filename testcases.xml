@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-cases>
+   <cases xmlns:java="http://java.sun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.assessment.data.TestCase">
+      <test-case-type>Functional</test-case-type>
+      <expected-ouput>5</expected-ouput>
+      <name>testFindNoOfOccurrences1</name>
+      <weight>2</weight>
+      <mandatory>true</mandatory>
+      <desc>na</desc>
+   </cases>
+   <cases xmlns:java="http://java.sun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.assessment.data.TestCase">
+      <test-case-type>Functional</test-case-type>
+      <expected-ouput>1</expected-ouput>
+      <name>testFindNoOfOccurrences2</name>
+      <weight>2</weight>
+      <mandatory>true</mandatory>
+      <desc>na</desc>
+   </cases>
+   <cases xmlns:java="http://java.sun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.assessment.data.TestCase">
+      <test-case-type>Functional</test-case-type>
+      <expected-ouput>5</expected-ouput>
+      <name>testFindNoOfOccurrences3</name>
+      <weight>2</weight>
+      <mandatory>true</mandatory>
+      <desc>na</desc>
+   </cases>
+   <cases xmlns:java="http://java.sun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.assessment.data.TestCase">
+      <test-case-type>Boundary</test-case-type>
+      <expected-ouput>true</expected-ouput>
+      <name>testFindNoOfOccurrences1Boundary</name>
+      <weight>1</weight>
+      <mandatory>true</mandatory>
+      <desc>na</desc>
+   </cases>
+    <cases xmlns:java="http://java.sun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.assessment.data.TestCase">
+      <test-case-type>Boundary</test-case-type>
+      <expected-ouput>true</expected-ouput>
+      <name>testFindNoOfOccurrences2Boundary</name>
+      <weight>1</weight>
+      <mandatory>true</mandatory>
+      <desc>na</desc>
+   </cases>
+   <cases xmlns:java="http://java.sun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="java:com.assessment.data.TestCase">
+      <test-case-type>Exception</test-case-type>
+      <expected-ouput>true</expected-ouput>
+      <name>testFindNoOfOccurrences1Exception</name>
+      <weight>1</weight>
+      <mandatory>true</mandatory>
+      <desc>na</desc>
+   </cases>
+</test-cases>

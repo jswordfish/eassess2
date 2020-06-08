@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "name": "${APP_USER}"
+  },
+  "projects": [
+    {
+      "name": "${APP_USER}",
+      "source": {
+        "location": "https://github.com/jswordfish/SameerSahoo.git",
+        "type": "git"
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "redhat/java/latest",
+      "memoryLimit": "1280MiB",
+      "type": "chePlugin"
+    },
+    {
+      "mountSources": true,
+      "endpoints": [
+        {
+          "name": "8080/tcp",
+          "port": 8080
+        }
+      ],
+      "memoryLimit": "700Mi",
+      "type": "dockerimage",
+      "volumes": [
+        {
+          "name": "m2",
+          "containerPath": "/home/user/.m2"
+        }
+      ],
+      "alias": "tools",
+      "image": "quay.io/eclipse/che-java8-maven:7.4.0",
+      "env": [
+        {
+          "value": "-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/user",
+          "name": "JAVA_OPTS"
+        },
+        {
+          "value": "$(JAVA_OPTS)",
+          "name": "MAVEN_OPTS"
+        }
+      ]
+    },
+    {
+      "mountSources": true,
+      "endpoints": [
+        {
+          "name": "${APP_USER_CODE}-db",
+          "attributes": {
+            "discoverable": "true",
+            "public": "false"
+          },
+          "port": 3306
+        }
+      ],
+      "memoryLimit": "300Mi",
+      "type": "dockerimage",
+      "alias": "mysql",
+      "image": "docker.io/centos/mysql-57-centos7",
+      "env": [
+        {
+          "value": "petclinic",
+          "name": "MYSQL_USER"
+        },
+        {
+          "value": "password",
+          "name": "MYSQL_PASSWORD"
+        },
+        {
+          "value": "petclinic",
+          "name": "MYSQL_DATABASE"
+        },
+        {
+          "value": "$(echo ${0})\\\\$",
+          "name": "PS1"
+        }
+      ]
+    }
+  ],
+  "apiVersion": "1.0.0",
+  "commands": [
+    {
+      "name": "maven build",
+      "actions": [
+        {
+          "workdir": "${CHE_PROJECTS_ROOT}/${APP_USER}",
+          "type": "exec",
+          "command": "mvn clean install",
+          "component": "tools"
+        }
+      ]
+    },
+    {
+      "name": "run webapp",
+      "actions": [
+        {
+          "workdir": "${CHE_PROJECTS_ROOT}/${APP_USER}",
+          "type": "exec",
+          "command": "SPRING_DATASOURCE_URL=jdbc:mysql://db/petclinic \\\nSPRING_DATASOURCE_USERNAME=petclinic \\\nSPRING_DATASOURCE_PASSWORD=password \\\njava -jar -Dspring.profiles.active=mysql \\\n-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 \\\ntarget/*.jar\n",
+          "component": "tools"
+        }
+      ]
+    },
+    {
+      "name": "prepare database",
+      "actions": [
+        {
+          "type": "exec",
+          "command": "/opt/rh/rh-mysql57/root/usr/bin/mysql -u root < ${CHE_PROJECTS_ROOT}/web-java-spring-petclinic/src/main/resources/db/mysql/schema.sql &&\necho -e \"\\e[32mDone.\\e[0m Database petclinic was configured!\"\n",
+          "component": "mysql"
+        }
+      ]
+    },
+    {
+      "name": "Debug remote java application",
+      "actions": [
+        {
+          "referenceContent": "{\n\"version\": \"0.2.0\",\n\"configurations\": [\n  {\n    \"type\": \"java\",\n    \"name\": \"Debug (Attach) - Remote\",\n    \"request\": \"attach\",\n    \"hostName\": \"localhost\",\n    \"port\": 5005\n  }]\n}\n",
+          "type": "vscode-launch"
+        }
+      ]
+    }
+  ]
+}

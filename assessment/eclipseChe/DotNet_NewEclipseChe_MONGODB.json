@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "name": "${APP_USER}"
+  },
+  "projects": [
+    {
+      "name": "${APP_USER}",
+      "source": {
+        "location": "${GIT_CODEBASE_LINK}",
+        "type": "git"
+       }
+    }
+  ],
+  "components": [
+    {
+      "id": "redhat-developer/che-omnisharp-plugin/latest",
+      "memoryLimit": "1024Mi",
+      "type": "chePlugin",
+      "alias": "omnisharp"
+    },
+    {
+      "id": "redhat-developer/netcoredbg-theia-plugin/latest",
+      "memoryLimit": "512Mi",
+      "type": "chePlugin",
+      "alias": "netcoredbg"
+    },
+    {
+      "mountSources": true,
+      "endpoints": [
+        {
+          "name": "5000/tcp",
+          "port": 5000
+        }
+      ],
+      "memoryLimit": "512Mi",
+      "type": "dockerimage",
+      "volumes": [
+        {
+          "name": "dotnet",
+          "containerPath": "/home/user"
+        }
+      ],
+      "alias": "dotnet",
+      "image": "quay.io/eclipse/che-dotnet-2.2:7.4.0"
+    },
+    {
+      "endpoints": [
+        {
+          "name": "dTIME_STAMPb",
+          "port": 27017,
+          "attributes": {
+            "discoverable": "true",
+            "public": "false"
+          }
+        }
+      ],
+      "memoryLimit": "300Mi",
+      "type": "dockerimage",
+      "alias": "mongo",
+      "image": "docker.io/centos/mongodb-34-centos7",
+      "env": [
+        {
+          "value": "user",
+          "name": "MONGODB_USER"
+        },
+        {
+          "value": "password",
+          "name": "MONGODB_PASSWORD"
+        },
+        {
+          "value": "guestbook",
+          "name": "MONGODB_DATABASE"
+        },
+        {
+          "value": "password",
+          "name": "MONGODB_ADMIN_PASSWORD"
+        }
+      ]
+    }
+  ],
+  "apiVersion": "1.0.0",
+  "commands": [
+    {
+      "name": "update dependencies",
+      "actions": [
+        {
+          "workdir": "${CHE_PROJECTS_ROOT}/dotnet-web-simple",
+          "type": "exec",
+          "command": "dotnet restore",
+          "component": "dotnet"
+        }
+      ]
+    },
+    {
+      "name": "run",
+      "actions": [
+        {
+          "workdir": "${CHE_PROJECTS_ROOT}/dotnet-web-simple",
+          "type": "exec",
+          "command": "dotnet run",
+          "component": "dotnet"
+        }
+      ]
+    },
+    {
+      "name": "build",
+      "actions": [
+        {
+          "workdir": "${CHE_PROJECTS_ROOT}/dotnet-web-simple",
+          "type": "exec",
+          "command": "dotnet build",
+          "component": "dotnet"
+        }
+      ]
+    },
+    {
+      "name": "Launch .NET Web Application on Debug mode",
+      "actions": [
+        {
+          "referenceContent": "{\n  \"version\": \"0.2.0\",\n    \"configurations\": [\n      {\n          \"type\": \"netcoredbg\",\n          \"request\": \"launch\",\n          \"program\": \"/projects/dotnet-web-simple/bin/Debug/netcoreapp2.2/web.dll\",\n          \"args\": [],\n          \"name\": \".NET Core Launch (console)\",\n          \"stopAtEntry\": false,\n          \"console\": \"internalConsole\"\n      }\n  ]\n}\n",
+          "type": "vscode-launch"
+        }
+      ]
+    }
+  ]
+}

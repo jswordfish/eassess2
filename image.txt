@@ -1,0 +1,287 @@
+http://13.126.232.53/file-server/assessment/images/Java_Full_Stack.png	2	Java Stack - Build a Project Manager web app to keep track of upcoming projects and their respective tasks and their status and priorities. <br/><br/>\
+<a href="http://165.22.223.25/file-server/assessment/docs/ProjectManagerCaseStudyJava-FullStack.docx">Right click and download</a> the project specifications.\
+
+http://13.126.232.53/file-server/assessment/images/AS4 03.png	12920	01.What is the output?\
+
+http://13.126.232.53/file-server/assessment/images/AS4 02.png	12921	02.What is output?
+http://13.126.232.53/file-server/assessment/images/AS4 01.png	12922	03.What is output?\
+
+http://13.126.232.53/file-server/assessment/images/Tad 01.png	13405	01.The following NonStop element management products with their function: <br>\
+Select the correct match with their respective definition: 
+http://13.126.232.53/file-server/assessment/images/Tad 02.png	13406	02.What the paragraph RECEIVE-CONTROL  dictates about the requester- server  communication.
+http://13.126.232.53/file-server/assessment/images/Tad 03.png	13407	03.The definitions on the left column for the tools used in database management in tandem system.<br> Select which one is correct combination as per their properties:
+http://13.126.232.53/file-server/assessment/images/Tad 04.png	13408	04.Company X has a Pathway system configured for the first time , the global limits are being set carefully <br> Assuming below scenarios what Pathway START command is required (COLD, WARM, HOT, COOL):\
+(a)Pathway environment at the very first time. <br>\
+START PATHWAY   ________________!\
+(b)There are few changes in global parameters configurations, pathway is restarted. <br>\
+START PATHWAY _________________!\
+(c)Pathway system is running for quite long time in company X , it required to bring up again after some production release, there is No change in global parameter. <br>\
+START PATHWAY __________________!
+http://13.126.232.53/file-server/assessment/images/Tad 05.png	13409	05.Company X has a user interface based on requester/server model, the server name for this interface is SVM002, having below configuration:<br>\
+Calculate the number of Static and Dynamic servers are there for SVM002.<br>\
+a.Number of STATIC SERVER  : _______<br>\
+b.Number of DYNAMIC SERVER :_______\
+
+http://13.126.232.53/file-server/assessment/images/Tad 06.png	13410	06.The INFO command in SCUP utility helps to view the versions of any requester in POBJ , assuming there was an incident in production and the latest version of the specific requester needs to be rolled back to the last version (say T6520-RCPT(5) needs to disable and enable the T6520-RCPT(4)version).
+http://13.126.232.53/file-server/assessment/images/Tad 07.png	13411	07. The above is the actual EMS error that was logged when there was failure in accessing CAF file, select which one is the correct option, what could be the possible reason.
+http://13.126.232.53/file-server/assessment/images/Tad 08.png	13412	08.In SCOBOL program TCP validates the users input and throws the specific error : <br> Select the correct error value against the conditions given above:
+http://13.126.232.53/file-server/assessment/images/Tad 09.png	13413	09.Below a code snippet and answer the questions below: <br>\
+What the program behavior if the DEPENDING ON numeric identifier contains a value greater than the number of procedures in the PERFORM ONE statement.___________________\
+
+http://13.126.232.53/file-server/assessment/images/Tad 10.png	13414	10.Looking at the code snippet above in  question 20, there are function key mapped (F3, F4, SF16, F5, F1 THRU SF16, TIMEOUT )against the TERMINATION-STATUS:<br>\
+Select the correct function key for ACCEPT condition order based on code snippet:
+http://13.126.232.53/file-server/assessment/images/Tad 11.png	13415	11.Below a code snippet and answer the questions below: <br>\
+The BEGIN-TRANSACTION statement marks the beginning of a sequence of operation <br>\
+a.A new NonStop TMF transaction is requested by the TCP. <br>\
+b.TERMINATION-STATUS is set to 1 to indicate that the transaction has started. <br>\
+c.The terminal enters transaction mode. <br>\
+d.The TRANSID for the new transaction is assigned to the TRANSACTION-ID special register. The TRANSID will be automatically transmitted to a server by the file system whenever a SEND statement is executed by this terminal.<br>\
+Arrange above steps in correct order ,what would the correct sequence:\
+
+http://13.126.232.53/file-server/assessment/images/Tad 14.png	13416	12.Find the error in the below syntax
+http://13.126.232.53/file-server/assessment/images/Tad 16.png	13417	13.EMSPERUSE having alerts for CAFILE getting full, its already crossed the threshold limits and needs immediate attention to increase the size, you are advised to do this task, Select the correct attribute that needs to be altered. 
+http://13.126.232.53/file-server/assessment/images/Tad 17.png	13418	14.The Symbol @ to the variable name on the right side of the assignment operator is used for the standard pointer initialization in TAL. <br>Choose option from below what the expression @byte_array[index] ‘ > > ’ 1 signifies here:
+http://13.126.232.53/file-server/assessment/images/Tad 18.png	13419	15.Below is the program logic, dry run the program logic and get the output value of xyz. <br>\
+Output value of xyz  =  ______________.
+http://13.126.232.53/file-server/assessment/images/Tad 19.png	13420	16.In PERUSE utility there are many jobs listed in the spooler , Select the correct command from below to select job number 282 and listing out the contents to an TEDIT file at $VOL.SUBVOL.PEROUT.
+http://13.126.232.53/file-server/assessment/images/Tad 21.png	13421	17.a.The DELETE statement is used to remove a record from a RELATIVE OR INDEXED file only.<br>\
+b.The DELETE statement can be used with ENTRY-SEQUENCED files. <br>\
+c.A read operation must be the last successful operation prior to  a DELETE  operation if file is open for sequential access.<br>\
+d.If file is audited by TMF, the last operation must be READ WITH LOCK<br>\
+Select which is correct for the DELETE statement in a shared database environment:
+http://13.126.232.53/file-server/assessment/images/Tad 22.png	13422	18.The code snippet above shows the SHUTDOWN2  command to bring down the pathway environment :\
+Performs an immediate stop on all the TCP processes. Any server processes still running are then stopped. All pending requests are ignored. The status of outstanding transactions is inderminate.\
+
+http://13.126.232.53/file-server/assessment/images/Tad 23.png	13423	19.The Enscribe file system allows to partition the data base file that has many advantages, select the correct option from below:
+http://13.126.232.53/file-server/assessment/images/Tad 24.png	13424	20.The START statement positions a file for subsequent sequential read operations, select which one is FALSE in the below statements:
+http://13.126.232.53/file-server/assessment/images/Tad 25.png	13425	21.The following are the DATA DIVISION entries: <br>\
+What will be the value of VARB  after the execution of the  above statement.____________
+http://13.126.232.53/file-server/assessment/images/Tad 26.png	13426	22.The below are the supported file opening modes available in COBOL/SCOBOL   , select the correct one that can be used with REWRITE statement 
+http://13.126.232.53/file-server/assessment/images/tan 1.png	13572	a.The following NonStop element management products with their function: <br>\
+Select the correct match with their respective definition: 
+http://13.126.232.53/file-server/assessment/images/tan 2.png	13573	b.What the paragraph RECEIVE-CONTROL  dictates about the requester- server  communication.
+http://13.126.232.53/file-server/assessment/images/tan 3.png	13574	c.Company X has a Pathway system configured for the first time , the global limits are being set carefully <br>\
+Assuming below scenarios what Pathway START command is required (COLD, WARM, HOT, COOL): <br>\
+(a)\	Pathway environment at the very first time. <br> START PATHWAY   ________________!\
+(b)\	 There are few changes in global parameters configurations, pathway is restarted. <br> START PATHWAY _________________!\
+(c)\	Pathway system is running for quite long time in company X , it required to bring up again after some production release, there is No change in global parameter . <br>START PATHWAY __________________!\
+
+http://13.126.232.53/file-server/assessment/images/tan 4.png	13575	d.Company X has a user interface based on requester/server model, the server name for this interface is SVM002, having below configuration: <br>\
+Calculate the number of Static and Dynamic servers are there for SVM002. <br>\
+a.Number of STATIC SERVER  : _______<br>\
+b.Number of DYNAMIC SERVER :_______\
+
+http://13.126.232.53/file-server/assessment/images/tan 5.png	13576	e.The INFO command in SCUP utility helps to view the versions of any requester in POBJ , assuming there was an incident in production and the latest version of the specific requester needs to be rolled back to the last version (say T6520-RCPT(5) needs to disable and enable the T6520-RCPT(4)version).<br> Write the command to perform this activity.
+http://13.126.232.53/file-server/assessment/images/tan 6.png	13577	f. The above is the actual EMS error that was logged when there was failure in accessing CAF file, select which one is the correct option, what could be the possible reason.
+http://13.126.232.53/file-server/assessment/images/tan 7.png	13578	g.Below a code snippet and answer the questions below: <br>\
+What the program behavior if the DEPENDING ON numeric identifier contains a value greater than the number of procedures in the PERFORM ONE statement.___________________
+http://13.126.232.53/file-server/assessment/images/tan 8.png	13579	h.Below a code snippet and answer the questions below: <br>The BEGIN-TRANSACTION statement marks the beginning of a sequence of operation <br>\
+a.A new NonStop TMF transaction is requested by the TCP. <br>\
+b.TERMINATION-STATUS is set to 1 to indicate that the transaction has started.<br>\
+c.The terminal enters transaction mode.<br>\
+d.The TRANSID for the new transaction is assigned to the TRANSACTION-ID special register. The TRANSID will be automatically transmitted to a server by the file system whenever a SEND statement is executed by this terminal.<br>\
+Arrange above steps in correct order ,what would the correct sequence\
+
+http://13.126.232.53/file-server/assessment/images/tan 9.png	13580	i.Find out mistakes in the following DATA DIVISION entries.
+http://13.126.232.53/file-server/assessment/images/tan 10.png	13581	j.Find the error in the below syntax
+http://13.126.232.53/file-server/assessment/images/tan 11.png	13582	k.Find the error in the below syntax
+http://13.126.232.53/file-server/assessment/images/tan 12.png	13583	l.EMSPERUSE flooded with alerts for Spooler Collector $S reaching 81%. Below are the jobs pertaining to collector $S with pages > 100.As part of housekeeping you are advised to delete the jobs listed below. <br>\
+Write the SPOOLCOM command to delete the jobs matching the above conditions.
+http://13.126.232.53/file-server/assessment/images/tan 13.png	13584	m.EMSPERUSE having alerts for CAFILE getting full, its already crossed the threshold limits and needs immediate attention to increase the size, you are advised to do this task, Select the correct attribute that needs to be altered. 
+http://13.126.232.53/file-server/assessment/images/tan 14.png	13585	n.The Symbol @ to the variable name on the right side of the assignment operator is used for the standard pointer initialization in TAL. <br>\
+Choose option from below what the expression @byte_array[index]  ‘ > > ’ 1 signifies here:\
+
+http://13.126.232.53/file-server/assessment/images/tan 15.png	13586	o.Below is the program logic, dry run the program logic and get the output value of xyz. <br>Output value of xyz  =  ___________________
+http://13.126.232.53/file-server/assessment/images/38 new Software testing manual.png	15034	1What does the below image represents?
+http://13.126.232.53/file-server/assessment/images/15 new Software testing manual.png	15093	2 What does the below image represent?
+http://13.126.232.53/file-server/assessment/images/1.png	17366	Which of the following is related to given below syntax in the lambda parameter? 
+http://13.126.232.53/file-server/assessment/images/2.png	18852	Which is the default access specifier used in the below given code?
+http://13.126.232.53/file-server/assessment/images/2.png	18853	Which return type of a method used in the below code that does not return any value?
+http://13.126.232.53/file-server/assessment/images/3.png	18854	Which is the keyword used to create an object 'car' in the below given code?
+http://13.126.232.53/file-server/assessment/images/4.png	18855	What does the void returns in the below given code?
+http://13.126.232.53/file-server/assessment/images/5.png	18856	Which is the method used in the below given code to display a text on the console?
+http://13.126.232.53/file-server/assessment/images/6.png	18857	Which one among the following method is used as object reference to call an instance method in the bellow given code?
+http://13.126.232.53/file-server/assessment/images/7.png	18859	What does 2.2 refers in the below given image?
+http://13.126.232.53/file-server/assessment/images/38 Reactive Java 9.png	19446	What does the arrow mark indicate in the below-given image?
+http://13.126.232.53/file-server/assessment/images/java.png	19858	What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/2.png	20031	The below image refers to which pattern?
+http://13.126.232.53/file-server/assessment/images/1.png	21017	Which one among the following option specifies the below given image?
+http://13.126.232.53/file-server/assessment/images/1.Reactive programming in 7 steps.png	21275	What does the vertical line encircled with blue color indicate in the below-given image?
+http://13.126.232.53/file-server/assessment/images/git 1.png	21833	A.Which among the following option specifies the below given diagram?
+http://13.126.232.53/file-server/assessment/images/M 1.png	23557	1.Which is the keyword used to create an object 'car' in the below given code?
+http://13.126.232.53/file-server/assessment/images/M 2.png	23558	2.Which is the default access specifier used in the below given code?
+http://13.126.232.53/file-server/assessment/images/M 3.png	23559	3.Which is the method used in the below given code to display a text on the console?
+http://13.126.232.53/file-server/assessment/images/M 4.png	23560	4.What does the void returns in the below given code?
+http://13.126.232.53/file-server/assessment/images/M 5.png	23580	5.Which one among the following method is used as object reference to call an instance method in the bellow given code?
+http://13.126.232.53/file-server/assessment/images/M 6.png	23581	6.Where does the list of object references are available in the bellow given Diagram?
+http://13.126.232.53/file-server/assessment/images/M 7.png	23584	7.What does 2.2 refers in the below given image?
+http://13.126.232.53/file-server/assessment/images/user-landing-page.jpg	25484	Find the image
+http://13.126.232.53/file-server/assessment/images/Analysis.png	25485	Find the answer
+http://13.126.232.53/file-server/assessment/images/user-landing-page-OTP.jpg	25487	Find the answer to the Questions
+http://13.126.232.53/file-server/assessment/images/user-mcq-test.jpg	25499	Find the Image and Question
+http://13.126.232.53/file-server/assessment/images/j se im 1.png	26746	1. What does the void returns in the below given code?
+http://13.126.232.53/file-server/assessment/images/j se im 2.png	26748	2. Where does the list of object references are available in the bellow given Diagram?
+http://13.126.232.53/file-server/assessment/images/j se im 3.png	26749	3. Which is the keyword used to create an object 'car' in the below given code?
+http://13.126.232.53/file-server/assessment/images/j se im 4 ed.png	26750	4. Which one among the following method is used as object reference to call an instance method in the bellow given code?
+http://13.126.232.53/file-server/assessment/images/j se im 5.png	26751	5. What does 2.2 refers in the below given image?
+http://13.126.232.53/file-server/assessment/images/j se im 6.png	26752	6. Which is the method used in the below given code to display a text on the console?
+http://13.126.232.53/file-server/assessment/images/j se im 7.png	26753	7. Which is the default access specifier used in the below given code?
+http://13.126.232.53/file-server/assessment/images/learni im1.png	26999	1. What is the output of the code in the browser shown in the image?
+http://13.126.232.53/file-server/assessment/images/boot im2.png	27001	2. What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/learni im3.png	27002	3. What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/learni im4.png	27003	4. What is the output of the code API/member as the shown image?
+http://13.126.232.53/file-server/assessment/images/learni im5.png	27004	5. What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/ios.png	31478	A."Consider the below method,\
+Suggets the modification needed in order to correctly manage memory when compiled with ARC?"\
+
+http://13.126.232.53/file-server/assessment/images/ad im1.png	102841	Which kind of framework is given in the image below:
+http://13.126.232.53/file-server/assessment/images/ad im2.png	102871	In the image given below, sub-script is a part of which of the following:
+http://13.126.232.53/file-server/assessment/images/ad im3.png	102873	In the image given below, what is getAnnotation():
+http://13.126.232.53/file-server/assessment/images/ad im4.png	102874	What is the data type of equals() method?
+http://13.126.232.53/file-server/assessment/images/ad im5.png	102875	The diagram given in the image below is showing the relationship between entities. Is it true or false?
+http://13.126.232.53/file-server/assessment/images/ad im6.png	102876	What is the meaning of run() in ODTRunner class in the image given below:
+http://13.126.232.53/file-server/assessment/images/ad im7.png	102877	In the image given below, what is the use of assertNotNull()?
+http://13.126.232.53/file-server/assessment/images/ad im8.png	102880	In the image given below which of the following is not a key type:
+http://13.126.232.53/file-server/assessment/images/lee im1.png	103154	1) What is the output for the below given code?
+http://13.126.232.53/file-server/assessment/images/lee im2.png	103156	2) Which is the name defined to a variable in a below given code?
+http://13.126.232.53/file-server/assessment/images/lee im3.png	103163	3) Which among the following option is not a string manipulation in the below given code?
+http://13.126.232.53/file-server/assessment/images/lee im4.png	103200	4) Which is the assignment operator used in the below given code?
+http://13.126.232.53/file-server/assessment/images/lee im5.png	103202	5) What is the output for the below given code?
+http://13.126.232.53/file-server/assessment/images/lee im6.png	103233	6) What is the output for the below given code?
+http://13.126.232.53/file-server/assessment/images/comp im1.png	104424	Where does the list of object references are available in the bellow given Diagram?
+http://13.126.232.53/file-server/assessment/images/comp im2.png	104425	Which is the keyword used to create an object ' car ' in the below given code?
+http://13.126.232.53/file-server/assessment/images/boot im1.png	113638	1. What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/boot im3.png	113644	3. Which type of the form as shown in the image?
+http://13.126.232.53/file-server/assessment/images/boot im4.png	113646	4. Is the right syntax as shown in the image of tooltip? State Yes or No.
+http://13.126.232.53/file-server/assessment/images/boot im5.png	113650	5. Which part of BS4 belongs as shown in the image?
+http://13.126.232.53/file-server/assessment/images/Boo 1.png	114753	1.What is the use of table-condensed given in the image below?
+http://13.126.232.53/file-server/assessment/images/boo 2.png	114756	2.&times in the image given below indicates which of the following:
+http://13.126.232.53/file-server/assessment/images/boo 3.png	114787	3.What is  < !-- .col-md-3 -- > in the image given below:
+http://13.126.232.53/file-server/assessment/images/boo 4.png	114789	4.What is the use of the following in the image given below:
+http://13.126.232.53/file-server/assessment/images/boo 5.png	114791	5.What is the use of input in the image given below:
+http://13.126.232.53/file-server/assessment/images/boo 6.png	114792	6.What is the use of label in the image given below:
+http://13.126.232.53/file-server/assessment/images/boo 7.png	114793	7.h1 and h2 is known as which of the following:
+http://13.126.232.53/file-server/assessment/images/html 01.png	115935	1.Which character entity is used in the below-given code to display a less than sign ( < )?
+http://13.126.232.53/file-server/assessment/images/html 02.png	115936	2.Which attribute specifies the type of < input > element to display in the below-given code?
+http://13.126.232.53/file-server/assessment/images/html 03.png	115937	3.Which attribute is used in the below given code to define the link address?
+http://13.126.232.53/file-server/assessment/images/html 04.png	115938	4.Choose the correct code for the below-given output?
+http://13.126.232.53/file-server/assessment/images/html 05.png	115939	5.Which CSS type is used in the  below-given code?
+http://13.126.232.53/file-server/assessment/images/html 06.png	115940	6.What is the purpose of < hr > tag in the below-given code?
+http://13.126.232.53/file-server/assessment/images/html 07.png	115941	7.Which attribute specifies the initial value for an input field in the below given code?
+http://13.126.232.53/file-server/assessment/images/F 1.png	116126	1.What kind of method is used in below Image of code ?
+http://13.126.232.53/file-server/assessment/images/F 2.png	116127	2.What kind of expression in below Image of code ?
+http://13.126.232.53/file-server/assessment/images/F 3.png	116128	3.Which of the following method is required to execute the following code in below Image ?
+http://13.126.232.53/file-server/assessment/images/F 4.png	116129	4.Which of the following keyword denotes that it is an Extension Method in below Image of code ?
+http://13.126.232.53/file-server/assessment/images/F 5.png	116154	5.What kind of data type is used in below Image of code ?
+http://13.126.232.53/file-server/assessment/images/F 6.png	116157	6.Which of the following keyword is similar to function pointer in C/C++ in below Image of code ?
+http://13.126.232.53/file-server/assessment/images/F 7.png	116182	7.What is the output of below Feeling functional programming in below Image of code ?
+http://13.126.232.53/file-server/assessment/images/angu im1.png	116222	1- Which module advantages of angular is it belongs as shown in the image?
+http://13.126.232.53/file-server/assessment/images/angu im2.png	116236	2- What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/angu im3.png	116270	3- What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/angu im4.png	116271	4- What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/angu im5.png	116304	5- What is the output of the code as shown in the image?
+http://13.126.232.53/file-server/assessment/images/angu im6.png	116305	6- Which type of binding is as shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 1.png	126509	1) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 2.png	126510	2) Which of the following is a threat safe log.println(i) or fmt.PrintLn(i) as shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 3.png	126511	3) Which of the following is cannot be the output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 4.png	126512	4) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 5.png	126513	5) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 6.png	126514	6) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 7.png	126515	7) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 8.png	126516	8) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 9.png	126517	9) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 10.png	126518	10) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 11.png	126519	11) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/go im 12.png	126520	12) What can be the output of the Go code shown in the image?
+http://13.126.232.53/file-server/assessment/images/bege im1.png	133748	1) Which one among the following operator is not used in the bellow given code?
+http://13.126.232.53/file-server/assessment/images/bege im2.png	133749	2) What is the output for the below given code?
+http://13.126.232.53/file-server/assessment/images/bege im3.png	133750	3) What does the list contain in the below given code?
+http://13.126.232.53/file-server/assessment/images/bege im4.png	133751	4) What is the output for the given code below?
+http://13.126.232.53/file-server/assessment/images/bege im5.png	133752	5) Which non-assignment operator is used in the below given code?
+http://13.126.232.53/file-server/assessment/images/bege im6.png	133753	6) What is the output of the below code?
+http://13.126.232.53/file-server/assessment/images/bege im7.png	133754	7) Which one among the following data type is not used in the below given code?
+http://13.126.232.53/file-server/assessment/images/deii im1.png	137502	1. WHich function returns the data type and value in the bellow given image?
+http://13.126.232.53/file-server/assessment/images/deii im2.png	137503	3. Which is the pseudo-variable used in bellow given code?
+http://13.126.232.53/file-server/assessment/images/deii im3.png	137504	4. Which is the method used in the bellow given code to declare a class?
+http://13.126.232.53/file-server/assessment/images/deii im4.png	137505	5. Which is the Default Access specifier in bellow given code?
+http://13.126.232.53/file-server/assessment/images/deii im5.png	137506	6. Which data type does $x indicates in the bellow given program?
+http://13.126.232.53/file-server/assessment/images/deii im7.png	137507	7. What does $cars indicates in the bellow given code?
+http://13.126.232.53/file-server/assessment/images/Table im 1.png	144105	1) Which type of dataset is shown in the image?
+http://13.126.232.53/file-server/assessment/images/Table im 2.png	144106	2) Which type of dataset is shown in the image?
+http://13.126.232.53/file-server/assessment/images/Table im 3.png	144107	3) Which type of join is shown in the image?
+http://13.126.232.53/file-server/assessment/images/Table im 4.png	144108	4) How we can select only 2 cities and see their sales from the number of cities shown in the image?
+http://13.126.232.53/file-server/assessment/images/Table im 5.png	144109	5) How we can select only Top 5 customers from the number of customers shown in the image?
+http://13.126.232.53/file-server/assessment/images/Table im 6.png	144119	6) Which type of calculation is visible in the image shown?
+http://13.126.232.53/file-server/assessment/images/Table im 7.png	144122	7) What we can understand from the red bordered row shown in the image?
+http://13.126.232.53/file-server/assessment/images/auto image 1.png	146314	1- What do you understand from the explanation as shown in the image?
+http://13.126.232.53/file-server/assessment/images/auto image 2.png	146315	2- What do you understand from the explanation as shown in the image?
+http://13.126.232.53/file-server/assessment/images/auto image 3.png	146316	3- Which technology framework is as shown in the image?
+http://13.126.232.53/file-server/assessment/images/auto image 4.png	146318	4- Which of the testing technique is include the topics as shown in the image?
+http://13.126.232.53/file-server/assessment/images/auto image 5.png	146319	5- Which testing tool includes different processes as shown in the image?
+http://13.126.232.53/file-server/assessment/images/testam im1.png	146499	1) Which among the following attack does the given diagram specify?
+http://13.126.232.53/file-server/assessment/images/testam im2.png	146500	2) Which among the following module will let us to provide connection between client and server in the below given code?
+http://13.126.232.53/file-server/assessment/images/testam im3.png	146501	3) Which among the following option specifies the below given diagram?
+http://13.126.232.53/file-server/assessment/images/testam im4.png	146502	4) Which among the following option specifies the below given diagram?
+http://13.126.232.53/file-server/assessment/images/testam im5.png	146503	5) Which among the following option specifies the below given diagram?
+http://13.126.232.53/file-server/assessment/images/testam im6.png	146504	6) Which among the following option specifies the below given diagram?
+http://13.126.232.53/file-server/assessment/images/SElinux im1.png	149068	1- The below image refers to which among the following with respect to udev?
+http://13.126.232.53/file-server/assessment/images/SElinux im2.png	149071	2- The below image refers to services that are provided by a specific feature by systemd. What is the feature name?
+http://13.126.232.53/file-server/assessment/images/SElinux im3.png	149100	3- What is the use of the below command?
+http://13.126.232.53/file-server/assessment/images/HTML re.png	194978	1) In the image given below, Phone number specifies which of the following:
+http://13.126.232.53/file-server/assessment/images/Learn GIT one.png	195793	1) The diagram given below is showing the current state of a testing repository. Is it true or false?
+http://13.126.232.53/file-server/assessment/images/Learn GIT two.png	195795	2) In the image given below,  HEAD is used to do which of the following:
+http://13.126.232.53/file-server/assessment/images/Learn GIT three.png	195828	3) The structure given below is related to which of the following:
+http://13.126.232.53/file-server/assessment/images/Learn GIT four.png	195833	5) What is the use of the command given in the image below:
+http://13.126.232.53/file-server/assessment/images/Learn GIT six.png	195836	5) What is the use of the command given in the image:
+http://13.126.232.53/file-server/assessment/images/Learn GIT seven.png	195837	6) In the image given below, the HEAD is pointing to which of the following:
+http://13.126.232.53/file-server/assessment/images/image Py 1.png	195926	1) What will be the expected output of the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/img edit 2.png	195956	2) What will be the expected output of the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/img edit 3.png	195982	3) What will be the expected output of the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/img edit 4.png	195983	4) What will be the expected output of the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/img edit 5.png	195984	5) What will be the expected output of the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/img edit 6.png	195985	6) What will be the expected output of the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/image Py 7.png	195986	7) What is the output for the below given code?
+http://13.126.232.53/file-server/assessment/images/image P 1.png	196018	1. What is the expected output of the code given in the image below: 
+http://13.126.232.53/file-server/assessment/images/img 2 redit.png	196019	2. What will be the expected output of the code given in the image below: 
+http://13.126.232.53/file-server/assessment/images/img 3 redit.png	196020	3. What can be the expected output of the code given in the image below: 
+http://13.126.232.53/file-server/assessment/images/image P 4.png	196021	4. What will be the output of the code given in the image below : 
+http://13.126.232.53/file-server/assessment/images/image P 5.png	196022	5. What should the output be for the code given in the image below: 
+http://13.126.232.53/file-server/assessment/images/image P 6.png	196023	6. What is the expected output for the code given in the image below : 
+http://13.126.232.53/file-server/assessment/images/image P 7.png	196024	7. What can be the expected output for the code given below : 
+http://13.126.232.53/file-server/assessment/images/image P 8.png	196025	8. What is the output for the code given in the image below: 
+http://13.126.232.53/file-server/assessment/images/SQL one .png	196089	1- What is the syntax is used to get the highest budget as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL two.png	196090	2- what is the syntax is used to get the avg budget as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL three.png	196091	3- Which keyword syntax is as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL four.png	196092	4- Which SQL clause syntax is as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL five.png	196093	5- Which type of join as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL Six.png	196094	6- Which type of join as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL seven.png	196095	7- Which type of syntax query as shown in the image?
+http://13.126.232.53/file-server/assessment/images/SQL eight.png	196096	8- Is the syntax of EXISTS Clause is correct as shown in the image? State Yes or No.
+http://13.126.232.53/file-server/assessment/images/image 1 React.png	196186	1) What will we the expected output of the code given below:
+http://13.126.232.53/file-server/assessment/images/image 2 React.png	196187	2) What is the use of setState() in the lines of code given in the image below:
+http://13.126.232.53/file-server/assessment/images/image 3 React.png	196188	3) What is Header in the image given below;
+http://13.126.232.53/file-server/assessment/images/image 4 React.png	196189	4) In the image given below, the componentDidMount() method will called immediately before a component is mounted. Is it true or false?
+http://13.126.232.53/file-server/assessment/images/img react ed 5.png	196190	5) What is the use of ReactDOM in the code given in the image below:
+http://13.126.232.53/file-server/assessment/images/img react ed 6.png	196191	6) What is the use of keyword propType in the image given below: 
+http://13.126.232.53/file-server/assessment/images/img react ed 7.png	196192	7) What will be the expected output of the code in the image given below:
+http://13.126.232.53/file-server/assessment/images/image 8 React.png	196193	8) In the image given below, what is ArticleList()?
+http://13.126.232.53/file-server/assessment/images/Angular Seven New features im1.png	196224	1. Which one is the fact function as shown in the image?
+http://13.126.232.53/file-server/assessment/images/Angular Seven New features im2.png	196225	2. Which type properties of angular as shown in the image?
+http://13.126.232.53/file-server/assessment/images/Angular Seven New features im3.png	196226	3. What it will return in output as shown in the image?
+http://13.126.232.53/file-server/assessment/images/Angular Seven New features im4.png	196227	4. Is the syntax of the code DoBootstrap is correct as shown in the image?
+http://13.126.232.53/file-server/assessment/images/Angular Seven New features im5.png	196228	5. Which interface syntax is as shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im1.png	196262	1- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im2.png	196263	2- What will be the console output of the code shown in the image, assume there is no error in the code and we are getting the JSON data?
+http://13.126.232.53/file-server/assessment/images/leeeeee im3.png	196264	3- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im4.png	196265	4- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im5.png	196266	5- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im6.png	196267	6- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im7.png	196270	7- Which among the following option specifies the variable in the below code?
+http://13.126.232.53/file-server/assessment/images/leeeeee im8.png	196271	8- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im9.png	196279	9- Which is the method used in the below given code to print the output?
+http://13.126.232.53/file-server/assessment/images/leeeeee im10.png	196280	10- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/leeeeee im11.png	196281	11- What will be the console output of the code shown in the image?
+http://13.126.232.53/file-server/assessment/images/Angular one.png	196313	1. What is the below image Represents?
+http://13.126.232.53/file-server/assessment/images/Angular Rework one.png	196314	2. What does the file in the below given Image represents?
+http://13.126.232.53/file-server/assessment/images/Angular Rework 3.png	196315	3. What does the file in the below given Image represents?
+http://13.126.232.53/file-server/assessment/images/Angular Rework two.png	196316	4. What does the below image Represents?

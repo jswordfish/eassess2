@@ -1,0 +1,18 @@
+<workbook>
+	<worksheet name="Users_Upload">
+		<section startRow="0" endRow="0" />
+		<loop startRow="1" endRow="1" items="result" var="us"
+			varType="com.assessment.data.User">
+			<section startRow="1" endRow="1">
+				<mapping row="1" col="0">us.firstName</mapping>
+				<mapping row="1" col="1">us.lastName</mapping>
+				<mapping row="1" col="2">us.email</mapping>
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="0">End Rows:</cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>
