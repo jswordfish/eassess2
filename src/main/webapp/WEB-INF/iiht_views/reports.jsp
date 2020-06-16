@@ -112,10 +112,8 @@
 			<div class="container">
 				<div id="materialize-menu" class="menuzord">
 					<!--logo start-->
-					<a href="javascript:void(0);" class="logo-brand"> <img
-						class="retina"
-						src="<%=request.getContextPath()%>/resources/images/Logo.png"
-						alt="" />
+					<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
+						src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
 					</a>
 					<!--logo end-->
 					<!--mega menu start-->
@@ -123,13 +121,33 @@
 						<li><a
 							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
 						<li><a href="question_list">Question Bank</a></li>
-						<li><a href="testlist">Tests</a></li>
+						<li class="dropdown" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown active" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
 						<li><a href="skills">Skills</a></li>
-						<li class="active"><a href="showReports">Results</a></li>
-						<li><a href="codingSessions">Code Analysis Reports</a></li>
-						<li><a href="showSkillTags">Skill based Reports</a></li>
 						<li><a href="showProfileParams">Recomm Setting</a></li>
-						<li><a href="listUsers">Users</a></li>
+						<li class="dropdown" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
 					</ul>
 					<!--mega menu end-->
 				</div>
@@ -309,18 +327,18 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-body">
-					<form method="GET" action="downloadUserReportPdf">
-						<form:select path="test.testName" class="form-control"
-							onchange="Change1()" id="name1">
-							<option value="Select any option">Select Any Test Name</option>
-							<form:options items="${listTest}" itemValue="testName"
-								itemLabel="testName" />
-						</form:select>
-						<br>
-						<select id="slct1" class="form-control" name="userEmail"></select>
-						<input type="submit" value="Download"
-							style="align-content: center;" />
-					</form>
+<%-- 					<form method="GET" action="downloadUserReportPdf"> --%>
+<%-- 						<form:select path="test.testName" class="form-control" --%>
+<%-- 							onchange="Change1()" id="name1"> --%>
+<!-- 							<option value="Select any option">Select Any Test Name</option> -->
+<%-- 							<form:options items="${listTest}" itemValue="testName" --%>
+<%-- 								itemLabel="testName" /> --%>
+<%-- 						</form:select> --%>
+<!-- 						<br> -->
+<!-- 						<select id="slct1" class="form-control" name="userEmail"></select> -->
+<!-- 						<input type="submit" value="Download" -->
+<!-- 							style="align-content: center;" /> -->
+<%-- 					</form> --%>
 				</div>
 			</div>
 		</div>
@@ -422,6 +440,10 @@
 	<script src="${mainJs17}"></script>
 	<script>
 		$(document).ready(function() {
+			document.getElementById("dd").style.display = "block";
+			document.getElementById("dd2").style.display = "block";
+			document.getElementById("dd3").style.display = "block";
+
 			$('.mdb-select').materialSelect();
 		});
 	</script>

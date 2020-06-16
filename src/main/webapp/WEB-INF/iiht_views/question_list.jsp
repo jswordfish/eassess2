@@ -12,10 +12,12 @@
 <title>Question List</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="css/pnotify.custom.min.css" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/pnotify.custom.min.js"></script>
@@ -23,16 +25,19 @@
 <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
 <link href="./resources/assets/img/ico/favicon.png" rel="shortcut icon" />
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,900" rel="stylesheet"
-		type="text/css" />
+	type="text/css" />
 <!-- Material Icons CSS -->
 <link href="./resources/assets/fonts/iconfont/material-icons.css" rel="stylesheet" type="text/css" />
 <!-- FontAwesome CSS -->
-<link href="./resources/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css" />
 <!-- magnific-popup -->
 <link href="./resources/assets/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
 <!-- owl.carousel -->
-<link href="./resources/assets/owl.carousel/assets/owl.carousel.css" rel="stylesheet" type="text/css" />
-<link href="./resources/assets/owl.carousel/assets/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/owl.carousel/assets/owl.carousel.css" rel="stylesheet"
+	type="text/css" />
+<link href="./resources/assets/owl.carousel/assets/owl.theme.default.min.css" rel="stylesheet"
+	type="text/css" />
 <!-- flexslider -->
 <link href="./resources/assets/flexSlider/flexslider.css" rel="stylesheet" type="text/css" />
 <!-- materialize -->
@@ -50,7 +55,7 @@
 <link href="./resources/assets/revolution/css/navigation.css" rel="stylesheet" type="text/css" />
 <link href="./resources/assets/css/pnotify.custom.min.css" rel="stylesheet" type="text/css" />
 <style>
-.dropdown-menu {
+#myDropdown {
 	min-width: 387px !important;
 	height: 300px !important;
 	overflow: auto !important;
@@ -95,393 +100,400 @@ div.scrollmenu {
 </head>
 
 <body id="top" class="has-header-search">
-		<!--header start-->
-		<header id="header" class="tt-nav nav-border-bottom">
-				<div class="header-sticky light-header ">
-						<div class="container">
-								<div id="materialize-menu" class="menuzord">
-										<!--logo start-->
-										<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
-												src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
-										</a>
-										<!--logo end-->
-										<!--mega menu start-->
-										<ul class="menuzord-menu pull-right">
-												<li><a
-														href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
-												<li class="active"><a href="question_list">Question Bank</a></li>
-												<li><a href="testlist">Tests</a></li>
-												<li><a href="skills">Skills</a></li>
-												<li><a href="showReports">Reports</a></li>
-<!-- 				Report								<li><a href="codingSessions">Code Analysis Reports</a></li> -->
-<!-- 					Report							<li><a href="showSkillTags">showSkillTags</a></li> -->
-<!-- 				Test								<li><a href="showProfileParams">Recomm Setting</a></li> -->
-												<li><a href="listTestLinks">Test Links</a></li>
-												<li><a href="listUsers">Users</a></li>
-										</ul>
-										<!--mega menu end-->
-								</div>
-						</div>
+	<!--header start-->
+
+	<header id="header" class="tt-nav nav-border-bottom">
+		<div class="header-sticky light-header ">
+			<div class="container">
+				<div id="materialize-menu" class="menuzord">
+					<!--logo start-->
+					<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
+						src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
+					</a>
+					<!--logo end-->
+					<!--mega menu start-->
+					<ul class="menuzord-menu pull-right">
+						<li><a
+							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
+						<li class="active"><a href="question_list">Question Bank</a></li>
+						<li class="dropdown" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
+						<li><a href="skills">Skills</a></li>
+						<li><a href="showProfileParams">Recomm Setting</a></li>
+						<li class="dropdown" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
+					</ul>
+					<!--mega menu end-->
 				</div>
-		</header>
-		<!--header end-->
+			</div>
+		</div>
+	</header>
+	<!--header end-->
 
 
-		<section>
-				<div class="container">
-						<div class="row mt-5">
-								<div class="col-md-12">
-										<div class="col-md-2"></div>
-										<div class="col-md-2">
-												<a href="addQuestion" class="btn waves-effect waves-light col-md-12"><i
-														class="material-icons fa fa-plus-circle"></i>  </a>
-										</div>
-										<div class="col-md-2">
-												<a href="javascript:showFileDialog();" id="uploadQuestionsLink"
-														class="btn waves-effect waves-light col-md-12"><i class="material-icons fa fa-upload"></i>
-														 </a>
-										</div>
+	<section>
+		<div class="container">
+			<div class="row mt-5">
+				<div class="col-md-12">
+					<div class="col-md-2"></div>
+					<div class="col-md-2">
+						<a href="addQuestion" class="btn waves-effect waves-light col-md-12"><i
+							class="material-icons fa fa-plus-circle"></i>Add </a>
+					</div>
+					<div class="col-md-2">
+						<a href="javascript:showFileDialog();" id="uploadQuestionsLink"
+							class="btn waves-effect waves-light col-md-12"><i class="material-icons fa fa-upload"></i>Import
+						</a>
+					</div>
 
-										<div class="col-md-2">
-												<a href="verification" class="btn waves-effect waves-light col-md-12"><i
-														class="material-icons fa fa-check"></i>  </a>
-										</div>
+					<div class="col-md-2">
+						<a href="verification" class="btn waves-effect waves-light col-md-12"><i
+							class="material-icons fa fa-check"></i>Verify </a>
+					</div>
 
-										<div class="dropdown">
-												<div class="col-md-2">
-														<div class="dropdown">
-																<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-																		onclick="myFunction()">
-																		<i class="material-icons fa fa-download"></i> 
-																</button>
-																<div class="dropdown-menu" id="myDropdown">
-																		<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-																		<c:forEach items="${qu}" var="qualifier1">
-																				<a style="padding-left: 5px;" class="dropdown-item"
-																						href="<%=request.getContextPath()%>/downloadQuestion?qualifier1=${qualifier1}">${qualifier1}</a>
-																				<br />
+					<div class="dropdown">
+						<div class="col-md-2">
+							<div class="dropdown">
+								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+									onclick="myFunction()">
+									<i class="material-icons fa fa-download"></i>Download
+								</button>
+								<div class="dropdown-menu" id="myDropdown">
+									<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+									<c:forEach items="${qu}" var="qualifier1">
+										<a style="padding-left: 5px;" class="dropdown-item"
+											href="<%=request.getContextPath()%>/downloadQuestion?qualifier1=${qualifier1}">${qualifier1}</a>
+										<br />
 
-																		</c:forEach>
-																</div>
-														</div>
-												</div>
-										</div>
-
-										<div class="col-md-2">
-												<a href="signoff" class="btn waves-effect waves-light col-md-12"><i
-														class="material-icons fa fa-sign-out"></i>  </a>
-										</div>
-
+									</c:forEach>
 								</div>
-								<%-- 								<form id="fileFormQuestions" method="POST" enctype="multipart/form-data"> --%>
-								<!-- 										<input type="file" name="fileQuestions" id="fileQuestions" style="display: none" /> -->
+							</div>
+						</div>
+					</div>
 
-								<%-- 								</form> --%>
-								<form id="fileFormQuestions" method="POST" enctype="multipart/form-data">
-										<input type="file" name="fileQuestions" id="fileQuestions" style="display: none" />
+					<div class="col-md-2">
+						<a href="signoff" class="btn waves-effect waves-light col-md-12"><i
+							class="material-icons fa fa-sign-out"></i>Sign Out </a>
+					</div>
+
+				</div>
+				<%-- 								<form id="fileFormQuestions" method="POST" enctype="multipart/form-data"> --%>
+				<!-- 										<input type="file" name="fileQuestions" id="fileQuestions" style="display: none" /> -->
+
+				<%-- 								</form> --%>
+				<form id="fileFormQuestions" method="POST" enctype="multipart/form-data">
+					<input type="file" name="fileQuestions" id="fileQuestions" style="display: none" />
+				</form>
+				<div class="col-md-12">
+					<div class="mt-10"></div>
+					<div class="col-md-5">
+						<h1 style="color: #b07c2a;">
+							<b>Question Bank</b>
+						</h1>
+					</div>
+					<div class="col-md-4">
+						<div class="widget widget_search">
+
+							<div class="search-form">
+								<form action="searchQuestions" method="get">
+									<input type="text" placeholder="Search a question" name="searchText" id="searchText">
+									<button type="submit" id="search">
+										<i class="fa fa-search"></i>
+									</button>
 								</form>
-								<div class="col-md-12">
-										<div class="mt-10"></div>
-										<div class="col-md-5">
-												<h1 style="color: #b07c2a;">
-														<b>Question Bank</b>
-												</h1>
-										</div>
-										<div class="col-md-4">
-												<div class="widget widget_search">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="pagination" style="float: right;" id="pagination">
 
-														<div class="search-form">
-																<form action="searchQuestions" method="get">
-																		<input type="text" placeholder="Search a question" name="searchText" id="searchText">
-																		<button type="submit" id="search">
-																				<i class="fa fa-search"></i>
-																		</button>
-																</form>
-														</div>
-												</div>
-										</div>
-										<div class="col-md-3">
-												<div class="pagination" style="float: right;" id="pagination">
+							<c:if test="${showPreviousPage}">
+								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
+							</c:if>
 
-														<c:if test="${showPreviousPage}">
-																<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
-														</c:if>
-
-														<c:if test="${selectedPage != null &&  selectedPage > 0}">
+							<c:if test="${selectedPage != null &&  selectedPage > 0}">
 										                                    ${selectedPage} / ${totalNumberOfPages}
 										                                </c:if>
 
-														<c:if test="${showNextPage}">
-																<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
-														</c:if>
-
-												</div>
-										</div>
-								</div>
-						</div>
-						<div class="col-md-12">
-								<div class="table-responsive">
-
-										<input type="hidden" id="sort" value="asc">
-										<table class="table table-striped" id="tbl">
-												<thead style="background-color: #03a9f4;">
-														<tr>
-																<th>No</th>
-																<th>Question</th>
-
-																<th>Category</th>
-
-																<th>Difficulty Level</th>
-
-																<th>Updated On</th>
-
-																<th>Update</th>
-																<th>Delete</th>
-														</tr>
-												</thead>
-												<tbody>
-												<tbody>
-
-														<c:forEach items="${qs}" var="question" varStatus="loop">
-																<tr>
-
-																		<td>${loop.count}</td>
-
-
-																		<td><c:out value="${question.questionText}"></c:out></td>
-
-																		<td>${question.category}</td>
-																		<td><c:out value="${question.difficultyLevel.level}"></c:out></td>
-																		<td><c:out value="${question.updatedDate}"></c:out></td>
-																		<td><a href="addQuestion?qid=${question.id}">Click </a></td>
-																		<td><a href="javascript:confirm('${question.id}')">Click </a></td>
-																</tr>
-														</c:forEach>
-												</tbody>
-
-										</table>
-								</div>
+							<c:if test="${showNextPage}">
+								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
+							</c:if>
 
 						</div>
+					</div>
 				</div>
-				<!-- /.row -->
+			</div>
+			<div class="col-md-12">
+				<div class="table-responsive">
+
+					<input type="hidden" id="sort" value="asc">
+					<table class="table table-striped" id="tbl">
+						<thead style="background-color: #03a9f4;">
+							<tr>
+								<th>No</th>
+								<th>Question</th>
+
+								<th>Category</th>
+
+								<th>Difficulty Level</th>
+
+								<th>Updated On</th>
+
+								<th>Update</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tbody>
+
+							<c:forEach items="${qs}" var="question" varStatus="loop">
+								<tr>
+
+									<td>${loop.count}</td>
 
 
+									<td><c:out value="${question.questionText}"></c:out></td>
 
+									<td>${question.category}</td>
+									<td><c:out value="${question.difficultyLevel.level}"></c:out></td>
+									<td><c:out value="${question.updatedDate}"></c:out></td>
+									<td><a href="addQuestion?qid=${question.id}">Click </a></td>
+									<td><a href="javascript:confirm('${question.id}')">Click </a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+
+					</table>
 				</div>
-				<!-- /.container -->
-		</section>
+
+			</div>
+		</div>
+		<!-- /.row -->
 
 
 
-		<footer class="footer footer-four">
-				<div class="secondary-footer brand-bg darken-2 text-center">
-						<div class="container">
-								<ul>
-										<li><a href="javascript:void(0)">Dashboard</a></li>
-										<li><a href="question_list">Question Bank</a></li>
-										<li><a href="testlist">Tests</a></li>
-										<li><a href="javascript:void(0)">Skills</a></li>
-										<li><a href="showReports">Results</a></li>
-										<li><a href="codingSessions">Code Analysis Reports</a></li>
-										<li><a href="javascript:void(0)">Skill based Reports</a></li>
-										<li><a href="showProfileParams">Recomm Setting</a></li>
-										<li><a href="listUsers">Users</a></li>
-								</ul>
-						</div>
-				</div>
-		</footer>
+		</div>
+		<!-- /.container -->
+	</section>
+
+
+
+	<footer class="footer footer-four">
+		<div class="secondary-footer brand-bg darken-2 text-center">
+			<div class="container">
+				<ul>
+					<li><a href="javascript:void(0)">Dashboard</a></li>
+					<li><a href="question_list">Question Bank</a></li>
+					<li><a href="testlist">Tests</a></li>
+					<li><a href="javascript:void(0)">Skills</a></li>
+					<li><a href="showReports">Results</a></li>
+					<li><a href="codingSessions">Code Analysis Reports</a></li>
+					<li><a href="javascript:void(0)">Skill based Reports</a></li>
+					<li><a href="showProfileParams">Recomm Setting</a></li>
+					<li><a href="listUsers">Users</a></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
 
 
 
 
 
-		<!-- jQuery -->
+	<!-- jQuery -->
 
-		<spring:url value="/resources/assets/js/jquery-2.1.3.min.js" var="mainJs1" />
-		<script src="${mainJs1}"></script>
-		<spring:url value="/resources/assets/bootstrap/js/bootstrap.min.js" var="mainJs2" />
-		<script src="${mainJs2}"></script>
-		<spring:url value="/resources/assets/materialize/js/materialize.min.js" var="mainJs3" />
-		<script src="${mainJs3}"></script>
-		<spring:url value="/resources/assets/js/menuzord.js" var="mainJs4" />
-		<script src="${mainJs4}"></script>
-		<spring:url value="/resources/assets/js/bootstrap-tabcollapse.min.js" var="mainJs5" />
-		<script src="${mainJs5}"></script>
-		<spring:url value="/resources/assets/js/jquery.easing.min.js" var="mainJs6" />
-		<script src="${mainJs6}"></script>
-		<spring:url value="/resources/assets/js/jquery.sticky.min.js" var="mainJs7" />
-		<script src="${mainJs7}"></script>
-		<spring:url value="/resources/assets/js/smoothscroll.min.js" var="mainJs8" />
-		<script src="${mainJs8}"></script>
-		<spring:url value="/resources/assets/js/jquery.stellar.min.js" var="mainJs9" />
-		<script src="${mainJs9}"></script>
-		<spring:url value="/resources/assets/js/jquery.inview.min.js" var="mainJs10" />
-		<script src="${mainJs10}"></script>
-		<spring:url value="/resources/assets/owl.carousel/owl.carousel.min.js" var="mainJs11" />
-		<script src="${mainJs11}"></script>
-		<spring:url value="/resources/assets/flexSlider/jquery.flexslider-min.js" var="mainJs12" />
-		<script src="${mainJs12}"></script>
-		<spring:url value="/resources/assets/magnific-popup/jquery.magnific-popup.min.js" var="mainJs13" />
-		<script src="${mainJs13}"></script>
-		<spring:url value="https://maps.googleapis.com/maps/api/js" var="mainJs14" />
-		<script src="${mainJs14}"></script>
-		<spring:url value="/resources/assets/js/scripts.js" var="mainJs15" />
-		<script src="${mainJs15}"></script>
-		<spring:url value="/resources/assets/scripts/custom.js" var="mainJs16" />
-		<script src="${mainJs16}"></script>
-		<spring:url value="/resources/assets/scripts/pnotify.custom.min.js" var="mainJs17" />
-		<script src="${mainJs17}"></script>
+	<script src="./resources/assets/js/jquery-2.1.3.min.js"></script>
+	<script src="./resources/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="./resources/assets/materialize/js/materialize.min.js"></script>
+	<script src="./resources/assets/js/menuzord.js"></script>
+	<script src="./resources/assets/js/bootstrap-tabcollapse.min.js"></script>
+	<script src="./resources/assets/js/jquery.easing.min.js"></script>
+	<script src="./resources/assets/js/jquery.sticky.min.js"></script>
+	<script src="./resources/assets/js/smoothscroll.min.js"></script>
+	<script src="./resources/assets/js/jquery.stellar.min.js"></script>
+	<script src="./resources/assets/js/jquery.inview.min.js"></script>
+	<script src="./resources/assets/owl.carousel/owl.carousel.min.js"></script>
+	<script src="./resources/assets/flexSlider/jquery.flexslider-min.js"></script>
+	<script src="./resources/assets/magnific-popup/jquery.magnific-popup.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="./resources/assets/js/scripts.js"></script>
+	<script src="./resources/assets/scripts/custom.js"></script>
+	<script src="./resources/assets/scripts/pnotify.custom.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="./resources/Multi Select/bootstrap-multiselect.js"></script>
 
-		<script>
-			/* off-canvas sidebar toggle */
-			$('[data-toggle=offcanvas]').click(
-					function() {
-						$('.row-offcanvas').toggleClass('active');
-						$('.collapse').toggleClass('in').toggleClass(
-								'hidden-xs').toggleClass('visible-xs');
-					});
+	<script>
+		/* off-canvas sidebar toggle */
+		$('[data-toggle=offcanvas]').click(
+				function() {
+					$('.row-offcanvas').toggleClass('active');
+					$('.collapse').toggleClass('in').toggleClass('hidden-xs')
+							.toggleClass('visible-xs');
+				});
 
-			$('#search').on('click', function() {
-				var text = document.getElementById("searchText").value;
-				if (text.length != 0) {
-					window.location = "searchQuestions?searchText=" + text;
-				}
-			});
-
-			var isXlsx = function(name) {
-				return name.match(/xlsx$/i)
-			};
-
-			$("#btnfile").click(function() {
-				$("#uploadfile").click();
-			});
-
-			function showFileDialog() {
-				$("#fileQuestions	").click();
+		$('#search').on('click', function() {
+			var text = document.getElementById("searchText").value;
+			if (text.length != 0) {
+				window.location = "searchQuestions?searchText=" + text;
 			}
+		});
 
-			$(document)
-					.ready(
-							function() {
+		var isXlsx = function(name) {
+			return name.match(/xlsx$/i)
+		};
 
-								var file = $('[name="fileQuestions"]');
-								var imgContainer = $('#imgContainer');
+		$("#btnfile").click(function() {
+			$("#uploadfile").click();
+		});
 
-								$('#uploadLink').on('click', function() {
-									// $("#file").click();
+		function showFileDialog() {
+			$("#fileQuestions	").click();
+		}
 
-								});
+		$(document)
+				.ready(
+						function() {
+							document.getElementById("dd").style.display = "block";
+							document.getElementById("dd2").style.display = "block";
+							document.getElementById("dd3").style.display = "block";
+							var file = $('[name="fileQuestions"]');
+							var imgContainer = $('#imgContainer');
 
-								var fileU = document
-										.getElementById('fileQuestions');
-								fileU
-										.addEventListener(
-												"change",
-												function() {
-													if (fileU.files.length > 0) {
-														var filename = $
-																.trim(file
-																		.val());
-														if (!(isXlsx(filename))) {
-															notify('Error',
-																	'Please select an xlsx file to upload');
-															return;
-														}
-														$
-																.ajax(
-																		{
-																			xhr : function() {
-																				var xhr = new window.XMLHttpRequest();
-																				return xhr;
-																			},
-																			url : 'upload',
-																			type : "POST",
-																			data : new FormData(
-																					document
-																							.getElementById("fileFormQuestions")),
-																			enctype : 'multipart/form-data',
-																			processData : false,
-																			contentType : false
-																		})
-																.done(
-																		function(
-																				data) {
-																			notify(
-																					'Success',
-																					'File Upload Successful');
-
-																		})
-																.fail(
-																		function(
-																				jqXHR,
-																				textStatus) {
-																			notify(
-																					'Failure',
-																					'File Upload Failed. Please contact Administrator');
-																		});
-														document
-																.getElementById('fileQuestions').value = null;
-														return;
-													}
-
-												});
+							$('#uploadLink').on('click', function() {
+								// $("#file").click();
 
 							});
 
-			function notify(messageType, message) {
-				var notification = 'Information';
-				$(function() {
-					new PNotify({
-						title : notification,
-						text : message,
-						type : messageType,
-						styling : 'bootstrap3',
-						hide : true
-					});
-				});
-			}
+							var fileU = document
+									.getElementById('fileQuestions');
+							fileU
+									.addEventListener(
+											"change",
+											function() {
+												if (fileU.files.length > 0) {
+													var filename = $.trim(file
+															.val());
+													if (!(isXlsx(filename))) {
+														notify('Error',
+																'Please select an xlsx file to upload');
+														return;
+													}
+													$
+															.ajax(
+																	{
+																		xhr : function() {
+																			var xhr = new window.XMLHttpRequest();
+																			return xhr;
+																		},
+																		url : 'upload',
+																		type : "POST",
+																		data : new FormData(
+																				document
+																						.getElementById("fileFormQuestions")),
+																		enctype : 'multipart/form-data',
+																		processData : false,
+																		contentType : false
+																	})
+															.done(
+																	function(
+																			data) {
+																		notify(
+																				'Success',
+																				'File Upload Successful');
 
-			function confirm(id) {
-				(new PNotify(
-						{
-							title : 'Confirmation Needed',
-							text : 'Are you sure? Do you really want to delete this Q?',
-							icon : 'glyphicon glyphicon-question-sign',
-							hide : false,
-							confirm : {
-								confirm : true
-							},
-							buttons : {
-								closer : false,
-								sticker : false
-							},
-							history : {
-								history : false
-							}
-						})).get().on('pnotify.confirm', function() {
-					window.location = "removeQuestionFromList?qid=" + id;
-				}).on('pnotify.cancel', function() {
+																	})
+															.fail(
+																	function(
+																			jqXHR,
+																			textStatus) {
+																		notify(
+																				'Failure',
+																				'File Upload Failed. Please contact Administrator');
+																	});
+													document
+															.getElementById('fileQuestions').value = null;
+													return;
+												}
 
-				});
-			}
-		</script>
+											});
 
-
-		<c:if test="${msgtype != null}">
-				<script>
-					var notification = 'Information';
-					$(function() {
-						new PNotify({
-							title : notification,
-							text : '${message}',
-							type : '${msgtype}',
-							styling : 'bootstrap3',
-							hide : true
 						});
-					});
-				</script>
-		</c:if>
+
+		function notify(messageType, message) {
+			var notification = 'Information';
+			$(function() {
+				new PNotify({
+					title : notification,
+					text : message,
+					type : messageType,
+					styling : 'bootstrap3',
+					hide : true
+				});
+			});
+		}
+
+		function confirm(id) {
+			(new PNotify({
+				title : 'Confirmation Needed',
+				text : 'Are you sure? Do you really want to delete this Q?',
+				icon : 'glyphicon glyphicon-question-sign',
+				hide : false,
+				confirm : {
+					confirm : true
+				},
+				buttons : {
+					closer : false,
+					sticker : false
+				},
+				history : {
+					history : false
+				}
+			})).get().on('pnotify.confirm', function() {
+				window.location = "removeQuestionFromList?qid=" + id;
+			}).on('pnotify.cancel', function() {
+
+			});
+		}
+	</script>
+
+
+	<c:if test="${msgtype != null}">
+		<script>
+			var notification = 'Information';
+			$(function() {
+				new PNotify({
+					title : notification,
+					text : '${message}',
+					type : '${msgtype}',
+					styling : 'bootstrap3',
+					hide : true
+				});
+			});
+		</script>
+	</c:if>
 </body>
 
 </html>

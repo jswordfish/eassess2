@@ -15,12 +15,20 @@
 		<li><a href="skills"><img src="images/test_icon.png" alt="logo"> <span class="collapse in hidden-xs">Skills</span></a></li>
 		<li><a href="showClusters"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Cluster Management</span></a></li>
 		<li><a href="showAllResultsforMFA"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Multi File Tests Results</span></a></li>
+		
+		 <li><a href="domainReport"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Domain based Results</span></a></li>
+		 <li><a href="modules"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Modules Management</span></a></li>
+		 
+		 <li><a href="licenses"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">License Management</span></a></li>
+		 
 	    <li><a href="showReports"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Results</span></a></li>
 		 
 	    <li><a href="codingSessions"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Code Analysis Reports</span></a></li>
 		<li><a href="showSkillTags"><img src="images/results_icon.png" alt="logo"> <span class="collapse in hidden-xs">Skill based Reports</span></a></li>
 		<li><a href="showProfileParams"><img src="images/dashboard_icon.png" alt="logo"> <span class="collapse in hidden-xs">Recomm Setting</span></a></li>
 		<li><a href="listTestLinks"><img src="images/dashboard_icon.png" alt="logo"> <span class="collapse in hidden-xs">Test Links Management</span></a></li>
+		
+		<li><a href="lmsAdmins"><img src="images/dashboard_icon.png" alt="logo"> <span class="collapse in hidden-xs">LMS Admin Users</span></a></li>
 		
 		<li><a href="showjobDescriptions"><img src="images/dashboard_icon.png" alt="logo"> <span class="collapse in hidden-xs">Job description Management</span></a></li>
 		

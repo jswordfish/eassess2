@@ -7,10 +7,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,7 +19,10 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,18 +34,19 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.assessment.Exceptions.AssessmentGenericException;
+import com.assessment.common.CommonUtil;
 import com.assessment.common.ExcelReader;
 import com.assessment.common.PropertyConfig;
 import com.assessment.common.util.EmailGenericMessageThread;
 import com.assessment.data.Company;
 import com.assessment.data.Skill;
 import com.assessment.data.SkillLevel;
-import com.assessment.data.Tenant;
 import com.assessment.data.User;
 import com.assessment.data.UserNonCompliance;
 import com.assessment.data.UserTestSession;
 import com.assessment.data.UserType;
 import com.assessment.services.CompanyService;
+import com.assessment.services.LicenseService;
 import com.assessment.services.SkillService;
 import com.assessment.services.TenantService;
 import com.assessment.services.TestService;
@@ -82,6 +83,9 @@ public class UserController {
 	@Autowired
 	SkillService skillService;
 
+	@Autowired
+	LicenseService licenseService;
+
 	private static String LOCAL_BASE_URL = "http://localhost/";
 
 	Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -89,8 +93,7 @@ public class UserController {
 	// private static String REMOTE_BASE_URL="http://13.59.126.83/";
 
 	@RequestMapping(value = "/uploadUsers", method = RequestMethod.POST)
-	public void uploadUsers(HttpServletResponse response, MultipartHttpServletRequest request)
-			throws Exception {
+	public void uploadUsers(HttpServletResponse response, MultipartHttpServletRequest request) throws Exception {
 		try {
 			// System.out.println("in uploadUsers entering");
 			MultipartFile multipartFile = request.getFile("fileFromUserForm");
@@ -185,8 +188,8 @@ public class UserController {
 
 	@RequestMapping(value = "/setUpTenant", method = RequestMethod.GET)
 	public void setUpTenant(@RequestParam String tenantEmailId, @RequestParam String tenantId,
-			@RequestParam String companyName, String adminPassword,
-			HttpServletResponse response, HttpServletRequest request) throws Exception {
+			@RequestParam String companyName, String adminPassword, HttpServletResponse response,
+			HttpServletRequest request) throws Exception {
 		RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
 		List<String> list = bean.getInputArguments();
 		boolean local = false;
@@ -209,8 +212,8 @@ public class UserController {
 		 */
 		String password = "Welcome@123";
 		dataSourceRoot.getConnection().createStatement().execute("create schema " + tenantId);
-		dataSourceRoot.getConnection().createStatement().execute("create user 'User_" + tenantId
-				+ "'@'%' IDENTIFIED BY '" + password + "'");
+		dataSourceRoot.getConnection().createStatement().execute(
+				"create user 'User_" + tenantId + "'@'%' IDENTIFIED BY '" + password + "'");
 		dataSourceRoot.getConnection().createStatement().execute("grant all privileges on " + tenantId
 				+ ".* to 'User_" + tenantId + "'@'%'");
 
@@ -228,8 +231,7 @@ public class UserController {
 		if (local) {
 			configData = configData.replace("${BASE_URL}", LOCAL_BASE_URL);
 		} else {
-			configData = configData.replace("${BASE_URL}",
-					propertyConfig.getRemoteBaseUrl());
+			configData = configData.replace("${BASE_URL}", propertyConfig.getRemoteBaseUrl());
 		}
 		configData = configData.replace("${TENANT}", tenantId);
 		configData = configData.replace("${TENANT_SCREENSHOT_LOCATION}",
@@ -244,8 +246,9 @@ public class UserController {
 		 * Step 3 - Copy the base war file folder (assessment) into Tomcat's webapps
 		 * folder
 		 */
-		FileUtils.copyDirectory(new File(propertyConfig.getDefaultReferenceConfigFileLocation()
-				+ File.separator + "assessment"),
+		FileUtils.copyDirectory(
+				new File(propertyConfig.getDefaultReferenceConfigFileLocation()
+						+ File.separator + "assessment"),
 				new File(propertyConfig.getTomcatDeployLocation() + File.separator
 						+ tenantId));
 
@@ -253,9 +256,9 @@ public class UserController {
 		 * Step 4 - Change the appContext file of copied war folder to correspond to
 		 * tenant specific values
 		 */
-		String appContextFileLoc = propertyConfig.getTomcatDeployLocation() + File.separator
-				+ tenantId + File.separator + "WEB-INF" + File.separator + "classes"
-				+ File.separator + "appContext.xml";
+		String appContextFileLoc = propertyConfig.getTomcatDeployLocation() + File.separator + tenantId
+				+ File.separator + "WEB-INF" + File.separator + "classes" + File.separator
+				+ "appContext.xml";
 		String contents = FileUtils.readFileToString(new File(appContextFileLoc));
 		contents = contents.replace("${CONFIG_LOCATION}", op + File.separator + "config.properties");
 		String jdbcUrl = "";
@@ -266,8 +269,7 @@ public class UserController {
 		}
 		String user = "User_" + tenantId;
 		// String password = "password";
-		contents = contents.replace("${TEST_LINK_LOCATION}",
-				op + File.separator + "sendTestLink.html");
+		contents = contents.replace("${TEST_LINK_LOCATION}", op + File.separator + "sendTestLink.html");
 		contents = contents.replace("${RESULT_LINK_LOCATION}",
 				op + File.separator + "sendTestResultInfo.html");
 		contents = contents.replace("${JDBC_URL}", jdbcUrl);
@@ -275,8 +277,8 @@ public class UserController {
 		contents = contents.replace("${PASSWORD}", password);
 		FileUtils.write(new File(appContextFileLoc), contents, false);
 		String logFile = propertyConfig.getTomcatDeployLocation() + File.separator + tenantId
-				+ File.separator + "WEB-INF" + File.separator + "classes"
-				+ File.separator + "log4j.properties";
+				+ File.separator + "WEB-INF" + File.separator + "classes" + File.separator
+				+ "log4j.properties";
 		String logContents = FileUtils.readFileToString(new File(logFile));
 		logContents = logContents.replace("${LOG_FILE}", tenantId);
 		FileUtils.write(new File(logFile), logContents, false);
@@ -284,29 +286,24 @@ public class UserController {
 		String pwd = URLEncoder.encode(Base64.getEncoder().encodeToString(adminPassword.getBytes()));
 		if (local) {
 			message = "Hello \n\n Please go to https://localhost:8443/" + tenantId
-					+ "/init?companyId=" + tenantId + "&companyName="
-					+ companyName + "&tenantEmailId=" + tenantEmailId
-					+ "&pwd=" + pwd + "\n"
+					+ "/init?companyId=" + tenantId + "&companyName=" + companyName
+					+ "&tenantEmailId=" + tenantEmailId + "&pwd=" + pwd + "\n"
 					+ "After clicking on above link you can access your instance of Assessment platform by using following - \n<br>"
-					+ "Web Link - https://localhost:8443/" + tenantId
-					+ "\n<br>" + "User - " + tenantEmailId + "\n<br>"
-					+ "Password - " + adminPassword + "\n<br>"
-					+ "Company - " + companyName + "\n\n\n<br><br><br>"
-					+ "Thanks and Regards\n<br>"
+					+ "Web Link - https://localhost:8443/" + tenantId + "\n<br>"
+					+ "User - " + tenantEmailId + "\n<br>" + "Password - "
+					+ adminPassword + "\n<br>" + "Company - " + companyName
+					+ "\n\n\n<br><br><br>" + "Thanks and Regards\n<br>"
 					+ "System Admin - Yaksha\n<br>" + "IIHT";
 		} else {
 
-			message = "Hello \n\n Please go to "
-					+ (propertyConfig.getRemoteBaseUrl() + tenantId)
-					+ "/init?companyId=" + tenantId + "&companyName="
-					+ companyName + "&tenantEmailId=" + tenantEmailId
-					+ "&pwd=" + pwd + "\n"
+			message = "Hello \n\n Please go to " + (propertyConfig.getRemoteBaseUrl() + tenantId)
+					+ "/init?companyId=" + tenantId + "&companyName=" + companyName
+					+ "&tenantEmailId=" + tenantEmailId + "&pwd=" + pwd + "\n"
 					+ "After clicking on above link you can access your instance of Assessment platform by using following - \n<br>"
-					+ "Web Link - " + propertyConfig.getRemoteBaseUrl()
-					+ tenantId + "\n<br>" + "User - " + tenantEmailId
-					+ "\n<br>" + "Password - " + adminPassword + "\n<br>"
-					+ "Company - " + companyName + "\n\n\n<br><br><br>"
-					+ "Thanks and Regards\n<br>"
+					+ "Web Link - " + propertyConfig.getRemoteBaseUrl() + tenantId
+					+ "\n<br>" + "User - " + tenantEmailId + "\n<br>" + "Password - "
+					+ adminPassword + "\n<br>" + "Company - " + companyName
+					+ "\n\n\n<br><br><br>" + "Thanks and Regards\n<br>"
 					+ "System Admin - Yaksha\n<br>" + "IIHT";
 		}
 
@@ -426,8 +423,7 @@ public class UserController {
 		String email = properties.getProperty("user");
 		String testName = properties.getProperty("testName");
 		String companyId = properties.getProperty("companyId");
-		UserTestSession session = userTestSessionService.findUserTestSession(email, testName,
-				companyId);
+		UserTestSession session = userTestSessionService.findUserTestSession(email, testName, companyId);
 		userNonComplianceService.increment(email, testName, companyId, null);
 //		    	if(session == null) {
 //		    		userNonComplianceService.increment(email, testName, companyId, null);
@@ -492,6 +488,61 @@ public class UserController {
 		mav.addObject("usr", usr);
 		List<User> users = userService.findByCompany(user.getCompanyId());
 		mav.addObject("users", users);
+		return mav;
+	}
+
+	@RequestMapping(value = "/lmsAdmins", method = RequestMethod.GET)
+	public ModelAndView lmsAdmins(@RequestParam(name = "page", required = false) Integer pageNumber,
+			HttpServletResponse response, HttpServletRequest request, ModelMap modelMap)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		if (pageNumber == null) {
+			pageNumber = 0;
+		}
+
+		Page<User> users = userService.findUsersByTypeAndCompany(user.getCompanyId(),
+				UserType.LMS_ADMIN.getType(), PageRequest.of(pageNumber, 15));
+		ModelAndView mav = new ModelAndView("lmsAdmins");
+		mav.addObject("users", users.getContent());
+		CommonUtil.setCommonAttributesOfPagination(users, modelMap, pageNumber, "lmsAdmins", null);
+		return mav;
+	}
+
+	@RequestMapping(value = "/addlmsadmin", method = RequestMethod.GET)
+	public ModelAndView addlmsadmin(@RequestParam(name = "userId", required = false) Long userId,
+			HttpServletResponse response, HttpServletRequest request) throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		List<String> licenses = licenseService.getLicensesInString(user.getCompanyId());
+		ModelAndView mav = new ModelAndView("addlmsadmin");
+		User usr = null;
+		if (userId == null) {
+			usr = new User();
+		} else {
+			usr = userService.findById(userId);
+		}
+
+		usr.setCompanyId(user.getCompanyId());
+		usr.setCompanyName(user.getCompanyName());
+		mav.addObject("usr", usr);
+		mav.addObject("licenses", licenses);
+		return mav;
+	}
+
+	@RequestMapping(value = "/savelmsadmin", method = RequestMethod.POST)
+	public ModelAndView savelmsadmin(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("usr") User usr, ModelMap modelMap) {
+		User user = (User) request.getSession().getAttribute("user");
+		usr.setCompanyId(user.getCompanyId());
+		usr.setCompanyName(user.getCompanyName());
+		usr.setUserType(UserType.LMS_ADMIN);
+		userService.saveOrUpdate(usr);
+		Page<User> users = userService.findUsersByTypeAndCompany(user.getCompanyId(),
+				UserType.LMS_ADMIN.getType(), PageRequest.of(0, 15));
+		ModelAndView mav = new ModelAndView("lmsAdmins");
+		mav.addObject("users", users.getContent());
+		mav.addObject("message", "Lms Admin " + usr.getEmail() + " Saved");// later put it as label
+		mav.addObject("msgtype", "Information");
+		CommonUtil.setCommonAttributesOfPagination(users, modelMap, 0, "lmsAdmins", null);
 		return mav;
 	}
 }

@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Question List</title>
+<title>Links</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
@@ -25,28 +25,17 @@
 <link href="./resources/assets/img/ico/favicon.png" rel="shortcut icon" />
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,900" rel="stylesheet"
 		type="text/css" />
-<!-- Material Icons CSS -->
 <link href="./resources/assets/fonts/iconfont/material-icons.css" rel="stylesheet" type="text/css" />
-<!-- FontAwesome CSS -->
 <link href="./resources/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<!-- magnific-popup -->
 <link href="./resources/assets/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
-<!-- owl.carousel -->
 <link href="./resources/assets/owl.carousel/assets/owl.carousel.css" rel="stylesheet" type="text/css" />
 <link href="./resources/assets/owl.carousel/assets/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
-<!-- flexslider -->
 <link href="./resources/assets/flexSlider/flexslider.css" rel="stylesheet" type="text/css" />
-<!-- materialize -->
 <link href="./resources/assets/materialize/css/materialize.min.css" rel="stylesheet" type="text/css" />
-<!-- Bootstrap -->
 <link href="./resources/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<!-- shortcodes -->
 <link href="./resources/assets/css/shortcodes/shortcodes.css" rel="stylesheet" type="text/css" />
-<!-- Style CSS -->
 <link href="./resources/assets/style.css" rel="stylesheet" type="text/css" />
-<!-- RS5.0 Main Stylesheet -->
 <link href="./resources/assets/revolution/css/settings.css" rel="stylesheet" type="text/css" />
-<!-- RS5.0 Layers and Navigation Styles -->
 <link href="./resources/assets/revolution/css/layers.css" rel="stylesheet" type="text/css" />
 <link href="./resources/assets/revolution/css/navigation.css" rel="stylesheet" type="text/css" />
 <link href="./resources/assets/css/pnotify.custom.min.css" rel="stylesheet" type="text/css" />
@@ -61,25 +50,42 @@
 			<div class="container">
 				<div id="materialize-menu" class="menuzord">
 					<!--logo start-->
-					<a href="javascript:void(0);" class="logo-brand"> <img
-						class="retina"
-						src="<%=request.getContextPath()%>/resources/assets/images/Logo.png"
-						alt="" />
+					<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
+						src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
 					</a>
 					<!--logo end-->
 					<!--mega menu start-->
 					<ul class="menuzord-menu pull-right">
 						<li><a
 							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
-						<li class="active"><a href="question_list">Question Bank</a></li>
-						<li><a href="testlist">Tests</a></li>
+						<li><a href="question_list">Question Bank</a></li>
+						<li class="dropdown active" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
 						<li><a href="skills">Skills</a></li>
-						<li><a href="showReports">Results</a></li>
-						<li><a href="codingSessions">Code Analysis Reports</a></li>
-						<li><a href="showSkillTags">Skill based Reports</a></li>
 						<li><a href="showProfileParams">Recomm Setting</a></li>
-						<li><a href="listUsers">Users</a></li>
-<!-- 						<a href="/AssesmentApp/OnetPage">Assessment Profiler</a> -->
+						<li class="dropdown" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
 					</ul>
 					<!--mega menu end-->
 				</div>
@@ -247,6 +253,13 @@
 
  
 <script>
+
+			$(document).ready(function() {
+				document.getElementById("dd").style.display = "block";
+				document.getElementById("dd2").style.display = "block";
+				document.getElementById("dd3").style.display = "block";
+			});
+			
 function confirmDelete(id) {
 	//id = btoa(id);
    (new PNotify({

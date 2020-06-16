@@ -3,7 +3,8 @@ package com.assessment.services;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.assessment.data.User;
 
@@ -27,4 +28,5 @@ public interface UserService {
 	
 	public List<String> getAllTenantSchemas() throws SQLException;
 
+	Page<User> findUsersByTypeAndCompany( String companyId, String userType, Pageable pageable);
 }

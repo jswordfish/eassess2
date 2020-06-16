@@ -1,5 +1,8 @@
 package com.assessment.data;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -80,6 +83,15 @@ public class User extends Base{
 	String transientPassword;
 	
 	String otp;
+	
+	/**
+	 * comma separated
+	 */
+	@Column(length=5000)
+	String licenses;
+	
+	@Transient
+	List<String> lic;
 	
 	
 	public String getDepartment() {
@@ -305,7 +317,33 @@ public class User extends Base{
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
+	public String getLicenses() {
+		return licenses;
+	}
+	public void setLicenses(String licenses) {
+		this.licenses = licenses;
+	}
 	
+	
+	public List<String> getLic() {
+		if(getLicenses() != null && getLicenses().trim().length() > 0){
+			String[] elements = getLicenses().split(",");
+				for(String s: elements){
+					s = s.trim();
+				}
+			List<String> fixedLenghtList = Arrays.asList(elements);
+			return fixedLenghtList;
+		}
+	return lic;
+	}
+	
+	public void setLic(List<String> lics) {
+		this.lic = lics;
+			if(lics != null && lics.size() != 0){
+				 String string = String.join(",", lics);  
+				 setLicenses(string);
+			}
+	}
 	
 
 }

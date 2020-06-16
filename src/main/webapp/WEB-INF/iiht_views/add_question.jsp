@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Question List</title>
+<title>Add Question</title>
 <spring:url value="/resources/assets/img/ico/favicon.png" var="c1" />
 
 <link href="${c1}" rel="shortcut icon" />
@@ -139,10 +139,8 @@
 			<div class="container">
 				<div id="materialize-menu" class="menuzord">
 					<!--logo start-->
-					<a href="javascript:void(0);" class="logo-brand"> <img
-						class="retina"
-						src="<%=request.getContextPath()%>/resources/images/Logo.png"
-						alt="" />
+					<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
+						src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
 					</a>
 					<!--logo end-->
 					<!--mega menu start-->
@@ -150,13 +148,33 @@
 						<li><a
 							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
 						<li class="active"><a href="question_list">Question Bank</a></li>
-						<li><a href="testlist">Tests</a></li>
+						<li class="dropdown" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
 						<li><a href="skills">Skills</a></li>
-						<li><a href="showReports">Results</a></li>
-						<li><a href="codingSessions">Code Analysis Reports</a></li>
-						<li><a href="showSkillTags">Skill based Reports</a></li>
 						<li><a href="showProfileParams">Recomm Setting</a></li>
-						<li><a href="listUsers">Users</a></li>
+						<li class="dropdown" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
 					</ul>
 					<!--mega menu end-->
 				</div>
@@ -679,6 +697,10 @@
 
 	<script>
 		$(document).ready(function() {
+			document.getElementById("dd").style.display = "block";
+			document.getElementById("dd2").style.display = "block";
+			document.getElementById("dd3").style.display = "block";
+
 			$('select').material_select();
 			var qtype = '${question.type}';
 			changeQType(qtype);

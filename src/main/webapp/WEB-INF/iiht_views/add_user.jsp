@@ -105,13 +105,33 @@
 						<li><a
 							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
 						<li><a href="question_list">Question Bank</a></li>
-						<li><a href="testlist">Tests</a></li>
+						<li class="dropdown" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
 						<li><a href="skills">Skills</a></li>
-						<li><a href="showReports">Results</a></li>
-						<li><a href="codingSessions">Code Analysis Reports</a></li>
-						<li><a href="showSkillTags">Skill based Reports</a></li>
 						<li><a href="showProfileParams">Recomm Setting</a></li>
-						<li class="active"><a href="listUsers">Users</a></li>
+						<li class="dropdown active" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
 					</ul>
 					<!--mega menu end-->
 				</div>
@@ -334,6 +354,10 @@
 
 		$(document)
 				.ready(
+						document.getElementById("dd").style.display = "block";
+						document.getElementById("dd2").style.display = "block";
+						document.getElementById("dd3").style.display = "block";
+					
 						function() {
 
 							var file = $('[name="fileFromUserForm"]');

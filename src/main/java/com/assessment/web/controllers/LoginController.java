@@ -89,6 +89,8 @@ public class LoginController {
 	@Autowired
 	TestLinkTimeRepository linkTimeRepository;
 
+//	@Autowired
+//	LMSAdminController lmsAdminController;
 	private final String prefixURL = "iiht_html";
 
 	@RequestMapping(value = "/hackathon", method = RequestMethod.GET)
@@ -136,7 +138,8 @@ public class LoginController {
 				return mav;
 			}
 			ModelAndView mav = new ModelAndView("question_list");
-			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(), 0);
+			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(),
+					0);
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
 			// request.getSession().setAttribute("questions", questions);
@@ -209,7 +212,8 @@ public class LoginController {
 		Boolean dontCheckTimeValidity = false;
 		try {
 			TestLinkTime linkTime = linkTimeRepository.findUniquetestLink(companyId, url);
-			dontCheckTimeValidity = (linkTime == null ? false : linkTime.getDontCheckTimeValidity());
+			dontCheckTimeValidity = (linkTime == null ? false
+					: linkTime.getDontCheckTimeValidity());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			// e1.printStackTrace();
@@ -227,7 +231,8 @@ public class LoginController {
 				Boolean inactive = false;
 				if (start > now) {
 					message = "Link is not yet active. It will be activated at "
-							+ dateFormat.format(sDate) + ". Try later.";
+							+ dateFormat.format(sDate)
+							+ ". Try later.";
 					inactive = true;
 				}
 				if (now > end) {
@@ -295,8 +300,8 @@ public class LoginController {
 		/**
 		 * Step 1 - figure out if the user has taken a test.
 		 */
-		UserTestSession session = testSessionRepository.findByPrimaryKey(testUserData.getUser().getEmail(),
-				test.getTestName(), test.getCompanyId());
+		UserTestSession session = testSessionRepository.findByPrimaryKey(
+				testUserData.getUser().getEmail(), test.getTestName(), test.getCompanyId());
 		String userNameNew = "";
 		if (session == null) {
 			userNameNew = testUserData.getUser().getEmail();
@@ -347,12 +352,12 @@ public class LoginController {
 		}
 		// String url =
 		// "redirect:/startTestSession2?userId="+userId+"&companyId="+companyId+"&testId="+test.getId()+append+"&sharedDirect=yes&startDate="+URLEncoder.encode(Base64.getEncoder().encodeToString(testUserData.getStartTime().getBytes()))+"&endDate="+URLEncoder.encode(Base64.getEncoder().encodeToString(testUserData.getEndTime().getBytes()));
-		String url = "redirect:/startTestSession?userId=" + userId + "&companyId=" + companyId + "&testId="
-				+ test.getId() + append + "&sharedDirect=yes&startDate="
-				+ URLEncoder.encode(Base64.getEncoder()
-						.encodeToString(testUserData.getStartTime().getBytes()))
-				+ "&endDate=" + URLEncoder.encode(Base64.getEncoder()
-						.encodeToString(testUserData.getEndTime().getBytes()));
+		String url = "redirect:/startTestSession?userId=" + userId + "&companyId=" + companyId
+				+ "&testId=" + test.getId() + append + "&sharedDirect=yes&startDate="
+				+ URLEncoder.encode(Base64.getEncoder().encodeToString(
+						testUserData.getStartTime().getBytes()))
+				+ "&endDate=" + URLEncoder.encode(Base64.getEncoder().encodeToString(
+						testUserData.getEndTime().getBytes()));
 
 		ModelAndView mav = new ModelAndView(url);
 		return mav;
@@ -378,8 +383,8 @@ public class LoginController {
 		String stack = (String) request.getSession().getAttribute("errorStack");
 		if (stack != null) {
 			EmailGenericMessageThread client = new EmailGenericMessageThread(
-					"jatin.sutaria@thev2technologies.com", "Error in Assessment Platform",
-					stack, propertyConfig);
+					"jatin.sutaria@thev2technologies.com",
+					"Error in Assessment Platform", stack, propertyConfig);
 			Thread th = new Thread(client);
 			th.start();
 		}
@@ -421,7 +426,8 @@ public class LoginController {
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
 			List<QuestionMapperInstance> instances = qminService
-					.findFullStackQuestionMapperInstancesForJava(user.getCompanyId());
+					.findFullStackQuestionMapperInstancesForJava(
+							user.getCompanyId());
 			for (QuestionMapperInstance ins : instances) {
 				User u = userService.findByPrimaryKey(ins.getUser(), user.getCompanyId());
 				ins.setUerFullName(u.getFirstName() + " " + u.getLastName());
@@ -442,7 +448,8 @@ public class LoginController {
 			}
 			// Page<Question> questions =
 			// questionService.findQuestionsByPage(user.getCompanyId(), 0);
-			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(), 0);
+			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(),
+					0);
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
 			// request.getSession().setAttribute("questions", questions);
@@ -453,6 +460,12 @@ public class LoginController {
 			CommonUtil.setCommonAttributesOfPagination(questions, mav.getModelMap(), 0,
 					"question_list", null);
 			return mav;
+		} else if (user.getUserType().getType().equals(UserType.LMS_ADMIN.getType())) {
+			mav = new ModelAndView("user_profile_index");
+			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("companyId", user.getCompanyId());
+			return mav;
+//			return lmsAdminController.gotolmsAdminDashboard(user.getEmail(), request, response);
 		} else {
 			// student or learner
 			request.getSession().setAttribute("user", user);
@@ -488,13 +501,13 @@ public class LoginController {
 		 * Send Email
 		 */
 		String message = "Hello,\n\n<br><br>" + "To appear for the test (" + userOtp.getTestName()
-				+ ") - use following OTP - \n<br>\n<br>" + "<b><h3>OTP - " + userOtp2.getOtp()
-				+ "</h3></b>\n<br><br>" + "Thanks and Regards\n<br>"
+				+ ") - use following OTP - \n<br>\n<br>" + "<b><h3>OTP - "
+				+ userOtp2.getOtp() + "</h3></b>\n<br><br>" + "Thanks and Regards\n<br>"
 				+ "System Admin - Yaksha\n<br>" + "IIHT";
 
 		EmailGenericMessageThread runnable = new EmailGenericMessageThread(userOtp.getUser(),
-				"YAKSHA - Use this to appear for the test - " + userOtp.getTestName(), message,
-				propertyConfig);
+				"YAKSHA - Use this to appear for the test - " + userOtp.getTestName(),
+				message, propertyConfig);
 		Thread th = new Thread(runnable);
 		th.start();
 		return "success";

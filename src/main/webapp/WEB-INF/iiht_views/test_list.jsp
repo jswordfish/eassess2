@@ -2,8 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="false"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.assessment.data.*, java.text.*, java.util.*"%>
 <jsp:useBean id="random" class="java.util.Random" scope="application" />
 <html lang="en">
@@ -16,40 +15,31 @@
 
 <link href="${c1}" rel="shortcut icon" />
 
-<spring:url
-	value="https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,900"
-	var="c2" />
+<spring:url value="https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,900" var="c2" />
 
 <link href="${c2}" rel="stylesheet" type="text/css" />
 
 <!-- Material Icons CSS -->
-<spring:url value="/resources/assets/fonts/iconfont/material-icons.css"
-	var="c3" />
+<spring:url value="/resources/assets/fonts/iconfont/material-icons.css" var="c3" />
 
 <link href="${c3}" rel="stylesheet" type="text/css" />
 
 <!-- FontAwesome CSS -->
-<spring:url
-	value="/resources/assets/fonts/font-awesome/css/font-awesome.min.css"
-	var="c4" />
+<spring:url value="/resources/assets/fonts/font-awesome/css/font-awesome.min.css" var="c4" />
 
 <link href="${c4}" rel="stylesheet" type="text/css" />
 
 <!-- magnific-popup -->
-<spring:url value="/resources/assets/magnific-popup/magnific-popup.css"
-	var="c5" />
+<spring:url value="/resources/assets/magnific-popup/magnific-popup.css" var="c5" />
 
 <link href="${c5}" rel="stylesheet" type="text/css" />
 
 <!-- owl.carousel -->
-<spring:url
-	value="/resources/assets/owl.carousel/assets/owl.carousel.css" var="c6" />
+<spring:url value="/resources/assets/owl.carousel/assets/owl.carousel.css" var="c6" />
 
 <link href="${c6}" rel="stylesheet" type="text/css" />
 
-<spring:url
-	value="/resources/assets/owl.carousel/assets/owl.theme.default.min.css"
-	var="c7" />
+<spring:url value="/resources/assets/owl.carousel/assets/owl.theme.default.min.css" var="c7" />
 
 <link href="${c7}" rel="stylesheet" type="text/css" />
 <!-- flexslider -->
@@ -58,20 +48,17 @@
 <link href="${c8}" rel="stylesheet" type="text/css" />
 
 <!-- materialize -->
-<spring:url
-	value="/resources/assets/materialize/css/materialize.min.css" var="c9" />
+<spring:url value="/resources/assets/materialize/css/materialize.min.css" var="c9" />
 
 <link href="${c9}" rel="stylesheet" type="text/css" />
 
 <!-- Bootstrap -->
-<spring:url value="/resources/assets/bootstrap/css/bootstrap.min.css"
-	var="c10" />
+<spring:url value="/resources/assets/bootstrap/css/bootstrap.min.css" var="c10" />
 
 <link href="${c10}" rel="stylesheet" type="text/css" />
 
 <!-- shortcodes -->
-<spring:url value="/resources/assets/css/shortcodes/shortcodes.css"
-	var="c11" />
+<spring:url value="/resources/assets/css/shortcodes/shortcodes.css" var="c11" />
 
 <link href="${c11}" rel="stylesheet" type="text/css" />
 
@@ -81,36 +68,23 @@
 <link href="${c12}" rel="stylesheet" type="text/css" />
 
 <!-- RS5.0 Main Stylesheet -->
-<spring:url value="/resources/assets/revolution/css/settings.css"
-	var="c13" />
+<spring:url value="/resources/assets/revolution/css/settings.css" var="c13" />
 
 <link href="${c13}" rel="stylesheet" type="text/css" />
 
 <!-- RS5.0 Layers and Navigation Styles -->
-<spring:url value="/resources/assets/revolution/css/layers.css"
-	var="c14" />
+<spring:url value="/resources/assets/revolution/css/layers.css" var="c14" />
 
 <link href="${c14}" rel="stylesheet" type="text/css" />
-<spring:url value="/resources/assets/revolution/css/navigation.css"
-	var="c15" />
+<spring:url value="/resources/assets/revolution/css/navigation.css" var="c15" />
 
 <link href="${c15}" rel="stylesheet" type="text/css" />
-<spring:url value="/resources/assets/css/pnotify.custom.min.css"
-	var="c16" />
+<spring:url value="/resources/assets/css/pnotify.custom.min.css" var="c16" />
 
 <link href="${c16}" rel="stylesheet" type="text/css" />
 <script src="./resources/scripts/jquery.min.js" type="text/javascript"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	$(document).ready(function() {
-		 var date = new Date();
-		    date.setDate(date.getDate() +2);
-		$("#txt2Date").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
-		$("#txt2Date2").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
-	});
-</script>
 </head>
 
 <body id="top" class="has-header-search">
@@ -121,10 +95,8 @@
 			<div class="container">
 				<div id="materialize-menu" class="menuzord">
 					<!--logo start-->
-					<a href="javascript:void(0);" class="logo-brand"> <img
-						class="retina"
-						src="<%=request.getContextPath()%>/resources/images/Logo.png"
-						alt="" />
+					<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
+						src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
 					</a>
 					<!--logo end-->
 					<!--mega menu start-->
@@ -132,13 +104,33 @@
 						<li><a
 							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
 						<li><a href="question_list">Question Bank</a></li>
-						<li class="active"><a href="testlist">Tests</a></li>
+						<li class="dropdown active" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
 						<li><a href="skills">Skills</a></li>
-						<li><a href="showReports">Results</a></li>
-						<li><a href="codingSessions">Code Analysis Reports</a></li>
-						<li><a href="showSkillTags">Skill based Reports</a></li>
 						<li><a href="showProfileParams">Recomm Setting</a></li>
-						<li><a href="listUsers">Users</a></li>
+						<li class="dropdown" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
 					</ul>
 					<!--mega menu end-->
 				</div>
@@ -160,8 +152,8 @@
 					<div class="col-md-2">
 						<a
 							href="javascript:notify('Information', 'Feature to upload Tests coming soon. Right now we have capability to upload Users and Questions.');"
-							class="btn waves-effect waves-light col-md-12"><i
-							class="material-icons fa fa-upload"></i> Import</a>
+							class="btn waves-effect waves-light col-md-12"><i class="material-icons fa fa-upload"></i>
+							Import</a>
 					</div>
 					<div class="col-md-2">
 						<a href="signoff" class="btn waves-effect waves-light col-md-12"><i
@@ -173,8 +165,7 @@
 					<div class="col-md-12">
 						<div class="pagination" style="float: right;">
 							<c:if test="${showPreviousPage}">
-								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i
-									class="fa fa-arrow-left"></i></a>
+								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
 							</c:if>
 
 							<c:if test="${selectedPage != null &&  selectedPage > 0}">
@@ -182,8 +173,7 @@
                                 </c:if>
 
 							<c:if test="${showNextPage}">
-								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i
-									class="fa fa-arrow-right"></i></a>
+								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
 							</c:if>
 						</div>
 					</div>
@@ -201,8 +191,7 @@
 
 							<div class="search-form">
 								<form action="searchTests" method="get">
-									<input type="text" placeholder="Search a question"
-										name="searchText" id="searchText">
+									<input type="text" placeholder="Search a question" name="searchText" id="searchText">
 									<button type="submit" id="search">
 										<i class="fa fa-search"></i>
 									</button>
@@ -214,13 +203,13 @@
 						<div class="mt-10"></div>
 						<div class="col-md-4"></div>
 						<div class="col-md-4" style="padding-left: 0;">
-							<a href="javascript:notify('Information', 'Feature coming soon')">
-								<i class="fa fa-sort-amount-asc"></i> <span>Sort</span>
+							<a href="javascript:notify('Information', 'Feature coming soon')"> <i
+								class="fa fa-sort-amount-asc"></i> <span>Sort</span>
 							</a>
 						</div>
 						<div class="col-md-4" style="padding: 0;">
-							<a href="javascript:notify('Information', 'Feature coming soon')">
-								<i class="fa fa-filter"></i> <span>Filter</span>
+							<a href="javascript:notify('Information', 'Feature coming soon')"> <i
+								class="fa fa-filter"></i> <span>Filter</span>
 							</a>
 						</div>
 					</div>
@@ -230,8 +219,8 @@
 						<table class="table table-striped">
 							<thead style="background-color: #03a9f4;">
 								<tr>
-									<th><input type="checkbox" id="chkall" name="chkall"
-										class="filled-in" /> <label for="chkall"></label></th>
+									<th><input type="checkbox" id="chkall" name="chkall" class="filled-in" /> <label
+										for="chkall"></label></th>
 									<th class="title">Test Title</th>
 									<th>Category</th>
 									<th>Test Time In Minutes</th>
@@ -248,8 +237,7 @@
 
 								<c:forEach items="${tests}" var="test">
 									<tr>
-										<td><input type="checkbox" class="filled-in" /> <label
-											for="chkall"></label></td>
+										<td><input type="checkbox" class="filled-in" /> <label for="chkall"></label></td>
 
 										<td><c:out value="${test.testName}"></c:out></td>
 										<td>${test.category}</td>
@@ -257,16 +245,14 @@
 										<td>${test.passPercent}</td>
 										<td><c:out value="${test.cDate}"></c:out></td>
 										<td><c:out value="${test.uDate}"></c:out></td>
-										<td><a onClick="confirm(${test.id}); return false;"
-											href="#">Click to Expire</a></td>
-										<td><a href="updateTest?testId=${test.id}">Click to
-												Update</a></td>
-										<td><a href="javascript:void(0);" class="testname"
-											data-name="${test.testName}" data-toggle="modal"
+										<td><a onClick="confirm(${test.id}); return false;" href="#">Click to Expire</a></td>
+										<td><a href="updateTest?testId=${test.id}">Click to Update</a></td>
+										<td><a href="javascript:void(0);" class="testname" data-name="${test.testName}"
+											data-toggle="modal"
 											onClick="javascript:duplicateOpen('${test.testName}', '${test.companyId}')"><i
 												class="fa fa-copy"></i></a></td>
-										<td><a href="javascript:void(0);" class="testname"
-											data-name="${test.testName}" data-toggle="modal"
+										<td><a href="javascript:void(0);" class="testname" data-name="${test.testName}"
+											data-toggle="modal"
 											onClick="javascript:shareOpen('${test.testName}', '${test.publicUrl}', '${test.id}','${random.nextInt()}')"><i
 												class="fa fa-share-alt"></i></a></td>
 									</tr>
@@ -318,15 +304,13 @@
 				</div>
 				<div class="modal-body">
 					<form method="GET" action="duplicateTest">
-						<label>Existing test name</label> <input id="existing_name"
-							value="Sample Test " type="text" disabled /> <label>New
-							Test Name</label> <input id="newTest" type="text" required /> <label>Qualifier
-							1</label> <input id="newQual1" type="text" required /> <label>Qualifier
-							2</label> <input id="newQual2" type="text" />
+						<label>Existing test name</label> <input id="existing_name" value="Sample Test " type="text"
+							disabled /> <label>New Test Name</label> <input id="newTest" type="text" required /> <label>Qualifier
+							1</label> <input id="newQual1" type="text" required /> <label>Qualifier 2</label> <input
+							id="newQual2" type="text" />
 						<div class="buttons text-center" style="padding-top: 20px;">
-							<input type="button" class="waves-effect waves-light btn"
-								value="Duplicate" onClick="javascript:dup()" /> <input
-								class="waves-effect waves-light btn" type="button"
+							<input type="button" class="waves-effect waves-light btn" value="Duplicate"
+								onClick="javascript:dup()" /> <input class="waves-effect waves-light btn" type="button"
 								data-dismiss="modal" value="Cancel" />
 						</div>
 					</form>
@@ -346,85 +330,79 @@
 					<h4 class="modal-title">Share Test</h4>
 				</div>
 				<div class="modal-body">
-				
-				 <div role="tabpanel">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#uploadTab" aria-controls="uploadTab" role="tab" data-toggle="tab">Single Share</a>
 
-                        </li>
-                        <li role="presentation"><a href="#browseTab" aria-controls="browseTab" role="tab" data-toggle="tab">Bulk Share</a>
+					<div role="tabpanel">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#uploadTab" aria-controls="uploadTab"
+								role="tab" data-toggle="tab">Single Share</a></li>
+							<li role="presentation"><a href="#browseTab" aria-controls="browseTab" role="tab"
+								data-toggle="tab">Bulk Share</a></li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="uploadTab">
 
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="uploadTab">
-                        
-                        <form method="POST" action="sharePublicTest" enctype="multipart/form-data">
-						<div>
-							<label>Existing test name</label> <input id="existing_name1"
-								type="text" readonly="readonly" name="existing_name1"/>
-						</div>
-						<div>
-							<label>First Name</label> <input id="firstName" type="text" name="firstName"/>
-						</div>
-						<div>
-							<label>Last name</label> <input id="lastName" type="text" name="lastName"/></a>
-						</div>
-						<div>
-							<label>Email Id</label> <input id="userEmail" type="text" name="userEmail"/>
-						</div>
-						<div>
-							<label>Public Test URL</label> <input id="publicTestUrl"
-								type="text" readonly="readonly" />
-						</div>
-						<div>
-							<label>Expire Date</label> <input id="txt2Date" name="expId"/>
-						</div>
+								<form method="POST" action="sharePublicTest" enctype="multipart/form-data">
+									<div>
+										<label>Existing test name</label> <input id="existing_name1" type="text"
+											readonly="readonly" name="existing_name1" />
+									</div>
+									<div>
+										<label>First Name</label> <input id="firstName" type="text" name="firstName" />
+									</div>
+									<div>
+										<label>Last name</label> <input id="lastName" type="text" name="lastName" /></a>
+									</div>
+									<div>
+										<label>Email Id</label> <input id="userEmail" type="text" name="userEmail" />
+									</div>
+									<div>
+										<label>Public Test URL</label> <input id="publicTestUrl" type="text" readonly="readonly" />
+									</div>
+									<div>
+										<label>Expire Date</label> <input id="txt2Date" name="expId" />
+									</div>
 
-						<input type="hidden" name="testId" id="testId" value="" />
-						<div class="buttons text-center" style="padding-top: 20px;">
-							<input class="waves-effect waves-light btn" type="button"
-								value="Copy in your Clipboard"
-								onClick="javascript:copyUrlInClipBoard()" /> <input
-								class="waves-effect waves-light btn" type="submit" value="Share" /> <input
-								class="waves-effect waves-light btn" type="button" value="Close"
-								data-dismiss="modal" />
-						</div>
-					</form> 
-                        
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="browseTab">
-                        
-                           <form method="POST" action="shareBulkPublicTest" enctype="multipart/form-data">
-						<div>
-							<label>Existing test name</label> <input id="existing_name2"
-								type="text" readonly="readonly" name="existing_name1"/>
-						</div>
-						<div>
-							 <input id="publicTestUrl2"
-								type="hidden" readonly="readonly" />
-						</div>
-						<div><label>Bulk Users</label><input type="file" name="file"></div>
-						<div>
-							<label>Expire Date</label> <input id="txt2Date2" name="expId"/>
-						</div>
+									<input type="hidden" name="testId" id="testId" value="" />
+									<div class="buttons text-center" style="padding-top: 20px;">
+										<input class="waves-effect waves-light btn" type="button" value="Copy in your Clipboard"
+											onClick="javascript:copyUrlInClipBoard()" /> <input class="waves-effect waves-light btn"
+											type="submit" value="Share" /> <input class="waves-effect waves-light btn" type="button"
+											value="Close" data-dismiss="modal" />
+									</div>
+								</form>
 
-						<input type="hidden" name="testId" id="testId2" value="" />
-						<div class="buttons text-center" style="padding-top: 20px;">
-							<input class="waves-effect waves-light btn" type="button"
-								value="Copy in your Clipboard"
-								onClick="javascript:copyUrlInClipBoard()" /> <input
-								class="waves-effect waves-light btn" type="submit" value="Share" /> <input
-								class="waves-effect waves-light btn" type="button" value="Close"
-								data-dismiss="modal" />
+							</div>
+							<div role="tabpanel" class="tab-pane" id="browseTab">
+
+								<form method="POST" action="shareBulkPublicTest" enctype="multipart/form-data">
+									<div>
+										<label>Existing test name</label> <input id="existing_name2" type="text"
+											readonly="readonly" name="existing_name1" />
+									</div>
+									<div>
+										<input id="publicTestUrl2" type="hidden" readonly="readonly" />
+									</div>
+									<div>
+										<label>Bulk Users</label><input type="file" name="file">
+									</div>
+									<div>
+										<label>Expire Date</label> <input id="txt2Date2" name="expId" />
+									</div>
+
+									<input type="hidden" name="testId" id="testId2" value="" />
+									<div class="buttons text-center" style="padding-top: 20px;">
+										<input class="waves-effect waves-light btn" type="button" value="Copy in your Clipboard"
+											onClick="javascript:copyUrlInClipBoard()" /> <input class="waves-effect waves-light btn"
+											type="submit" value="Share" /> <input class="waves-effect waves-light btn" type="button"
+											value="Close" data-dismiss="modal" />
+									</div>
+								</form>
+							</div>
 						</div>
-					</form> 
-                        </div>
-                    </div>
-                </div>
-					 
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -432,57 +410,41 @@
 
 	<!-- jQuery -->
 
-	<%-- 		<spring:url value="/resources/assets/js/jquery-2.1.3.min.js" var="mainJs1" /> --%>
-	<%-- 		<script src="${mainJs1}"></script> --%>
-	<spring:url value="/resources/assets/bootstrap/js/bootstrap.min.js"
-		var="mainJs2" />
-	<script src="${mainJs2}"></script>
-	<spring:url value="/resources/assets/materialize/js/materialize.min.js"
-		var="mainJs3" />
-	<script src="${mainJs3}"></script>
-	<spring:url value="/resources/assets/js/menuzord.js" var="mainJs4" />
-	<script src="${mainJs4}"></script>
-	<spring:url value="/resources/assets/js/bootstrap-tabcollapse.min.js"
-		var="mainJs5" />
-	<script src="${mainJs5}"></script>
-	<spring:url value="/resources/assets/js/jquery.easing.min.js"
-		var="mainJs6" />
-	<script src="${mainJs6}"></script>
-	<spring:url value="/resources/assets/js/jquery.sticky.min.js"
-		var="mainJs7" />
-	<script src="${mainJs7}"></script>
-	<spring:url value="/resources/assets/js/smoothscroll.min.js"
-		var="mainJs8" />
-	<script src="${mainJs8}"></script>
-	<spring:url value="/resources/assets/js/jquery.stellar.min.js"
-		var="mainJs9" />
-	<script src="${mainJs9}"></script>
-	<spring:url value="/resources/assets/js/jquery.inview.min.js"
-		var="mainJs10" />
-	<script src="${mainJs10}"></script>
-	<spring:url value="/resources/assets/owl.carousel/owl.carousel.min.js"
-		var="mainJs11" />
-	<script src="${mainJs11}"></script>
-	<spring:url
-		value="/resources/assets/flexSlider/jquery.flexslider-min.js"
-		var="mainJs12" />
-	<script src="${mainJs12}"></script>
-	<spring:url
-		value="/resources/assets/magnific-popup/jquery.magnific-popup.min.js"
-		var="mainJs13" />
-	<script src="${mainJs13}"></script>
-	<spring:url value="https://maps.googleapis.com/maps/api/js"
-		var="mainJs14" />
-	<script src="${mainJs14}"></script>
-	<spring:url value="/resources/assets/js/scripts.js" var="mainJs15" />
-	<script src="${mainJs15}"></script>
-	<spring:url value="/resources/assets/scripts/custom.js" var="mainJs16" />
-	<script src="${mainJs16}"></script>
-	<spring:url value="/resources/assets/scripts/pnotify.custom.min.js"
-		var="mainJs17" />
-	<script src="${mainJs17}"></script>
+	<script src="./resources/assets/js/jquery-2.1.3.min.js"></script>
+	<script src="./resources/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="./resources/assets/materialize/js/materialize.min.js"></script>
+	<script src="./resources/assets/js/menuzord.js"></script>
+	<script src="./resources/assets/js/bootstrap-tabcollapse.min.js"></script>
+	<script src="./resources/assets/js/jquery.easing.min.js"></script>
+	<script src="./resources/assets/js/jquery.sticky.min.js"></script>
+	<script src="./resources/assets/js/smoothscroll.min.js"></script>
+	<script src="./resources/assets/js/jquery.stellar.min.js"></script>
+	<script src="./resources/assets/js/jquery.inview.min.js"></script>
+	<script src="./resources/assets/owl.carousel/owl.carousel.min.js"></script>
+	<script src="./resources/assets/flexSlider/jquery.flexslider-min.js"></script>
+	<script src="./resources/assets/magnific-popup/jquery.magnific-popup.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="./resources/assets/js/scripts.js"></script>
+	<script src="./resources/assets/scripts/custom.js"></script>
+	<script src="./resources/assets/scripts/pnotify.custom.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="./resources/Multi Select/bootstrap-multiselect.js"></script>
 
 	<script>
+
+	$(document).ready(function() {
+		document.getElementById("dd").style.display = "block";
+		document.getElementById("dd2").style.display = "block";
+		document.getElementById("dd3").style.display = "block";
+
+		 var date = new Date();
+		    date.setDate(date.getDate() +2);
+		$("#txt2Date").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
+		$("#txt2Date2").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
+	});
+	
         function dup() {
             var existing_name = document.getElementById("existing_name").value;
             var newTest = document.getElementById("newTest").value;

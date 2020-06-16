@@ -550,72 +550,147 @@ body * {
 														<ul>
 															<li
 																style="${currentQuestion.questionMapperInstance.questionMapper.question.choice1 == null || 
-
-			currentQuestion.questionMapperInstance.questionMapper.question.choice1.trim().length() == 0? 'display: none;':'clear:left; font-size: 14px;'}">
-																<%-- 																																<form:checkbox path="one" label="" /> --%>
-																<!-- 																																																																																																<input id="one1_1" name="one" type="checkbox" value="true"> -->
-																<%-- 																																<label><form:checkbox path="one" label=""/></label> --%>
+					
+								currentQuestion.questionMapperInstance.questionMapper.question.choice1.trim().length() == 0? 'display: none;':'clear:left; font-size: 17px;'}">
+															<%
+															QuestionInstanceDto currentQuestion = (QuestionInstanceDto) request.getAttribute("currentQuestion");
+															System.out.println(currentQuestion.getQuestionMapperInstance().getQuestionMapper().getQuestion().getRightChoices());
+												int cc = currentQuestion.getQuestionMapperInstance().getQuestionMapper().getQuestion().getRightChoices().split("-").length;
+														if(cc == 1){
+															System.out.println(" cc is "+cc);
+															%>
+																<form:radiobutton path="radioAnswer" id="one" value="one" />
+																
+					<label for="one" style="font-size: 15px; font-weight: normal; color: #0d0d0d">${currentQuestion.questionMapperInstance.questionMapper.question.choice1}</label>
+																<%
+														}
+														else {
+																%>
+																
 																<label for="one1_1"
 																style="font-size: 15px; font-weight: normal; color: #0d0d0d">
 																	<form:checkbox path="one" label="" id="one1_1" />
 																	${currentQuestion.questionMapperInstance.questionMapper.question.choice1}
-															</label> <input type="hidden" name="_one_1" value="on">
+															</label> 
+																
+																<%
+														}
+																%>
 															</li>
 															<li
 																style="${currentQuestion.questionMapperInstance.questionMapper.question.choice2 == null || 
-
-			currentQuestion.questionMapperInstance.questionMapper.question.choice2.trim().length() == 0? 'display: none;':'clear:left;font-size: 14px;'}">
-																<%-- 																																<form:checkbox path="two" />  --%>
-																<!-- 																																																																<input id="two1_1" name="two" type="checkbox" value="true"> -->
+					
+								currentQuestion.questionMapperInstance.questionMapper.question.choice2.trim().length() == 0? 'display: none;':'clear:left;font-size: 17px;'}">
+															<%
+															if(cc == 1){
+															%>
+															<form:radiobutton  id="two" path="radioAnswer" value="two" />
+					<label for="two"  style="font-size: 15px; font-weight: normal; color: #0d0d0d">${currentQuestion.questionMapperInstance.questionMapper.question.choice2}</label>
+															<%
+															}
+															else {
+															%>
+															
 																<label for="two1_1"
 																style="font-size: 15px; font-weight: normal; color: #0d0d0d">
 																	<form:checkbox path="two" label="" id="two1_1" />
 																	${currentQuestion.questionMapperInstance.questionMapper.question.choice2}
 															</label>
+															<%
+															}
+															%>
 															</li>
 															<li
 																style="${currentQuestion.questionMapperInstance.questionMapper.question.choice3 == null || 
-
-			currentQuestion.questionMapperInstance.questionMapper.question.choice3.trim().length() == 0? 'display: none;':'clear:left;font-size: 14px;'}">
-																<!-- 																																																																<input id="three1_1" name="three" type="checkbox" value="true"> -->
-																<%-- 																																																																<form:checkbox path="three" /> --%>
+					
+								currentQuestion.questionMapperInstance.questionMapper.question.choice3.trim().length() == 0? 'display: none;':'clear:left;font-size: 17px;'}">
+															<%
+															if(cc == 1){
+															%>
+															<form:radiobutton path="radioAnswer" value="three" id="three" />
+					<label for="three" style="font-size: 15px; font-weight: normal; color: #0d0d0d">${currentQuestion.questionMapperInstance.questionMapper.question.choice3}</label>
+															<%
+															}
+															else {
+															%>
+															
 																<label for="three1_1"
 																style="font-size: 15px; font-weight: normal; color: #0d0d0d">
 																	<form:checkbox path="three" label="" id="three1_1" />
 																	${currentQuestion.questionMapperInstance.questionMapper.question.choice3}
 															</label>
+															<%
+															}
+															%>
 															</li>
-
+					
 															<li
 																style="${currentQuestion.questionMapperInstance.questionMapper.question.choice4 == null || 
-
-			currentQuestion.questionMapperInstance.questionMapper.question.choice4.trim().length() == 0? 'display: none;':'clear:left;font-size: 14px;'}">
-																<%-- 																																<form:checkbox path="four" /> --%>
-																<!-- 																																																																<input id="four1_1" name="four" type="checkbox" value="true"> -->
+					
+								currentQuestion.questionMapperInstance.questionMapper.question.choice4.trim().length() == 0? 'display: none;':'clear:left;font-size: 17px;'}">
+															<%
+															if(cc == 1){
+															%>
+															<form:radiobutton path="radioAnswer" value="four" id="four" />
+					<label for="four" style="font-size: 15px; font-weight: normal; color: #0d0d0d">${currentQuestion.questionMapperInstance.questionMapper.question.choice4}</label>
+															<%
+															}
+															else {
+															%>
+															
 																<label for="four1_1"
 																style="font-size: 15px; font-weight: normal; color: #0d0d0d">
 																	<form:checkbox path="four" label="" id="four1_1" />
 																	${currentQuestion.questionMapperInstance.questionMapper.question.choice4}
 															</label>
+															<%
+															}
+															%>
 															</li>
 															<li
 																style="${currentQuestion.questionMapperInstance.questionMapper.question.choice5 == null || 
-
-			currentQuestion.questionMapperInstance.questionMapper.question.choice5.trim().length() == 0? 'display: none;':'clear:left;font-size: 14px;'}">
+					
+								currentQuestion.questionMapperInstance.questionMapper.question.choice5.trim().length() == 0? 'display: none;':'clear:left;font-size: 17px;'}">
+															<%
+															if(cc == 1){
+															%>
+															<form:radiobutton path="radioAnswer" value="five" id="five"/>
+					<label for="five" style="font-size: 15px; font-weight: normal; color: #0d0d0d">${currentQuestion.questionMapperInstance.questionMapper.question.choice5}</label>
+															<%
+															}
+															else {
+															%>
+															
 																<label for="five1_1"
 																style="font-size: 15px; font-weight: normal; color: #0d0d0d"><form:checkbox
 																		path="five" label="" id="five1_1" />
 																	${currentQuestion.questionMapperInstance.questionMapper.question.choice5}</label>
+															<%
+															}
+															%>
 															</li>
 															<li
 																style="${currentQuestion.questionMapperInstance.questionMapper.question.choice6 == null || 
-
-			currentQuestion.questionMapperInstance.questionMapper.question.choice6.trim().length() == 0? 'display: none;':'clear:left;font-size: 14px;'}">
+					
+								currentQuestion.questionMapperInstance.questionMapper.question.choice6.trim().length() == 0? 'display: none;':'clear:left;font-size: 17px;'}">
+															<%
+															if(cc == 1){
+															%>
+															<form:radiobutton path="radioAnswer" value="six" id="six"/>
+					<label for="six" style="font-size: 15px; font-weight: normal; color: #0d0d0d">${currentQuestion.questionMapperInstance.questionMapper.question.choice6}</label>
+															<%
+															}
+															else {
+															%>
+															
 																<label for="six1_1"
 																style="font-size: 15px; font-weight: normal; color: #0d0d0d">
 																	<form:checkbox path="six" label=" " id="six1_1" />
 																	${currentQuestion.questionMapperInstance.questionMapper.question.choice6}
 															</label>
+															<%
+															}
+															%>
 															</li>
 														</ul>
 													</div>
@@ -793,9 +868,9 @@ body * {
 								QuestionInstanceDto currentQuestion = (QuestionInstanceDto) request.getAttribute("currentQuestion");
 								System.out.println("fill in the blanks "+currentQuestion.getFillInBlanks().size());
 								%>
-	<c:forEach varStatus="s" items="${currentQuestion.fillInBlanks}">
-		<form:input  path="fillInBlanks[${s.index}]" placeholder="Fill the Blank" style="color:red;size:20"  class="no-outline" />
-	</c:forEach>
+								<c:forEach varStatus="s" items="${currentQuestion.fillInBlanks}">
+									<form:input  path="fillInBlanks[${s.index}]" placeholder="Fill the Blank" style="color:red;size:20"  class="no-outline" />
+								</c:forEach>
 								
 								</div>
 							</div>

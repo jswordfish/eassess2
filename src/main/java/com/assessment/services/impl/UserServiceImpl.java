@@ -18,17 +18,17 @@ import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.assessment.common.AssessmentGenericException;
 import com.assessment.data.Company;
-import com.assessment.data.Tenant;
 import com.assessment.data.User;
+import com.assessment.data.UserType;
 import com.assessment.repositories.UserRepository;
 import com.assessment.services.CompanyService;
-import com.assessment.services.TenantService;
 import com.assessment.services.UserService;
 @Service
 @Transactional
@@ -167,5 +167,9 @@ public class UserServiceImpl implements UserService{
 	public List<User> searchUsers(String companyId, String text){
 		return userRepository.searchQuestions(companyId, text);
 	}
-
+	@Override
+	public Page<User> findUsersByTypeAndCompany(String companyId, String userType, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return userRepository.findUsersByTypeAndCompany(companyId, UserType.valueOf(userType), pageable);
+	}
 }

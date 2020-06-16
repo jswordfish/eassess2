@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Question List</title>
+<title>Schedule</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
@@ -56,34 +56,52 @@
 
 		<!--header start-->
 		<header id="header" class="tt-nav nav-border-bottom">
-				<div class="header-sticky light-header ">
-						<div class="container">
-								<div id="materialize-menu" class="menuzord">
-										<!--logo start-->
-										<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
-												src="<%=request.getContextPath()%>/resources/assets/images/Logo.png" alt="" />
-										</a>
-										<!--logo end-->
-										<!--mega menu start-->
-										<ul class="menuzord-menu pull-right">
-												<li><a
-														href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
-												<li class="active"><a href="question_list">Question Bank</a></li>
-												<li><a href="testlist">Tests</a></li>
-												<li><a href="skills">Skills</a></li>
-												<li><a href="showReports">Results</a></li>
-												<li><a href="codingSessions">Code Analysis Reports</a></li>
-												<li><a href="showSkillTags">Skill based Reports</a></li>
-												<li><a href="showProfileParams">Recomm Setting</a></li>
-												<li><a href="listTestLinks">Test Links</a></li>
-												<li><a href="listUsers">Users</a></li>
-												<!-- 						<a href="/AssesmentApp/OnetPage">Assessment Profiler</a> -->
-										</ul>
-										<!--mega menu end-->
-								</div>
-						</div>
+		<div class="header-sticky light-header ">
+			<div class="container">
+				<div id="materialize-menu" class="menuzord">
+					<!--logo start-->
+					<a href="javascript:void(0);" class="logo-brand"> <img class="retina"
+						src="<%=request.getContextPath()%>/resources/images/Logo.png" alt="" />
+					</a>
+					<!--logo end-->
+					<!--mega menu start-->
+					<ul class="menuzord-menu pull-right">
+						<li><a
+							href="javascript:notify('Information', 'We will release the feature pretty soon! Please wait for our next release');">Dashboard</a></li>
+						<li><a href="question_list">Question Bank</a></li>
+						<li class="dropdown active" id="dd"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Tests
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="testlist">All Tests</a></li>
+								<li><a href="listTestLinks">Test Link Management</a></li>
+								<li><a href="showAllSchedules">Test Schedule</a></li>
+							</ul></li>
+						<li><a href="modules">Module</a></li>
+						<li><a href="licenses">License</a></li>
+						<li class="dropdown" id="dd2"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Report
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="showReports">Results</a></li>
+								<li><a href="codingSessions">Code Reports</a></li>
+								<li><a href="showSkillTags">Skill Reports</a></li>
+							</ul></li>
+						<li><a href="skills">Skills</a></li>
+						<li><a href="showProfileParams">Recomm Setting</a></li>
+						<li class="dropdown" id="dd3"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users
+								<b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="listUsers">All Users</a></li>
+								<li><a href="lmsAdmins">LMS Admin Users</a></li>
+							</ul></li>
+					</ul>
+					<!--mega menu end-->
 				</div>
-		</header>
+			</div>
+		</div>
+	</header>
 		<!--header end-->
 
 
@@ -239,7 +257,16 @@
 		<script
 				src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
+<script>
+$(document).ready(function() {
+	document.getElementById("dd").style.display = "block";
+	document.getElementById("dd2").style.display = "block";
+	document.getElementById("dd3").style.display = "block";
 
+	$('.slct').material_select();
+	$('#example-multiple-selected').multiselect();
+});
+</script>
 
 		<c:if test="${msgtype != null}">
 				<script>
