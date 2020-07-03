@@ -4,38 +4,43 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
-public class ModuleItem extends Base{
-	
-	
-	@ManyToOne (cascade = CascadeType.ALL) 
-	@JoinColumn (name = "PARENTID", nullable = false) 
+public class ModuleItem extends Base {
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PARENTID", nullable = false)
 	private Module parentModule;
-	
+
 	String itemName;
-	
+
 	String testName;
-	
+
 	String testDescription;
-	
-	Boolean mandatory= false;
-	
+
+	Boolean mandatory = false;
+
 	String imageUrl;
-	
+
 	String videoUrl;
-	
+
 	Integer itemLevelWeight;
-	
+
 	String externalImageUrl;
-	
+
 	String externalVideoUrl;
-	
-	public ModuleItem(){
-		
+
+	@Transient
+	String userSpecificLink;
+
+	public ModuleItem() {
+
 	}
-	
-	public ModuleItem(Module parentModule, String itemName, String testName, String testDescription, Boolean mandatory, String imageUrl, String videoUrl, Integer itemLevelWeight, String externalImageUrl,  String externalVideoUrl){
+
+	public ModuleItem(Module parentModule, String itemName, String testName, String testDescription,
+			Boolean mandatory, String imageUrl, String videoUrl, Integer itemLevelWeight,
+			String externalImageUrl, String externalVideoUrl) {
 		this.parentModule = parentModule;
 		this.itemName = itemName;
 		this.testName = testName;
@@ -47,8 +52,6 @@ public class ModuleItem extends Base{
 		this.externalImageUrl = externalImageUrl;
 		this.externalVideoUrl = externalVideoUrl;
 	}
-
-
 
 	public String getItemName() {
 		return itemName;
@@ -129,21 +132,30 @@ public class ModuleItem extends Base{
 	public void setExternalVideoUrl(String externalVideoUrl) {
 		this.externalVideoUrl = externalVideoUrl;
 	}
-	
+
 	@Override
-	public int hashCode(){
-		return getId() == null?(getItemName()==null?"-1":getItemName()).hashCode():getId().hashCode();
+	public int hashCode() {
+		return getId() == null ? (getItemName() == null ? "-1" : getItemName()).hashCode()
+				: getId().hashCode();
 	}
-	
+
 	@Override
-	public boolean equals(Object obj){
-		if(!(obj instanceof ModuleItem)){
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ModuleItem)) {
 			return false;
 		}
-		
+
 		ModuleItem moduleItem = (ModuleItem) obj;
-		Long idtemp = getId() != null?getId():getItemName().hashCode();
+		Long idtemp = getId() != null ? getId() : getItemName().hashCode();
 		return this.hashCode() == moduleItem.hashCode();
+	}
+
+	public String getUserSpecificLink() {
+		return userSpecificLink;
+	}
+
+	public void setUserSpecificLink(String userSpecificLink) {
+		this.userSpecificLink = userSpecificLink;
 	}
 
 }

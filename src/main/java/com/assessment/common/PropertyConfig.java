@@ -51,6 +51,21 @@ public class PropertyConfig {
 	
 	String reportFilesLocation;
 	
+	String modulesImageLocation;
+	
+	String modulesVideoLocation;
+	
+	String moduleItemsImageLocation;
+	
+	String moduleItemsVideoLocation;
+	
+	String sendCredentialsToStudent;
+	
+	String shareModuleoStudent;
+	
+	
+	String sendTestResultInfoSubjective;
+	
 	public String getFullStackWorkspaceFolder() {
 		return fullStackWorkspaceFolder;
 	}
@@ -72,6 +87,12 @@ public class PropertyConfig {
 	
 	
 	String fullStackWorkspaceFolder;
+	
+	String imageQuestionFolder;
+	
+	String videoQuestionFolder;
+	
+	String subjectiveScoring = "no";
 	
 	public String getBaseUrl() {
 		return baseUrl;
@@ -290,6 +311,86 @@ public class PropertyConfig {
 
 	public void setReportFilesLocation(String reportFilesLocation) {
 		this.reportFilesLocation = reportFilesLocation;
+	}
+
+	public String getModulesImageLocation() {
+		return modulesImageLocation;
+	}
+
+	public void setModulesImageLocation(String modulesImageLocation) {
+		this.modulesImageLocation = modulesImageLocation;
+	}
+
+	public String getModulesVideoLocation() {
+		return modulesVideoLocation;
+	}
+
+	public void setModulesVideoLocation(String modulesVideoLocation) {
+		this.modulesVideoLocation = modulesVideoLocation;
+	}
+
+	public String getModuleItemsImageLocation() {
+		return moduleItemsImageLocation;
+	}
+
+	public void setModuleItemsImageLocation(String moduleItemsImageLocation) {
+		this.moduleItemsImageLocation = moduleItemsImageLocation;
+	}
+
+	public String getModuleItemsVideoLocation() {
+		return moduleItemsVideoLocation;
+	}
+
+	public void setModuleItemsVideoLocation(String moduleItemsVideoLocation) {
+		this.moduleItemsVideoLocation = moduleItemsVideoLocation;
+	}
+
+	public String getSendCredentialsToStudent() {
+		return sendCredentialsToStudent;
+	}
+
+	public void setSendCredentialsToStudent(String sendCredentialsToStudent) {
+		this.sendCredentialsToStudent = sendCredentialsToStudent;
+	}
+
+	public String getShareModuleoStudent() {
+		return shareModuleoStudent;
+	}
+
+	public void setShareModuleoStudent(String shareModuleoStudent) {
+		this.shareModuleoStudent = shareModuleoStudent;
+	}
+
+	public String getImageQuestionFolder() {
+		return imageQuestionFolder;
+	}
+
+	public void setImageQuestionFolder(String imageQuestionFolder) {
+		this.imageQuestionFolder = imageQuestionFolder;
+	}
+
+	public String getVideoQuestionFolder() {
+		return videoQuestionFolder;
+	}
+
+	public void setVideoQuestionFolder(String videoQuestionFolder) {
+		this.videoQuestionFolder = videoQuestionFolder;
+	}
+
+	public String getSubjectiveScoring() {
+		return subjectiveScoring;
+	}
+
+	public void setSubjectiveScoring(String subjectiveScoring) {
+		this.subjectiveScoring = subjectiveScoring;
+	}
+
+	public String getSendTestResultInfoSubjective() {
+		return sendTestResultInfoSubjective;
+	}
+
+	public void setSendTestResultInfoSubjective(String sendTestResultInfoSubjective) {
+		this.sendTestResultInfoSubjective = sendTestResultInfoSubjective;
 	}
 
 	

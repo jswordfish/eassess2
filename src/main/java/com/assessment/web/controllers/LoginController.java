@@ -2,8 +2,8 @@ package com.assessment.web.controllers;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,11 @@ import com.assessment.common.SchedulerTask;
 import com.assessment.common.util.EmailGenericMessageThread;
 import com.assessment.data.Company;
 import com.assessment.data.DifficultyLevel;
+import com.assessment.data.LMSAdminDtO;
+import com.assessment.data.LMSUserModuleMapping;
+import com.assessment.data.License;
+import com.assessment.data.Module;
+import com.assessment.data.ModuleItem;
 import com.assessment.data.Question;
 import com.assessment.data.QuestionMapperInstance;
 import com.assessment.data.Test;
@@ -44,11 +50,15 @@ import com.assessment.repositories.TestSchedulerRepository;
 import com.assessment.repositories.UserTestSessionRepository;
 import com.assessment.scheduler.ScheduleTaskService;
 import com.assessment.services.CompanyService;
+import com.assessment.services.LicenseService;
+import com.assessment.services.LmsUserModuleMappingService;
+import com.assessment.services.ModuleService;
 import com.assessment.services.QuestionMapperInstanceService;
 import com.assessment.services.QuestionService;
 import com.assessment.services.TestService;
 import com.assessment.services.UserOtpService;
 import com.assessment.services.UserService;
+import com.assessment.web.dto.ModuleDTO;
 import com.assessment.web.dto.TestUserData;
 
 @Controller
@@ -89,8 +99,21 @@ public class LoginController {
 	@Autowired
 	TestLinkTimeRepository linkTimeRepository;
 
-//	@Autowired
-//	LMSAdminController lmsAdminController;
+	@Autowired
+	LMSAdminController lmsAdminController;
+
+	@Autowired
+	LicenseService licenseService;
+
+	@Autowired
+	LmsUserModuleMappingService mappingService;
+
+	@Autowired
+	ModuleService moduleService;
+	
+	@Autowired
+	UserController userController;
+
 	private final String prefixURL = "iiht_html";
 
 	@RequestMapping(value = "/hackathon", method = RequestMethod.GET)
@@ -111,9 +134,9 @@ public class LoginController {
 			TimeZone timeZone = TimeZone.getTimeZone("Asia/Kolkata");
 			CronTrigger cronTrigger = new CronTrigger(scheduler.getCronExpression(), timeZone);
 			SchedulerTask schedulerTask = new SchedulerTask(scheduler.getTestId(),
-					scheduler.getTestName(), scheduler.getCompanyId(),
-					config.getBaseUrl(), scheduler.getUserEmails(),
-					config.getTestLinkHtml_Generic_Location(), config);
+					scheduler.getTestName(), scheduler.getCompanyId(), config.getBaseUrl(),
+					scheduler.getUserEmails(), config.getTestLinkHtml_Generic_Location(),
+					config);
 			schedulerService.addTaskToScheduler(scheduler.getId().intValue(), schedulerTask,
 					cronTrigger);
 		}
@@ -138,8 +161,7 @@ public class LoginController {
 				return mav;
 			}
 			ModelAndView mav = new ModelAndView("question_list");
-			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(),
-					0);
+			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(), 0);
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
 			// request.getSession().setAttribute("questions", questions);
@@ -147,8 +169,8 @@ public class LoginController {
 			mav = new ModelAndView("question_list");
 			mav.addObject("qs", questions.getContent());
 			mav.addObject("levels", DifficultyLevel.values());
-			CommonUtil.setCommonAttributesOfPagination(questions, mav.getModelMap(), 0,
-					"question_list", null);
+			CommonUtil.setCommonAttributesOfPagination(questions, mav.getModelMap(), 0, "question_list",
+					null);
 			return mav;
 		}
 
@@ -212,8 +234,7 @@ public class LoginController {
 		Boolean dontCheckTimeValidity = false;
 		try {
 			TestLinkTime linkTime = linkTimeRepository.findUniquetestLink(companyId, url);
-			dontCheckTimeValidity = (linkTime == null ? false
-					: linkTime.getDontCheckTimeValidity());
+			dontCheckTimeValidity = (linkTime == null ? false : linkTime.getDontCheckTimeValidity());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			// e1.printStackTrace();
@@ -231,8 +252,7 @@ public class LoginController {
 				Boolean inactive = false;
 				if (start > now) {
 					message = "Link is not yet active. It will be activated at "
-							+ dateFormat.format(sDate)
-							+ ". Try later.";
+							+ dateFormat.format(sDate) + ". Try later.";
 					inactive = true;
 				}
 				if (now > end) {
@@ -300,8 +320,8 @@ public class LoginController {
 		/**
 		 * Step 1 - figure out if the user has taken a test.
 		 */
-		UserTestSession session = testSessionRepository.findByPrimaryKey(
-				testUserData.getUser().getEmail(), test.getTestName(), test.getCompanyId());
+		UserTestSession session = testSessionRepository.findByPrimaryKey(testUserData.getUser().getEmail(),
+				test.getTestName(), test.getCompanyId());
 		String userNameNew = "";
 		if (session == null) {
 			userNameNew = testUserData.getUser().getEmail();
@@ -310,8 +330,8 @@ public class LoginController {
 			 * Step 2 - find out how many sessions for the given test the user has taken
 			 */
 			List<UserTestSession> sessions = testSessionRepository.findByTestNamePart(
-					testUserData.getUser().getEmail() + "[" + test.getId(),
-					test.getTestName(), test.getCompanyId());
+					testUserData.getUser().getEmail() + "[" + test.getId(), test.getTestName(),
+					test.getCompanyId());
 			int noOfConfAttempts = test.getNoOfConfigurableAttempts() == null ? 50
 					: test.getNoOfConfigurableAttempts();
 			if (noOfConfAttempts <= (sessions.size() + 1)) {
@@ -342,8 +362,8 @@ public class LoginController {
 		if (testUserData.getUser() == null) {
 			return showPublicTest(request, response);
 		}
-		String userId = URLEncoder.encode(Base64.getEncoder()
-				.encodeToString(testUserData.getUser().getEmail().getBytes()));
+		String userId = URLEncoder.encode(
+				Base64.getEncoder().encodeToString(testUserData.getUser().getEmail().getBytes()));
 		String companyId = URLEncoder.encode(test.getCompanyId());
 		String inviteSent = (String) request.getSession().getAttribute("inviteSent");
 		String append = "";
@@ -352,12 +372,12 @@ public class LoginController {
 		}
 		// String url =
 		// "redirect:/startTestSession2?userId="+userId+"&companyId="+companyId+"&testId="+test.getId()+append+"&sharedDirect=yes&startDate="+URLEncoder.encode(Base64.getEncoder().encodeToString(testUserData.getStartTime().getBytes()))+"&endDate="+URLEncoder.encode(Base64.getEncoder().encodeToString(testUserData.getEndTime().getBytes()));
-		String url = "redirect:/startTestSession?userId=" + userId + "&companyId=" + companyId
-				+ "&testId=" + test.getId() + append + "&sharedDirect=yes&startDate="
-				+ URLEncoder.encode(Base64.getEncoder().encodeToString(
-						testUserData.getStartTime().getBytes()))
-				+ "&endDate=" + URLEncoder.encode(Base64.getEncoder().encodeToString(
-						testUserData.getEndTime().getBytes()));
+		String url = "redirect:/startTestSession?userId=" + userId + "&companyId=" + companyId + "&testId="
+				+ test.getId() + append + "&sharedDirect=yes&startDate="
+				+ URLEncoder.encode(Base64.getEncoder()
+						.encodeToString(testUserData.getStartTime().getBytes()))
+				+ "&endDate=" + URLEncoder.encode(Base64.getEncoder()
+						.encodeToString(testUserData.getEndTime().getBytes()));
 
 		ModelAndView mav = new ModelAndView(url);
 		return mav;
@@ -383,8 +403,8 @@ public class LoginController {
 		String stack = (String) request.getSession().getAttribute("errorStack");
 		if (stack != null) {
 			EmailGenericMessageThread client = new EmailGenericMessageThread(
-					"jatin.sutaria@thev2technologies.com",
-					"Error in Assessment Platform", stack, propertyConfig);
+					"jatin.sutaria@thev2technologies.com", "Error in Assessment Platform",
+					stack, propertyConfig);
 			Thread th = new Thread(client);
 			th.start();
 		}
@@ -426,8 +446,7 @@ public class LoginController {
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
 			List<QuestionMapperInstance> instances = qminService
-					.findFullStackQuestionMapperInstancesForJava(
-							user.getCompanyId());
+					.findFullStackQuestionMapperInstancesForJava(user.getCompanyId());
 			for (QuestionMapperInstance ins : instances) {
 				User u = userService.findByPrimaryKey(ins.getUser(), user.getCompanyId());
 				ins.setUerFullName(u.getFirstName() + " " + u.getLastName());
@@ -448,8 +467,7 @@ public class LoginController {
 			}
 			// Page<Question> questions =
 			// questionService.findQuestionsByPage(user.getCompanyId(), 0);
-			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(),
-					0);
+			Page<Question> questions = questionService.getAllLevel1Questions(user.getCompanyId(), 0);
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
 			// request.getSession().setAttribute("questions", questions);
@@ -457,21 +475,91 @@ public class LoginController {
 			mav = new ModelAndView("question_list");
 			mav.addObject("qs", questions.getContent());
 			mav.addObject("levels", DifficultyLevel.values());
-			CommonUtil.setCommonAttributesOfPagination(questions, mav.getModelMap(), 0,
-					"question_list", null);
+			CommonUtil.setCommonAttributesOfPagination(questions, mav.getModelMap(), 0, "question_list",
+					null);
 			return mav;
 		} else if (user.getUserType().getType().equals(UserType.LMS_ADMIN.getType())) {
-			mav = new ModelAndView("user_profile_index");
+//			mav = new ModelAndView("user_profile_index");
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("companyId", user.getCompanyId());
+//			List<String> classifiers = userService.findInstituteGradeClassifier(user.getCompanyId(),
+//					user.getCollegeName());
+//			mav.addObject("classifiers", classifiers);
+//			mav.addObject("user", user);
+//			LMSAdminDtO adminDtO = new LMSAdminDtO();
+//			adminDtO.setEmail(user.getEmail());
+//			adminDtO.setClassifier(user.getClassifier());
+//			adminDtO.setGrade(user.getGrade());
+//			adminDtO.setCollegeName(user.getCollegeName());
+//			mav.addObject("adminDto", adminDtO);
+//			String licenses = user.getLicenses();
+//			List<License> lics = new ArrayList<>();
+//			if (licenses != null && licenses.trim().length() > 0) {
+//				String lic[] = licenses.split(",");
+//				for (String l : lic) {
+//					l = l.trim();
+//					License license = licenseService.findByPrimaryKey(l, user.getCompanyId());
+//					lics.add(license);
+//				}
+//			}
+//			mav.addObject("licenses", lics);
+			return userController.showLearnerAdminDashboard(request, response);
+		} else if (user.getUserType().getType().equals(UserType.LMS_STUDENT.getType())) {
+			List<LMSUserModuleMapping> mappings = mappingService
+					.getAllModulesForUser(user.getCompanyId(), user.getEmail());
+			List<ModuleDTO> modules = new ArrayList<ModuleDTO>();
+			for (LMSUserModuleMapping mapping : mappings) {
+				Module module = moduleService.findUniqueModule(mapping.getModuleName(),
+						user.getCompanyId());
+				ModuleDTO moduleDTO = new ModuleDTO();
+				moduleDTO.setModule(module);
+				moduleDTO.setSharedByEmail(
+						mapping.getCreatedBy() == null ? "NA" : mapping.getCreatedBy());
+				User trainer = null;
+				if (mapping.getCreatedBy() != null) {
+					trainer = userService.findByPrimaryKey(mapping.getCreatedBy(),
+							user.getCompanyId());
+					moduleDTO.setSharedByFullName(
+							trainer.getFirstName() + " " + trainer.getLastName());
+				}
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+				Date share = mapping.getUpdateDate() == null ? mapping.getCreateDate()
+						: mapping.getUpdateDate();
+				String dt = dateFormat.format(share);
+				moduleDTO.setSharedDate(dt);
+				moduleDTO.setLearnerEmail(user.getEmail());
+				moduleDTO.setLearnerFullName(user.getFirstName() + " " + user.getLastName());
+				modules.add(moduleDTO);
+				for (ModuleItem item : module.getItems()) {
+					String testName = item.getTestName();
+					Test test = testService.findbyTest(testName, user.getCompanyId());
+					String userTestUrl = getUrlForUser(user.getEmail(), test.getId(),
+							user.getCompanyId());
+					item.setUserSpecificLink(userTestUrl);
+				}
+			}
+			mav = new ModelAndView("user_profile_student_index");
+			mav.addObject("moduledtos", modules);
+			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("companyId", user.getCompanyId());
+
 			return mav;
-//			return lmsAdminController.gotolmsAdminDashboard(user.getEmail(), request, response);
 		} else {
 			// student or learner
 			request.getSession().setAttribute("user", user);
 			return lmsController.goToLearnerDashboard(user.getEmail(), request, response);
 		}
 
+	}
+
+	private String getUrlForUser(String user, Long testId, String companyId) {
+		String userBytes = Base64.getEncoder().encodeToString(user.getBytes());
+
+		String after = "userId=" + URLEncoder.encode(userBytes) + "&testId="
+				+ URLEncoder.encode(testId.toString()) + "&companyId="
+				+ URLEncoder.encode(companyId);
+		String url = propertyConfig.getBaseUrl() + "startTestSession?" + after;
+		return url;
 	}
 
 	@RequestMapping(value = "/addQ", method = RequestMethod.GET)
@@ -501,13 +589,13 @@ public class LoginController {
 		 * Send Email
 		 */
 		String message = "Hello,\n\n<br><br>" + "To appear for the test (" + userOtp.getTestName()
-				+ ") - use following OTP - \n<br>\n<br>" + "<b><h3>OTP - "
-				+ userOtp2.getOtp() + "</h3></b>\n<br><br>" + "Thanks and Regards\n<br>"
-				+ "System Admin - Yaksha\n<br>" + "IIHT";
+				+ ") - use following OTP - \n<br>\n<br>" + "<b><h3>OTP - " + userOtp2.getOtp()
+				+ "</h3></b>\n<br><br>" + "Thanks and Regards\n<br>" + "System Admin - Yaksha\n<br>"
+				+ "IIHT";
 
 		EmailGenericMessageThread runnable = new EmailGenericMessageThread(userOtp.getUser(),
-				"YAKSHA - Use this to appear for the test - " + userOtp.getTestName(),
-				message, propertyConfig);
+				"YAKSHA - Use this to appear for the test - " + userOtp.getTestName(), message,
+				propertyConfig);
 		Thread th = new Thread(runnable);
 		th.start();
 		return "success";
@@ -558,8 +646,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/validateotp", method = RequestMethod.GET)
 	public @ResponseBody String validateotp(@RequestParam String otp, @RequestParam String email,
-			@RequestParam String companyName, HttpServletRequest request,
-			HttpServletResponse response) {
+			@RequestParam String companyName, HttpServletRequest request, HttpServletResponse response) {
 		companyName = companyName.trim();
 		Company company = companyService.findByCompanyName(companyName);
 		if (company == null) {
@@ -579,8 +666,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/savenewpassword", method = RequestMethod.GET)
 	public @ResponseBody String savenewpassword(@RequestParam String password, @RequestParam String email,
-			@RequestParam String companyName, HttpServletRequest request,
-			HttpServletResponse response) {
+			@RequestParam String companyName, HttpServletRequest request, HttpServletResponse response) {
 		companyName = companyName.trim();
 		Company company = companyService.findByCompanyName(companyName);
 		if (company == null) {

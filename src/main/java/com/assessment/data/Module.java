@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Primary key companyId
  * @author jsutaria
@@ -29,6 +31,7 @@ public class Module extends Base{
 	
 	String videoUrl;
 	
+	@JsonIgnore
 	@OneToMany (cascade = {CascadeType.ALL}, mappedBy = "parentModule", orphanRemoval=true, fetch = FetchType.EAGER) 
 	private Set<ModuleItem> items = new HashSet();
 	
@@ -120,6 +123,13 @@ public class Module extends Base{
 				 String string = String.join(",", lics);  
 				 setLicenseNames(string);
 			}
+	}
+
+	@Override
+	public String toString() {
+		return "Module [moduleName=" + moduleName + ", moduleDescription=" + moduleDescription + ", imageUrl="
+				+ imageUrl + ", videoUrl=" + videoUrl + ", items=" + items + ", licenseNames="
+				+ licenseNames + ", lics=" + lics + "]";
 	}
 
 	

@@ -116,19 +116,17 @@
 					<div class="col-md-12">
 						<div class="pagination" style="float: right;" id="pagination">
 
-							 <c:if test="${showPreviousPage}">
-								<a href="question_list?page=${previousPage}${queryParam}"><i
-									class="fa fa-arrow-left"></i></a>
+							<c:if test="${showPreviousPage}">
+								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
 							</c:if>
 
 							<c:if test="${selectedPage != null &&  selectedPage > 0}">
-                                    ${selectedPage} / ${totalNumberOfPages}
-                                </c:if>
+										                                    ${selectedPage} / ${totalNumberOfPages}
+										                                </c:if>
 
 							<c:if test="${showNextPage}">
-								<a href="question_list?page=${nextPage}${queryParam}"><i
-									class="fa fa-arrow-right"></i></a>
-							</c:if> 
+								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
+							</c:if>
 							
 						</div>
 					</div>

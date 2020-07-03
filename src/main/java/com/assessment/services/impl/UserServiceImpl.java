@@ -26,73 +26,71 @@ import org.springframework.transaction.annotation.Transactional;
 import com.assessment.common.AssessmentGenericException;
 import com.assessment.data.Company;
 import com.assessment.data.User;
-import com.assessment.data.UserType;
 import com.assessment.repositories.UserRepository;
 import com.assessment.services.CompanyService;
 import com.assessment.services.UserService;
+import com.assessment.data.UserType;
+
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	CompanyService companyService;
-	
+
 	@Autowired
 	DataSource dataSource;
-	
-	
-	
+
 	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	Validator validator = factory.getValidator();
-	
+
 	Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
+
 	private void validateMandatoryFields(User user) {
 		Set<ConstraintViolation<User>> violations = validator.validate(user);
-		if(violations.size() > 0){
+		if (violations.size() > 0) {
 			throw new AssessmentGenericException("NOT_SUFFICIENT_PARAMS");
 		}
-		
-		
+
 	}
-	
-	public List<String> getAllTenantSchemas() throws SQLException{
+
+	public List<String> getAllTenantSchemas() throws SQLException {
 		String sql = "SHOW DATABASES";
 		List<String> schemas = new ArrayList<>();
 		ResultSet rs = dataSource.getConnection().createStatement().executeQuery(sql);
-			while(rs.next()) {
-					String sc = rs.getString(1);
-				logger.info(sc);
-				logger.debug(sc);
-					if(!(sc.equalsIgnoreCase("assessment") || sc.equalsIgnoreCase("information_schema") || sc.equalsIgnoreCase("mysql") || sc.equalsIgnoreCase("performance_schema") || sc.equalsIgnoreCase("sys"))) {
-						schemas.add(sc);
-						logger.info("in");
-						logger.debug("in");
-					}
+		while (rs.next()) {
+			String sc = rs.getString(1);
+			logger.info(sc);
+			logger.debug(sc);
+			if (!(sc.equalsIgnoreCase("assessment") || sc.equalsIgnoreCase("information_schema")
+					|| sc.equalsIgnoreCase("mysql")
+					|| sc.equalsIgnoreCase("performance_schema")
+					|| sc.equalsIgnoreCase("sys"))) {
+				schemas.add(sc);
+				logger.info("in");
+				logger.debug("in");
 			}
-			
-			return schemas;
+		}
+
+		return schemas;
 	}
-	
-	
-	
+
 	/**
-	 * Returns null if validation false
-	 * Returns User object if validation true
+	 * Returns null if validation false Returns User object if validation true
 	 */
 	public User authenticate(String user, String password, String company) {
 		Company comp = companyService.findByCompanyName(company);
-			if(comp == null) {
-				return null;
-			}
-			
-		User usr = userRepository.findByPrimaryKeyAndPassword(user, password, comp.getCompanyId());
-		if(usr == null) {
+		if (comp == null) {
 			return null;
 		}
-		
+
+		User usr = userRepository.findByPrimaryKeyAndPassword(user, password, comp.getCompanyId());
+		if (usr == null) {
+			return null;
+		}
+
 		return usr;
 	}
 
@@ -101,75 +99,96 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		validateMandatoryFields(user);
 		Company comp = companyService.findByPrimaryKey(user.getCompanyName(), user.getCompanyId());
-		if(comp == null) {
+		if (comp == null) {
 			throw new AssessmentGenericException("NOT_SUFFICIENT_COMPANY_INFO");
 		}
-		if(findByPrimaryKey(user.getEmail(), user.getCompanyId()) == null) {
+		if (findByPrimaryKey(user.getEmail(), user.getCompanyId()) == null) {
 			user.setCreateDate(new Date());
 			userRepository.save(user);
-		}
-		else {
+		} else {
 			throw new AssessmentGenericException("USER_ALREADY_EXISTS");
 		}
 	}
 
 	@Override
 	public void updateUser(User user) {
-		User user2= findByPrimaryKey(user.getEmail(), user.getCompanyId());
-		if( user2 != null) {
+		User user2 = findByPrimaryKey(user.getEmail(), user.getCompanyId());
+		if (user2 != null) {
 			user.setUpdateDate(new Date());
 			user.setId(user2.getId());
 			Mapper mapper = new DozerBeanMapper();
 			mapper.map(user, user2);
 			userRepository.save(user2);
-		}
-		else {
+		} else {
 			throw new AssessmentGenericException("USER_NOT_FOUND");
 		}
-		
+
 	}
 
 	@Override
 	public User findByPrimaryKey(String email, String companyId) {
 		// TODO Auto-generated method stub
 		List<User> usrs = userRepository.findByPrimaryKeyFromList(email, companyId);
-			if(usrs == null || usrs.size() == 0){
-				return null;
-			}
-			
-			return usrs.get(0);
-		//return userRepository.findByPrimaryKey(email, companyId);
+		if (usrs == null || usrs.size() == 0) {
+			return null;
+		}
+
+		return usrs.get(0);
+		// return userRepository.findByPrimaryKey(email, companyId);
 	}
 
 	public synchronized void saveOrUpdate(User user) {
-		User user2= findByPrimaryKey(user.getEmail(), user.getCompanyId());
-		if( user2 != null) {
+		User user2 = findByPrimaryKey(user.getEmail(), user.getCompanyId());
+		if (user2 != null) {
 			user.setUpdateDate(new Date());
 			user.setId(user2.getId());
 			Mapper mapper = new DozerBeanMapper();
 			mapper.map(user, user2);
+			user2.setLic(user.getLic());
 			userRepository.save(user2);
-		}
-		else {
+		} else {
 			user.setCreateDate(new Date());
 			userRepository.save(user);
 		}
 	}
-	
-	public List<User> findByCompany(  String companyId){
+
+	public List<User> findByCompany(String companyId) {
 		return userRepository.findByCompany(companyId);
 	}
-	
+
 	public User findById(Long id) {
 		return userRepository.findById(id).get();
 	}
-	
-	public List<User> searchUsers(String companyId, String text){
+
+	public List<User> searchUsers(String companyId, String text) {
 		return userRepository.searchQuestions(companyId, text);
 	}
+
 	@Override
 	public Page<User> findUsersByTypeAndCompany(String companyId, String userType, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return userRepository.findUsersByTypeAndCompany(companyId, UserType.valueOf(userType), pageable);
 	}
+
+	@Override
+	public List<String> findInstituteGradeClassifier(String companyId, String collegeName) {
+		// TODO Auto-generated method stub
+		return userRepository.findInstituteGradeClassifier(companyId, collegeName);
+	}
+
+	@Override
+	public List<User> findByInstituteGradeClassifier(String companyId, String collegeName, String grade,
+			String classifier) {
+		// TODO Auto-generated method stub
+		return userRepository.findByInstituteGradeClassifier(companyId, collegeName, grade, classifier);
+	}
+
+	@Override
+	public List<String> findEmailByInstituteGradeClassifier(String companyId, String collegeName, String grade,
+			String classifier) {
+		// TODO Auto-generated method stub
+		return userRepository.findEmailByInstituteGradeClassifier(companyId, collegeName, grade,
+				classifier);
+	}
+
 }

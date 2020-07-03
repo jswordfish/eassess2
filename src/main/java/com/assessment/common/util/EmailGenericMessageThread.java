@@ -54,8 +54,10 @@ public class EmailGenericMessageThread implements Runnable {
 
 	FileStatusService fileStatusService;
 
-	static String from1 = "eassess2017@gmail.com";
-	static String pwd1 = "E-assess123";
+//	static String from1 = "eassess2017@gmail.com";
+	static String from1 = "gulfarooqui1@gmail.com";
+	static String pwd1 = "Infinite#7326";
+//	static String pwd1 = "E-assess123";
 
 	private static AtomicInteger successCount = new AtomicInteger(0);
 

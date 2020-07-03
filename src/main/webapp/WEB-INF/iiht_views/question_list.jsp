@@ -18,7 +18,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="css/pnotify.custom.min.css" rel="stylesheet" type="text/css">
+<link href="./resources/assets/css/pnotify.custom.min.css" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/pnotify.custom.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
@@ -423,7 +423,8 @@ div.scrollmenu {
 																		notify(
 																				'Success',
 																				'File Upload Successful');
-
+// 																		setTimeout(function(){}, 3000);																		
+																		location.reload();
 																	})
 															.fail(
 																	function(

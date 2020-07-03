@@ -1,6 +1,7 @@
 package com.assessment.data;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -47,6 +48,25 @@ public class UserTestSession extends Base {
 	String sectionsNoOfQuestionsNotAnswered;
 	
 	Float weightedScorePercentage;
+	
+	Integer noOfNonCompliances = 0;
+	
+	@Transient
+	String style = "";
+	
+	Boolean subjective  = false;
+	
+	Boolean markComplete = false;//a
+	
+	String collegeName;
+	
+	String grade;
+	
+	String classifier;
+	
+	String firstName;
+	
+	String lastName;
 	
 	public Boolean getSharedDirect() {
 		return sharedDirect;
@@ -176,6 +196,71 @@ public class UserTestSession extends Base {
 	public String getFormattedWeightedScore(){
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 		return decimalFormat.format(getWeightedScorePercentage() == null?0.0f:getWeightedScorePercentage());
+	}
+	public Integer getNoOfNonCompliances() {
+		return noOfNonCompliances;
+	}
+	public void setNoOfNonCompliances(Integer noOfNonCompliances) {
+		this.noOfNonCompliances = noOfNonCompliances;
+	}
+	public String getStyle() {
+		return style;
+	}
+	public void setStyle(String style) {
+		this.style = style;
+	}
+	
+	@Transient
+	public String getDateofTest(){
+		Date dt = getUpdateDate() == null?getCreateDate():getUpdateDate();
+		String ret = "NA";
+		if(dt != null){
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+			ret = dateFormat.format(dt);
+		}
+		return ret;
+	}
+	public Boolean getSubjective() {
+		return subjective;
+	}
+	public void setSubjective(Boolean subjective) {
+		this.subjective = subjective;
+	}
+	public Boolean getMarkComplete() {
+		return markComplete;
+	}
+	public void setMarkComplete(Boolean markComplete) {
+		this.markComplete = markComplete;
+	}
+	public String getCollegeName() {
+		return collegeName;
+	}
+	public void setCollegeName(String collegeName) {
+		this.collegeName = collegeName;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getClassifier() {
+		return classifier;
+	}
+	public void setClassifier(String classifier) {
+		this.classifier = classifier;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	

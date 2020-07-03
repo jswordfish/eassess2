@@ -3,6 +3,8 @@ package com.assessment.web.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.assessment.data.QuestionMapperInstance;
 
 public class QuestionInstanceDto {
@@ -43,6 +45,28 @@ public class QuestionInstanceDto {
 	List<String> fillInBlanks = new ArrayList<String>();
 	
 	MTFdto mtf;
+
+
+	MultipartFile imageVideoData; 
+	
+	String type;
+	
+	Long questionMapperId;
+	
+	
+	String imageUploadUrl;
+	
+	String videoUploadUrl;
+	
+	String subjectiveText;
+	
+	public String getSubjectiveText() {
+		return subjectiveText;
+	}
+
+	public void setSubjectiveText(String subjectiveText) {
+		this.subjectiveText = subjectiveText;
+	}
 
 	public QuestionMapperInstance getQuestionMapperInstance() {
 		return questionMapperInstance;
@@ -281,6 +305,46 @@ public class QuestionInstanceDto {
 
 	public void setMtfSize(Integer mtfSize) {
 		this.mtfSize = mtfSize;
+	}
+
+	public MultipartFile getImageVideoData() {
+		return imageVideoData;
+	}
+
+	public void setImageVideoData(MultipartFile imageVideoData) {
+		this.imageVideoData = imageVideoData;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Long getQuestionMapperId() {
+		return questionMapperId;
+	}
+
+	public void setQuestionMapperId(Long questionMapperId) {
+		this.questionMapperId = questionMapperId;
+	}
+
+	public String getImageUploadUrl() {
+		return imageUploadUrl;
+	}
+
+	public void setImageUploadUrl(String imageUploadUrl) {
+		this.imageUploadUrl = imageUploadUrl;
+	}
+
+	public String getVideoUploadUrl() {
+		return videoUploadUrl;
+	}
+
+	public void setVideoUploadUrl(String videoUploadUrl) {
+		this.videoUploadUrl = videoUploadUrl;
 	}
 	
 	

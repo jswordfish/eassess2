@@ -1,35 +1,34 @@
 package com.assessment.web.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TestSessionDTO {
-Boolean testComplete;
-	
+	Boolean testComplete;
+
 	Integer noOfQuestionsAnswered;
-	
+
 	Integer totalQuestions;
-	
+
 	List<QualifierSkillLevelDto> skills = new ArrayList<QualifierSkillLevelDto>();
-	
+
 	Float averageScore;
-	
+
 	Float weightedScore;
-	
+
 	Boolean pass;
-	
+
 	Float passThresholdPercent;
-	
+
 	Integer noOfAttempts;
-	
+
 	Integer noOfAttemptsavailable;
-	
+
 	String start;
-	
+
 	String end;
-	
-	
+
+	String errorMsg;
 
 	public Boolean getTestComplete() {
 		return testComplete;
@@ -91,7 +90,7 @@ Boolean testComplete;
 		return passThresholdPercent;
 	}
 
-	public void setPassThresholdPercent(Float	 passThresholdPercent) {
+	public void setPassThresholdPercent(Float passThresholdPercent) {
 		this.passThresholdPercent = passThresholdPercent;
 	}
 
@@ -127,7 +126,12 @@ Boolean testComplete;
 		this.end = end;
 	}
 
-	
-	
-	
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
 }

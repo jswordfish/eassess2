@@ -100,26 +100,11 @@
 							class="material-icons fa fa-sign-out"></i> Sign Off</a>
 					</div>
 				</div>
-				<div class="col-md-12">
-					<div class="col-md-12">
-						<div class="pagination" style="float: right;">
-
-							<c:if test="${showPreviousPage}">
-								<a href="${question_list}?page=${previousPage}${queryParam}"><i
-									class="fa fa-arrow-left"></i></a>
-							</c:if>
-
-							<c:if test="${selectedPage != null &&  selectedPage > 0}">
-                                    ${selectedPage} / ${totalNumberOfPages}
-                                </c:if>
-
-							<c:if test="${showNextPage}">
-								<a href="${question_list}?page=${nextPage}${queryParam}"><i
-									class="fa fa-arrow-right"></i></a>
-							</c:if>
-						</div>
-					</div>
-				</div>
+<!-- 				<div class="col-md-12"> -->
+<!-- 					<div class="col-md-12"> -->
+						
+<!-- 					</div> -->
+<!-- 				</div> -->
 
 				<div class="col-md-12">
 					<div class="mt-10"></div>
@@ -128,8 +113,20 @@
 							<b>Licenses in System</b>
 						</h1>
 					</div>
-					<div class="col-md-4">
-						<div class="widget widget_search">
+				<div class="col-md">
+						<div class="pagination" style="float: right;" id="pagination">
+
+							<c:if test="${showPreviousPage}">
+								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
+							</c:if>
+
+							<c:if test="${selectedPage != null &&  selectedPage > 0}">
+										                                    ${selectedPage} / ${totalNumberOfPages}
+										                                </c:if>
+
+							<c:if test="${showNextPage}">
+								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
+							</c:if>
 
 						</div>
 					</div>

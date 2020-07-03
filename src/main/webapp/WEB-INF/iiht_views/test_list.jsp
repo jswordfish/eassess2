@@ -10,78 +10,34 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Tests</title>
-
-<spring:url value="/resources/assets/img/ico/favicon.png" var="c1" />
-
-<link href="${c1}" rel="shortcut icon" />
-
-<spring:url value="https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,900" var="c2" />
-
-<link href="${c2}" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/img/ico/favicon.png" rel="shortcut icon" />
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,300,500,700,900" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/css/pnotify.custom.min.css" rel="stylesheet" type="text/css">
 
 <!-- Material Icons CSS -->
-<spring:url value="/resources/assets/fonts/iconfont/material-icons.css" var="c3" />
-
-<link href="${c3}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/fonts/iconfont/material-icons.css" rel="stylesheet" type="text/css" />
 <!-- FontAwesome CSS -->
-<spring:url value="/resources/assets/fonts/font-awesome/css/font-awesome.min.css" var="c4" />
-
-<link href="${c4}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <!-- magnific-popup -->
-<spring:url value="/resources/assets/magnific-popup/magnific-popup.css" var="c5" />
-
-<link href="${c5}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
 <!-- owl.carousel -->
-<spring:url value="/resources/assets/owl.carousel/assets/owl.carousel.css" var="c6" />
-
-<link href="${c6}" rel="stylesheet" type="text/css" />
-
-<spring:url value="/resources/assets/owl.carousel/assets/owl.theme.default.min.css" var="c7" />
-
-<link href="${c7}" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/owl.carousel/assets/owl.carousel.css" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/owl.carousel/assets/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
 <!-- flexslider -->
-<spring:url value="/resources/assets/flexSlider/flexslider.css" var="c8" />
-
-<link href="${c8}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/flexSlider/flexslider.css" rel="stylesheet" type="text/css" />
 <!-- materialize -->
-<spring:url value="/resources/assets/materialize/css/materialize.min.css" var="c9" />
-
-<link href="${c9}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/materialize/css/materialize.min.css" rel="stylesheet" type="text/css" />
 <!-- Bootstrap -->
-<spring:url value="/resources/assets/bootstrap/css/bootstrap.min.css" var="c10" />
-
-<link href="${c10}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <!-- shortcodes -->
-<spring:url value="/resources/assets/css/shortcodes/shortcodes.css" var="c11" />
-
-<link href="${c11}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/css/shortcodes/shortcodes.css" rel="stylesheet" type="text/css" />
 <!-- Style CSS -->
-<spring:url value="/resources/assets/style.css" var="c12" />
-
-<link href="${c12}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/style.css" rel="stylesheet" type="text/css" />
 <!-- RS5.0 Main Stylesheet -->
-<spring:url value="/resources/assets/revolution/css/settings.css" var="c13" />
-
-<link href="${c13}" rel="stylesheet" type="text/css" />
-
+<link href="./resources/assets/revolution/css/settings.css" rel="stylesheet" type="text/css" />
 <!-- RS5.0 Layers and Navigation Styles -->
-<spring:url value="/resources/assets/revolution/css/layers.css" var="c14" />
-
-<link href="${c14}" rel="stylesheet" type="text/css" />
-<spring:url value="/resources/assets/revolution/css/navigation.css" var="c15" />
-
-<link href="${c15}" rel="stylesheet" type="text/css" />
-<spring:url value="/resources/assets/css/pnotify.custom.min.css" var="c16" />
-
-<link href="${c16}" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/revolution/css/layers.css" rel="stylesheet" type="text/css" />
+<link href="./resources/assets/revolution/css/navigation.css" rel="stylesheet" type="text/css" />
 <script src="./resources/scripts/jquery.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -161,24 +117,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-12">
-					<div class="col-md-12">
-						<div class="pagination" style="float: right;">
-							<c:if test="${showPreviousPage}">
-								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
-							</c:if>
-
-							<c:if test="${selectedPage != null &&  selectedPage > 0}">
-                                    ${selectedPage} / ${totalNumberOfPages}
-                                </c:if>
-
-							<c:if test="${showNextPage}">
-								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
-							</c:if>
-						</div>
-					</div>
-				</div>
-
+				 
 				<div class="col-md-12">
 					<div class="mt-10"></div>
 					<div class="col-md-5">
@@ -199,19 +138,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3" style="padding: 0;">
-						<div class="mt-10"></div>
-						<div class="col-md-4"></div>
-						<div class="col-md-4" style="padding-left: 0;">
-							<a href="javascript:notify('Information', 'Feature coming soon')"> <i
-								class="fa fa-sort-amount-asc"></i> <span>Sort</span>
-							</a>
-						</div>
-						<div class="col-md-4" style="padding: 0;">
-							<a href="javascript:notify('Information', 'Feature coming soon')"> <i
-								class="fa fa-filter"></i> <span>Filter</span>
-							</a>
-						</div>
+					 
+						<div class="pagination" style="float: right;">
+							<c:if test="${showPreviousPage}">
+								<a href="${callingMethod}?page=${previousPage}${queryParam}"><i class="fa fa-arrow-left"></i></a>
+							</c:if>
+
+							<c:if test="${selectedPage != null &&  selectedPage > 0}">
+                                    ${selectedPage} / ${totalNumberOfPages}
+                                </c:if>
+
+							<c:if test="${showNextPage}">
+								<a href="${callingMethod}?page=${nextPage}${queryParam}"><i class="fa fa-arrow-right"></i></a>
+							</c:if>
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -230,7 +169,7 @@
 									<th>Expire Test</th>
 									<th>Update Test</th>
 									<th>Duplicate Test</th>
-									<th>Share Test</th>
+<!-- 									<th>Share Test</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -251,10 +190,10 @@
 											data-toggle="modal"
 											onClick="javascript:duplicateOpen('${test.testName}', '${test.companyId}')"><i
 												class="fa fa-copy"></i></a></td>
-										<td><a href="javascript:void(0);" class="testname" data-name="${test.testName}"
-											data-toggle="modal"
-											onClick="javascript:shareOpen('${test.testName}', '${test.publicUrl}', '${test.id}','${random.nextInt()}')"><i
-												class="fa fa-share-alt"></i></a></td>
+<%-- 										<td><a href="javascript:void(0);" class="testname" data-name="${test.testName}" --%>
+<!-- 											data-toggle="modal" -->
+<%-- 											onClick="javascript:shareOpen('${test.testName}', '${test.publicUrl}', '${test.id}','${random.nextInt()}')"><i --%>
+<!-- 												class="fa fa-share-alt"></i></a></td> -->
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -343,7 +282,7 @@
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="uploadTab">
 
-								<form method="POST" action="sharePublicTest" enctype="multipart/form-data">
+								<form method="GET" action="sharePublicTest" enctype="multipart/form-data">
 									<div>
 										<label>Existing test name</label> <input id="existing_name1" type="text"
 											readonly="readonly" name="existing_name1" />
@@ -438,11 +377,6 @@
 		document.getElementById("dd").style.display = "block";
 		document.getElementById("dd2").style.display = "block";
 		document.getElementById("dd3").style.display = "block";
-
-		 var date = new Date();
-		    date.setDate(date.getDate() +2);
-		$("#txt2Date").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
-		$("#txt2Date2").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
 	});
 	
         function dup() {
@@ -469,27 +403,6 @@
             $('#modalshare').modal('hide');
         }
 
-        function shareOpen(testName, testPublicUrl, testId,uniqueId) {
-//       		 var date = new Date();
-//       		    date.setDate(date.getDate() +2);
-//       		$("#txt2Date").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate',date);
-            var name = $(this).attr('data-name');
-            console.log('here ' + testName);
-//             console.log('rand ' + uniqueId);
-// 			var
-			var str = uniqueId;
-			var uniqURL = testPublicUrl.concat('&uid='+str);
-			console.log(uniqURL)
-			document.getElementById("existing_name1").value = testName;
-            document.getElementById("publicTestUrl").value = testPublicUrl;
-            document.getElementById("testId").value = testId;
-        	document.getElementById("existing_name2").value = testName;
-            document.getElementById("publicTestUrl2").value = testPublicUrl;
-            document.getElementById("testId2").value = testId;
-            $('#modalcopy').modal('hide');
-            $('#modalshare').modal('show');
-        }
-      
         function copyUrlInClipBoard() {
             el = document.createElement('textarea');
             el.value = document.getElementById("publicTestUrl").value;

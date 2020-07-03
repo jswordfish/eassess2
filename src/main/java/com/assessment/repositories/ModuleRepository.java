@@ -18,7 +18,8 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
 	@Query(value="SELECT m FROM Module m WHERE m.companyId=:companyId")
 	public Page<Module> getModules(@Param("companyId") String companyId, Pageable pageable);
 	
-	
+//	Gulrez
+	public Page<Module>findByLicenseNamesInAndCompanyId(List<String> licenseName,String companyId,Pageable pageable);
 	
 	@Query(value="SELECT m FROM Module m WHERE m.companyId=:companyId and upper(m.licenseNames) LIKE %:licenseName% ")
 	public List<Module> findModulesByLicense(@Param("companyId") String companyId, @Param("licenseName") String licenseName);

@@ -26,29 +26,29 @@ import com.assessment.repositories.QuestionMapperInstanceRepository;
 import com.assessment.repositories.UserTestSessionRepository;
 import com.assessment.services.TestService;
 import com.assessment.services.UserTestSessionService;
+
 @Service
 @Transactional
-public class UserTestSessionServiceImpl implements UserTestSessionService{
-	
+public class UserTestSessionServiceImpl implements UserTestSessionService {
+
 	@Autowired
 	UserTestSessionRepository userTestSessionRep;
-	
+
 	@Autowired
 	TestService testService;
-	
+
 	@Autowired
 	QuestionMapperInstanceRepository questionMapperInstanceRepository;
-	
+
 	ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	Validator validator = factory.getValidator();
-	
+
 	private void validateMandatoryFields(UserTestSession userTestSession) {
 		Set<ConstraintViolation<UserTestSession>> violations = validator.validate(userTestSession);
-		if(violations.size() > 0){
+		if (violations.size() > 0) {
 			throw new AssessmentGenericException("NOT_SUFFICIENT_PARAMS");
 		}
-		
-		
+
 	}
 
 	@Override
@@ -62,80 +62,81 @@ public class UserTestSessionServiceImpl implements UserTestSessionService{
 		// TODO Auto-generated method stub
 		validateMandatoryFields(userTestSession);
 		Test test = testService.findbyTest(userTestSession.getTestName(), userTestSession.getCompanyId());
-		
-		
-		
-		UserTestSession userTestSession2 = findUserTestSession(userTestSession.getUser(), userTestSession.getTestName(), userTestSession.getCompanyId());
-		if(userTestSession2 == null) {
-			//create
+
+		UserTestSession userTestSession2 = findUserTestSession(userTestSession.getUser(),
+				userTestSession.getTestName(), userTestSession.getCompanyId());
+		if (userTestSession2 == null) {
+			// create
 			userTestSession.setTest(test);
 			userTestSession.setNoOfAttempts(1);
 			userTestSession = calculateResults(userTestSession, test);
-			//userTestSession.setCreateDate(new Date());
+			// userTestSession.setCreateDate(new Date());
 			userTestSessionRep.save(userTestSession);
 			return userTestSession;
-		}
-		else {
-			//update
+		} else {
+			// update
 			userTestSession2 = calculateResults(userTestSession2, test);
 			userTestSession2.setUpdateDate(userTestSession.getUpdateDate());
-			userTestSession2.setWeightedScorePercentage(userTestSession.getWeightedScorePercentage());
+			userTestSession2.setWeightedScorePercentage(
+					userTestSession.getWeightedScorePercentage());
 			userTestSession2.setNoOfAttempts(userTestSession2.getNoOfAttempts() + 1);
-			//userTestSession2.setUpdateDate(new Date());
+			// userTestSession2.setUpdateDate(new Date());
 			userTestSessionRep.save(userTestSession2);
 			return userTestSession2;
 		}
 	}
-	
+
 	private UserTestSession calculateResults(UserTestSession userTestSession, Test test) {
-		List<QuestionMapperInstance> questionMapperInstances = questionMapperInstanceRepository.findQuestionMapperInstancesForUserForTest(userTestSession.getTestName(), userTestSession.getUser(), userTestSession.getCompanyId());
-			Integer totalMarks = 0;
-			Integer totalMarksRecieved = 0;
-			for(QuestionMapperInstance questionMapperInstance : questionMapperInstances) {
-				totalMarks += questionMapperInstance.getQuestionMapper().getPointsToAward();
-				if(questionMapperInstance.getCorrect()) {
-					totalMarksRecieved += questionMapperInstance.getQuestionMapper().getPointsToAward();
-				}
+		List<QuestionMapperInstance> questionMapperInstances = questionMapperInstanceRepository
+				.findQuestionMapperInstancesForUserForTest(userTestSession.getTestName(),
+						userTestSession.getUser(),
+						userTestSession.getCompanyId());
+		Integer totalMarks = 0;
+		Integer totalMarksRecieved = 0;
+		for (QuestionMapperInstance questionMapperInstance : questionMapperInstances) {
+			totalMarks += questionMapperInstance.getQuestionMapper().getPointsToAward();
+			if (questionMapperInstance.getCorrect()) {
+				totalMarksRecieved += questionMapperInstance.getQuestionMapper()
+						.getPointsToAward();
 			}
-			float per = new Float(totalMarksRecieved)/new Float(totalMarks) * 100;
-			DecimalFormat df = new DecimalFormat("##.##");
-			userTestSession.setPercentageMarksRecieved(Float.parseFloat(df.format(per)));
-			userTestSession.setTotalMarks(totalMarks);
-			userTestSession.setTotalMarksRecieved(totalMarksRecieved);
-			Float weightedScore = getWeightedScoreForTest(questionMapperInstances);
-			userTestSession.setWeightedScorePercentage(weightedScore);
-			//if(per >= test.getPassPercent() ) {
-			if(weightedScore >= test.getPassPercent() ) {
-				userTestSession.setPass(true);
-			}
-			else {
-				userTestSession.setPass(false);
-			}
+		}
+		float per = new Float(totalMarksRecieved) / new Float(totalMarks) * 100;
+		DecimalFormat df = new DecimalFormat("##.##");
+		userTestSession.setPercentageMarksRecieved(Float.parseFloat(df.format(per)));
+		userTestSession.setTotalMarks(totalMarks);
+		userTestSession.setTotalMarksRecieved(totalMarksRecieved);
+		Float weightedScore = getWeightedScoreForTest(questionMapperInstances);
+		userTestSession.setWeightedScorePercentage(weightedScore);
+		// if(per >= test.getPassPercent() ) {
+		if (weightedScore >= test.getPassPercent()) {
+			userTestSession.setPass(true);
+		} else {
+			userTestSession.setPass(false);
+		}
 		return userTestSession;
 	}
-	
-	private Float getWeightedScoreForTest(List<QuestionMapperInstance> instances){
+
+	private Float getWeightedScoreForTest(List<QuestionMapperInstance> instances) {
 		Map<Integer, List<QuestionMapperInstance>> map = new HashMap<Integer, List<QuestionMapperInstance>>();
-		for(QuestionMapperInstance instance : instances){
+		for (QuestionMapperInstance instance : instances) {
 			Integer weight = instance.getQuestionMapper().getQuestion().getQuestionWeight();
-			if(weight == null){
+			if (weight == null) {
 				weight = 1;
 			}
-			if(map.get(weight) == null){
+			if (map.get(weight) == null) {
 				List<QuestionMapperInstance> list = new ArrayList<QuestionMapperInstance>();
 				list.add(instance);
 				map.put(weight, list);
-			}
-			else{
+			} else {
 				map.get(weight).add(instance);
 			}
 		}
 		Map<Integer, Float> map_weight_percentage = new HashMap<Integer, Float>();
-		for(Integer weight : map.keySet()){
+		for (Integer weight : map.keySet()) {
 			List<QuestionMapperInstance> instances2 = map.get(weight);
 			Integer noOfCorrect = 0;
-			for(QuestionMapperInstance instance : instances2){
-				if(instance.getCorrect()){
+			for (QuestionMapperInstance instance : instances2) {
+				if (instance.getCorrect()) {
 					noOfCorrect++;
 				}
 			}
@@ -144,7 +145,7 @@ public class UserTestSessionServiceImpl implements UserTestSessionService{
 		}
 		Integer totalWeight = 0;
 		Float totalScore = 0f;
-		for(Integer weight : map_weight_percentage.keySet()){
+		for (Integer weight : map_weight_percentage.keySet()) {
 			totalWeight += weight;
 			Float percentageForWeight = map_weight_percentage.get(weight);
 			totalScore += percentageForWeight * weight;
@@ -154,7 +155,7 @@ public class UserTestSessionServiceImpl implements UserTestSessionService{
 	}
 
 	@Override
-	public List<AssessmentTestData> getAllResultsData(String companyId){
+	public List<AssessmentTestData> getAllResultsData(String companyId) {
 		return userTestSessionRep.getAllResultsData(companyId);
 	}
 
@@ -162,5 +163,45 @@ public class UserTestSessionServiceImpl implements UserTestSessionService{
 	public List<UserTestSession> findUserSessionsForTest(String testName, String companyId) {
 		// TODO Auto-generated method stub
 		return userTestSessionRep.findUserSessionsForTest(testName, companyId);
+	}
+
+	@Override
+	public List<UserTestSession> findTestListForUser(String companyId, String user) {
+		// TODO Auto-generated method stub
+		return userTestSessionRep.findTestListForUser(companyId, user);
+	}
+
+	@Override
+	public List<UserTestSession> findResultsForDay(String companyId, Date start, Date end) {
+		// TODO Auto-generated method stub
+		return userTestSessionRep.findResultsForDay(companyId, start, end);
+	}
+
+	@Override
+	public List<UserTestSession> findSubjectiveResultsNotMarkedAsCompleteForInstitution(String companyId,
+			String collegeName, String grade, String classifier) {
+		// TODO Auto-generated method stub
+		return userTestSessionRep.findSubjectiveResultsNotMarkedAsCompleteForInstitution(companyId,
+				collegeName, grade, classifier);
+	}
+
+	@Override
+	public List<UserTestSession> findSubjectiveResultsMarkedAsCompleteForInstitution(String companyId,
+			String collegeName, String grade, String classifier) {
+		// TODO Auto-generated method stub
+		return userTestSessionRep.findSubjectiveResultsMarkedAsCompleteForInstitution(companyId,
+				collegeName, grade, classifier);
+	}
+
+	@Override
+	public UserTestSession findSessinById(Long sessionId) {
+		// TODO Auto-generated method stub
+		return userTestSessionRep.findById(sessionId).get();
+	}
+
+	@Override
+	public List<UserTestSession> findByCompanyIdAndCollegeName(String companyId, String collegeName) {
+		// TODO Auto-generated method stub
+		return userTestSessionRep.findByCompanyIdAndCollegeName(companyId, collegeName);
 	}
 }

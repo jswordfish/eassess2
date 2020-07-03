@@ -20,5 +20,8 @@ public interface ModuleService {
 	Page<Module> getModules(String companyId, Pageable pageable);
 	
 	void deleteModule(Long id);
+	
+	 Page<Module>findByLicenseNamesIn(List<String> licenseName,String companyId,Pageable pageable);
+
 
 }

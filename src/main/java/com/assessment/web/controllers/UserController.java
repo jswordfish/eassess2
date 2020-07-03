@@ -1,15 +1,23 @@
 package com.assessment.web.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +31,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,20 +48,29 @@ import com.assessment.common.ExcelReader;
 import com.assessment.common.PropertyConfig;
 import com.assessment.common.util.EmailGenericMessageThread;
 import com.assessment.data.Company;
+import com.assessment.data.LMSAdminDtO;
+import com.assessment.data.LMSUserModuleMapping;
+import com.assessment.data.License;
+import com.assessment.data.Module;
+import com.assessment.data.ModuleItem;
 import com.assessment.data.Skill;
 import com.assessment.data.SkillLevel;
+import com.assessment.data.Test;
 import com.assessment.data.User;
 import com.assessment.data.UserNonCompliance;
 import com.assessment.data.UserTestSession;
 import com.assessment.data.UserType;
 import com.assessment.services.CompanyService;
 import com.assessment.services.LicenseService;
+import com.assessment.services.LmsUserModuleMappingService;
+import com.assessment.services.ModuleService;
 import com.assessment.services.SkillService;
 import com.assessment.services.TenantService;
 import com.assessment.services.TestService;
 import com.assessment.services.UserNonComplianceService;
 import com.assessment.services.UserService;
 import com.assessment.services.UserTestSessionService;
+import com.assessment.web.dto.ModuleDTO;
 
 @Controller
 public class UserController {
@@ -85,6 +103,12 @@ public class UserController {
 
 	@Autowired
 	LicenseService licenseService;
+
+	@Autowired
+	ModuleService moduleService;
+
+	@Autowired
+	LmsUserModuleMappingService mappingService;
 
 	private static String LOCAL_BASE_URL = "http://localhost/";
 
@@ -545,4 +569,437 @@ public class UserController {
 		CommonUtil.setCommonAttributesOfPagination(users, modelMap, 0, "lmsAdmins", null);
 		return mav;
 	}
+
+	@RequestMapping(value = "/uploadLMSUsers", method = RequestMethod.POST)
+	public @ResponseBody String uploadLMSUsers(HttpServletResponse response, MultipartHttpServletRequest request)
+			throws Exception {
+		try {
+			// System.out.println("in uploadUsers entering");
+			User user = (User) request.getSession().getAttribute("user");
+			MultipartFile multipartFile = request.getFile("idusers");
+			Long size = multipartFile.getSize();
+			String contentType = multipartFile.getContentType();
+			InputStream stream = multipartFile.getInputStream();
+//			    File file = new File("users.xml");
+			File file = ResourceUtils.getFile("classpath:users.xml");
+			List<User> users = ExcelReader.parseExcelFileToBeans(stream, file);
+			logger.info("in upload method users size " + users.size());
+			if (users.size() == 0) {
+				return "No Data Found";
+			}
+			String compId = user.getCompanyId();
+			Company company = companyService.findByCompanyId(compId);
+			// System.out.println("Company got in uploadUsers "+company.getId() +"
+			// "+company.getCompanyName());
+			logger.info("Company got in uploadQuestions " + company.getId() + " "
+					+ company.getCompanyName());
+			for (User u : users) {
+				u.setCompanyId(company.getCompanyId());
+				u.setCompanyName(company.getCompanyName());
+				u.setPassword(u.getEmail().hashCode() + "");
+				u.setUserType(UserType.LMS_STUDENT);
+				User u1 = userService.findByPrimaryKey(u.getEmail(),
+						company.getCompanyId());
+				u.setCompanyId(user.getCompanyId());
+				u.setCompanyName(user.getCompanyName());
+				userService.saveOrUpdate(u);
+				if (u1 == null) { // first time sent email
+					String html = FileUtils.readFileToString(new File(propertyConfig
+							.getSendCredentialsToStudent()));
+					html = html.replace("{FULL_NAME}",
+							u.getFirstName() + " " + u.getLastName());
+					html = html.replace("{BASE_URL}", propertyConfig.getBaseUrl());
+					html = html.replace("{USER}", u.getEmail());
+					html = html.replace("{PASSWORD}", u.getPassword());
+					EmailGenericMessageThread client = new EmailGenericMessageThread(
+							u.getEmail(),
+							"Registration Credentials - "
+									+ propertyConfig.getBaseUrl(),
+							html, propertyConfig);
+					Thread thread = new Thread(client);
+					thread.start();
+
+				}
+			}
+			return "ok";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("problems in uploading users", e);
+			return e.getMessage();
+		}
+	}
+
+	@RequestMapping(value = "/getHTMLTableForClassfier", method = RequestMethod.GET)
+	public @ResponseBody String getHTMLTableForClassfier(@RequestParam("classifier") String classifier,
+			HttpServletRequest request, HttpServletResponse response) {
+		User user = (User) request.getSession().getAttribute("user");
+		String table = "<table id=\"classTable\" class=\"table table-bordered\">          <thead>		  <tr>		  <th scope=\"col\">#</th>		  <th scope=\"col\">First Name</th>		  <th scope=\"col\">Last name</th>		  <th scope=\"col\">Institute</th>		  <th scope=\"col\">Grade</th>		  <th scope=\"col\">Classifier</th>		  		</tr>          </thead>          <tbody>            ${content}		          </tbody>        </table>";
+		String rows = "<tr class=\"${type}\">              <td>${ser}</td>              <td>${firstName}</td>              <td>${lastName}</td>              <td>${institute}</td>              <td>${grade}</td>              <td>${classifier}</td>                                        </tr>";
+		String clss[] = classifier.split("-");
+		String institute = clss[0].trim();
+		String grade = clss[1].trim();
+		String cs = clss[2].trim();
+		String companyId = user.getCompanyId();
+		List<User> users = userService.findByInstituteGradeClassifier(companyId, institute, grade, cs);
+		String tot = "";
+		int count = 1;
+		for (User usr : users) {
+			String row = rows;
+			if (count % 2 == 0) {
+				row = row.replace("${type}", "success");
+			} else {
+				row = row.replace("${type}", "info");
+			}
+
+			row = row.replace("${ser}", count + "");
+			count++;
+			row = row.replace("${firstName}", usr.getFirstName());
+			row = row.replace("${lastName}", usr.getLastName());
+
+			row = row.replace("${institute}", usr.getCollegeName());
+			row = row.replace("${grade}", usr.getGrade());
+			row = row.replace("${classifier}", usr.getClassifier());
+			tot += row;
+		}
+
+		table = table.replace("${content}", tot);
+		return table;
+	}
+
+	@RequestMapping(value = "/shareModule", method = RequestMethod.GET)
+	public @ResponseBody String shareModule(@RequestParam(required = false, name = "meetingid") String meetingid,
+			@RequestParam("moduleName") String moduleName,
+			@RequestParam("classifier") String classifier, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		moduleName = URLDecoder.decode(moduleName);
+		if (meetingid != null) {
+			meetingid = URLDecoder.decode(meetingid);
+		}
+		classifier = URLDecoder.decode(classifier);
+		User user = (User) request.getSession().getAttribute("user");
+
+		String clss[] = classifier.split("-");
+		String institute = clss[0].trim();
+		String grade = clss[1].trim();
+		String cs = clss[2].trim();
+		String companyId = user.getCompanyId();
+		List<String> users = userService.findEmailByInstituteGradeClassifier(companyId, institute, grade,
+				cs);
+		// Module module = moduleRepository.findById(moduleId).get();
+		Module module = moduleService.findUniqueModule(moduleName, user.getCompanyId());
+		String html = FileUtils.readFileToString(new File(propertyConfig.getShareModuleoStudent()));
+		html = html.replace("{BASE_URL}", propertyConfig.getBaseUrl());
+		html = html.replace("{CONTEXT}", classifier);
+		html = html.replace("{TRAINER}", user.getFirstName() + " " + user.getLastName());
+		html = html.replace("{MODULE_NAME}", module.getModuleName());
+		if (meetingid != null && meetingid.trim().length() > 0) {
+
+			html = html.replace("{MEETING_ID}", meetingid);
+		} else {
+			html = html.replace("{MEETING_ID}", "NA");
+		}
+
+		for (String email : users) {
+			LMSUserModuleMapping lmsUserModuleMapping = mappingService.getByPrimaryKey(email,
+					module.getId(), user.getCompanyId());
+			// if(lmsUserModuleMapping == null){
+			lmsUserModuleMapping = new LMSUserModuleMapping();
+			lmsUserModuleMapping.setModuleId(module.getId());
+			lmsUserModuleMapping.setModuleName(module.getModuleName());
+			lmsUserModuleMapping.setUser(email);
+			lmsUserModuleMapping.setCompanyId(user.getCompanyId());
+			lmsUserModuleMapping.setCompanyName(user.getCompanyName());
+			lmsUserModuleMapping.setCreatedBy(user.getEmail());
+			mappingService.saveOrUpdate(lmsUserModuleMapping);
+			// }
+		}
+
+		EmailGenericMessageThread client = new EmailGenericMessageThread(user.getEmail(),
+				"Sharing Training Module " + module.getModuleName(), html, propertyConfig);
+		String emails[] = new String[users.size()];
+		emails = users.toArray(emails);
+		client.setCcArray(emails);
+		Thread thread = new Thread(client);
+		thread.start();
+		return "ok";
+	}
+
+	@RequestMapping(value = "/fetchModuleData", method = RequestMethod.GET)
+	@ResponseBody
+	public String showModuleData(@RequestParam(name = "mname", required = true) String mname,
+			HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Module module = moduleService.findUniqueModule(mname, user.getCompanyId());
+		String container = "<div><div><label id=\"modulenameid\" style=\"width:100%\">{MODULE_NAME}</label>	<h6>Description - {MODULE_DESC}</h6>							<div class=\"progress\" style=\"float: left;width: 100%;\">									<div id=\"moduleprogressid\" class=\"progress-bar\" style=\"width:{TEST_PERCENT}%\"></div>									<span id=\"moduleprogressspanid\">{TEST_PERCENT}%</span>								</div> 																							</div>						</div>                         <div ><table class='table borderless'>{ROWS}	</table></div>";
+		String rows = "<tr class='borderless'><td class='borderless' style=\"color:blue;\">  {FIRST_COLUMN}  </td>									<td class='borderless' style=\"color:#ffcc66;\">{TEST_NAME}</td>									<td class='borderless'style=\"color:#cc3399;\" ><a href=\"javascript:startTest('{TEST_URL}')\">Click Start Test</a></td></tr>";
+		String imageAvailable = "<a href=\"javascript:changeVideo('{VIDEO_URL}')\"><img src=\"images/play1.png\"</img>Click to Open Video</a>";
+		String imageNotAvailable = "Video Not Available";
+		container = container.replace("{MODULE_NAME}", module.getModuleName());
+		container = container.replace("{MODULE_DESC}", module.getModuleDescription() == null ? "NA"
+				: module.getModuleDescription());
+		Integer totalTests = 0;
+		Integer testsAppeared = 0;
+		Map<String, String> map = new HashMap<String, String>();
+		for (ModuleItem item : module.getItems()) {
+			totalTests++;
+			String testName = item.getTestName();
+			UserTestSession session = userTestSessionService.findUserTestSession(user.getEmail(),
+					testName, user.getCompanyId());
+			if (session != null) {
+				map.put(session.getTestName(), "&#10004;");
+				testsAppeared++;
+			}
+		}
+
+		Integer percent = 0;
+		if (totalTests > 0) {
+			percent = (int) (100.0f * testsAppeared / totalTests);
+		}
+		container = container.replace("{TEST_PERCENT}", "" + percent);
+
+		String allrows = "";
+		String temp = "";
+		String imgtemp = "";
+		for (ModuleItem item : module.getItems()) {
+			temp = rows;
+			if (item.getExternalVideoUrl() != null && (item.getExternalVideoUrl().startsWith(
+					"http") || item.getExternalVideoUrl().startsWith("www"))) {
+				imgtemp = imageAvailable;
+				imgtemp = imgtemp.replace("{VIDEO_URL}", item.getExternalVideoUrl());
+			} else {
+				imgtemp = imageNotAvailable;
+			}
+			temp = temp.replace("{FIRST_COLUMN}", imgtemp);
+			String testName = item.getTestName();
+			Test test = testService.findbyTest(testName, user.getCompanyId());
+			String check = "";
+			if (map.get(testName) != null) {
+				check = map.get(testName);
+			} else {
+				check = "&cross;";
+			}
+
+			temp = temp.replace("{TEST_NAME}",
+					(test.getTestName().replaceAll("^['\"]*", "")
+							.replaceAll("['\"]*$", "")) + "  - "
+							+ check);
+
+			String testurl = getUrlForUser(user.getEmail(), test.getId(), user.getCompanyId());
+			Date d1 = new Date();
+			String sDate = Base64.getEncoder().encodeToString(("" + d1.getTime()).getBytes());
+			Calendar c = Calendar.getInstance();
+			c.setTime(d1);
+			c.add(Calendar.YEAR, 2);
+			Date d2 = c.getTime();
+			String eDate = Base64.getEncoder().encodeToString(("" + d2.getTime()).getBytes());
+			sDate = URLEncoder.encode(sDate);
+			eDate = URLEncoder.encode(eDate);
+			testurl += "&startDate=" + sDate + "&endDate=" + eDate;
+			temp = temp.replace("{TEST_URL}", testurl);
+			allrows += temp;
+		}
+		container = container.replace("{ROWS}", allrows);
+		return container;
+	}
+
+	@RequestMapping(value = "/fetchModuleDataForPreviewForAdmin", method = RequestMethod.GET)
+	@ResponseBody
+	public String showModuleDataForPreviewForAdmin(@RequestParam(name = "mname", required = true) String mname,
+			HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Module module = moduleService.findUniqueModule(mname, user.getCompanyId());
+		String container = "<div><div><label id=\"modulenameid\" style=\"width:100%\"><b>Preview {MODULE_NAME}</b></label>	<h6>Description - {MODULE_DESC}</h6>																													</div> 																							</div>						</div>                         <div ><table class='table borderless'>{ROWS}	</table></div>";
+		String rows = "<tr class='borderless'><td class='borderless' style=\"color:blue;\">  {FIRST_COLUMN}  </td>									<td class='borderless' style=\"color:#ffcc66;\">{TEST_NAME}</td>									<td class='borderless'style=\"color:#cc3399;\" ><a href=\"javascript:startTest('{TEST_URL}')\">Click Start Test</a></td></tr>";
+		String imageAvailable = "<a href=\"javascript:changeVideo('{VIDEO_URL}')\"><img src=\"images/play1.png\"</img>Click to Open Video</a>";
+		String imageNotAvailable = "Video Not Available";
+		container = container.replace("{MODULE_NAME}", module.getModuleName());
+		container = container.replace("{MODULE_DESC}", module.getModuleDescription() == null ? "NA"
+				: module.getModuleDescription());
+
+		String allrows = "";
+		String temp = "";
+		String imgtemp = "";
+		for (ModuleItem item : module.getItems()) {
+			temp = rows;
+			if (item.getExternalVideoUrl() != null && (item.getExternalVideoUrl().startsWith(
+					"http") || item.getExternalVideoUrl().startsWith("www"))) {
+				imgtemp = imageAvailable;
+				imgtemp = imgtemp.replace("{VIDEO_URL}", item.getExternalVideoUrl());
+			} else {
+				imgtemp = imageNotAvailable;
+			}
+			temp = temp.replace("{FIRST_COLUMN}", imgtemp);
+			String testName = item.getTestName();
+			Test test = testService.findbyTest(testName, user.getCompanyId());
+			String check = "&cross;";
+
+			temp = temp.replace("{TEST_NAME}",
+					(test.getTestName().replaceAll("^['\"]*", "")
+							.replaceAll("['\"]*$", "")) + "  - "
+							+ check);
+
+			String testurl = getUrlForUser(user.getEmail(), test.getId(), user.getCompanyId());
+			Date d1 = new Date();
+			String sDate = Base64.getEncoder().encodeToString(("" + d1.getTime()).getBytes());
+			Calendar c = Calendar.getInstance();
+			c.setTime(d1);
+			c.add(Calendar.YEAR, 2);
+			Date d2 = c.getTime();
+			String eDate = Base64.getEncoder().encodeToString(("" + d2.getTime()).getBytes());
+			sDate = URLEncoder.encode(sDate);
+			eDate = URLEncoder.encode(eDate);
+			testurl += "&startDate=" + sDate + "&endDate=" + eDate;
+			temp = temp.replace("{TEST_URL}", testurl);
+			allrows += temp;
+		}
+		container = container.replace("{ROWS}", allrows);
+		return container;
+	}
+
+	private String getUrlForUser(String user, Long testId, String companyId) {
+		String userBytes = Base64.getEncoder().encodeToString(user.getBytes());
+
+		String after = "userId=" + URLEncoder.encode(userBytes) + "&testId="
+				+ URLEncoder.encode(testId.toString()) + "&companyId="
+				+ URLEncoder.encode(companyId);
+		String url = propertyConfig.getBaseUrl() + "startTestSession?" + after;
+		return url;
+	}
+
+	@RequestMapping(value = "/showUserTests", method = RequestMethod.GET)
+	public ModelAndView showUserTests(HttpServletRequest request, HttpServletResponse response,
+			ModelMap modelMap) {
+		User user = (User) request.getSession().getAttribute("user");
+		List<UserTestSession> sessions = userTestSessionService.findTestListForUser(user.getCompanyId(),
+				user.getEmail());
+		Stack<String> stk = new Stack<>();
+		stk.add("success");
+		stk.add("danger");
+		stk.add("info");
+		stk.add("warning");
+		stk.add("active");
+		for (UserTestSession session : sessions) {
+			if (stk.size() == 0) {
+				stk.add("success");
+				stk.add("danger");
+				stk.add("info");
+				stk.add("warning");
+				stk.add("active");
+			}
+			String disp = stk.pop();
+			session.setStyle(disp);
+		}
+
+		ModelAndView mav = new ModelAndView("user_profile_student_sessions");
+		mav.addObject("sessions", sessions);
+		mav.addObject("email", user.getEmail());
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/showLearnerUserDashboard", method = RequestMethod.GET)
+	public ModelAndView showLearenrUserDashboard(HttpServletRequest request, HttpServletResponse response,
+			ModelMap modelMap) {
+		User user = (User) request.getSession().getAttribute("user");
+		List<LMSUserModuleMapping> mappings = mappingService.getAllModulesForUser(user.getCompanyId(),
+				user.getEmail());
+		List<ModuleDTO> modules = new ArrayList<ModuleDTO>();
+		for (LMSUserModuleMapping mapping : mappings) {
+			Module module = moduleService.findUniqueModule(mapping.getModuleName(),
+					user.getCompanyId());
+			ModuleDTO moduleDTO = new ModuleDTO();
+			moduleDTO.setModule(module);
+			moduleDTO.setSharedByEmail(
+					mapping.getCreatedBy() == null ? "NA" : mapping.getCreatedBy());
+			User trainer = null;
+			if (mapping.getCreatedBy() != null) {
+				trainer = userService.findByPrimaryKey(mapping.getCreatedBy(),
+						user.getCompanyId());
+				moduleDTO.setSharedByFullName(
+						trainer.getFirstName() + " " + trainer.getLastName());
+			}
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+			Date share = mapping.getUpdateDate() == null ? mapping.getCreateDate()
+					: mapping.getUpdateDate();
+			String dt = dateFormat.format(share);
+			moduleDTO.setSharedDate(dt);
+			moduleDTO.setLearnerEmail(user.getEmail());
+			moduleDTO.setLearnerFullName(user.getFirstName() + " " + user.getLastName());
+			modules.add(moduleDTO);
+			for (ModuleItem item : module.getItems()) {
+				String testName = item.getTestName();
+				Test test = testService.findbyTest(testName, user.getCompanyId());
+				String userTestUrl = getUrlForUser(user.getEmail(), test.getId(),
+						user.getCompanyId());
+				item.setUserSpecificLink(userTestUrl);
+			}
+		}
+		ModelAndView mav = new ModelAndView("user_profile_student_index");
+		mav.addObject("moduledtos", modules);
+		request.getSession().setAttribute("user", user);
+		request.getSession().setAttribute("companyId", user.getCompanyId());
+
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/showLearnerAdminDashboard", method = RequestMethod.GET)
+	public ModelAndView showLearnerAdminDashboard(HttpServletRequest request, HttpServletResponse response) {
+		User user = (User) request.getSession().getAttribute("user");
+		ModelAndView mav = new ModelAndView("user_profile_index");
+//	  		request.getSession().setAttribute("user", user);
+//	  		request.getSession().setAttribute("companyId", user.getCompanyId());
+		List<String> classifiers = userService.findInstituteGradeClassifier(user.getCompanyId(),
+				user.getCollegeName());
+		mav.addObject("classifiers", classifiers);
+		mav.addObject("user", user);
+		LMSAdminDtO adminDtO = new LMSAdminDtO();
+		adminDtO.setEmail(user.getEmail());
+		adminDtO.setClassifier(user.getClassifier());
+		adminDtO.setGrade(user.getGrade());
+		adminDtO.setCollegeName(user.getCollegeName());
+		mav.addObject("adminDto", adminDtO);
+		String licenses = user.getLicenses();
+		List<License> lics = new ArrayList<>();
+		if (licenses != null && licenses.trim().length() > 0) {
+			String lic[] = licenses.split(",");
+			for (String l : lic) {
+				l = l.trim();
+				License license = licenseService.findByPrimaryKey(l, user.getCompanyId());
+				lics.add(license);
+			}
+		}
+		mav.addObject("licenses", lics);
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/fetchModulesForAdminUserByLicense", method = RequestMethod.GET)
+	@ResponseBody
+	public String fetchModulesForAdminUserByLicense(
+			@RequestParam(name = "licname", required = true) String licname,
+			HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		User user = (User) request.getSession().getAttribute("user");
+		String all = "<div class=\"colorlib-classes colorlib-light-grey\"  >		\n\t		<div class=\"container\">				\n\t\t					<div class=\"row\">													{MODULES}																							</div>	\n\t\t			</div>	\n\t		</div>";
+		String mod = "<div class=\"col-md-3 animate-box\">		\n\t	<div class=\"classes\">			\n\t\t	<div class=\"classes-img\" style=\"background-image: url(./resources/userprofile/images/elearning.jpg);\">			\n\t\t\t		<span class=\"price text-center\"><small>{LICENSE}</small></span>	\n\t\t			</div>		\n\t\t		<div class=\"desc\">			\n\t\t\t		<h3><a href=\"javascript:showModule('{MOD_NAME}')\">{MOD_NAME}</a></h3>			\n\t\t\t		<p>{MOD_DESC}</p>	\n\t\t\t				<p><a href=\"javascript:showItems('MOD_NAME_ENC')\" class=\"btn-learn\">Click to Preview Items </a>\n\t\t\t</p>			\n\t\t	</div>		\n\t	</div>	\n	</div>";
+		List<Module> modules = moduleService.findModulesByLicense(licname, user.getCompanyId());
+		all = all.replace("{LICENSE}", licname);
+		String tempModAll = "";
+		String tempMod = "";
+		for (Module module : modules) {
+			tempMod = mod;
+			tempMod = tempMod.replace("{LICENSE}", licname);
+			tempMod = tempMod.replace("{MOD_NAME}", module.getModuleName());
+			tempMod = tempMod.replace("MOD_NAME_ENC", URLEncoder.encode(module.getModuleName()));
+			tempMod = tempMod.replace("{MOD_DESC}", module.getModuleDescription() == null ? "NA"
+					: module.getModuleDescription());
+			tempModAll += tempMod;
+		}
+		all = all.replace("{MODULES}", tempModAll);
+		return all;
+	}
+
 }

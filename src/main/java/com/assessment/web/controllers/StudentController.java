@@ -1,5 +1,6 @@
 package com.assessment.web.controllers;
 import java.io.File;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.assessment.common.AssessmentGenericException;
@@ -516,6 +518,7 @@ public class StudentController {
 				 List<QuestionMapper> questionMappers = questionMapperService.getQuestionsForSection(test.getTestName(), section.getSectionName(), user.getCompanyId());
 				 //Collections.shuffle(questionMappers);
 				 List<QuestionMapper> questionMappersActual = questionMappers.subList(0, section.getNoOfQuestionsToBeAsked());
+				 Collections.shuffle(questionMappersActual);
 					List<QuestionInstanceDto> questionMapperInstances=new ArrayList<QuestionInstanceDto>();
 					int pos = 0;
 					for (QuestionMapper questionMapper : questionMappersActual) {
@@ -545,6 +548,7 @@ public class StudentController {
 						
 						if(questionMapperInstance == null){
 							questionMapperInstance = new QuestionMapperInstance();
+							questionMapperInstance.setQuestionMapper(questionMapper);
 						}
 						
 						questionInstanceDto.setQuestionMapperInstance(questionMapperInstance);
@@ -563,9 +567,6 @@ public class StudentController {
 						if(questionMapper.getQuestion().getQuestionType() != null && questionMapper.getQuestion().getQuestionType().getType().equals(QuestionType.MATCH_FOLLOWING_MCQ.getType())){
 							processDtoForMTFAnswers(questionMapperInstance, questionInstanceDto, questionMapper);
 						}
-						
-						
-						
 					}
 					sectionInstanceDto.setFirst(true);
 					sectionInstanceDto.setQuestionInstanceDtos(questionMapperInstances);
@@ -586,7 +587,7 @@ public class StudentController {
 					
 					model.addObject("currentSection", sectionInstanceDto);
 
-					model.addObject("currentQuestion", questionMapperInstances.get(0));
+					model.addObject("currentQuestion", questionMapperInstances.get(0));  // problem area
 					request.getSession().setAttribute("currentSection", sectionInstanceDto);
 					 /**
 					  * Get the fullstack for Q if type is full stack.
@@ -784,6 +785,19 @@ public class StudentController {
 						else if(code.equals(codeByUser)){
 							noOfQuestionsNotAnswered ++;
 						}
+				}
+				
+				if(qType.equalsIgnoreCase(QuestionType.SUBJECTIVE_TEXT.getType())) {
+					String txt=questionInstanceDto.getSubjectiveText();
+					if(txt==null) {
+						noOfQuestionsNotAnswered++;
+					}
+				}
+				if(qType.equalsIgnoreCase(QuestionType.VIDEO_UPLOAD_BY_USER.getType())||qType.equalsIgnoreCase(QuestionType.IMAGE_UPLOAD_BY_USER.getType())) {
+					String url=questionInstanceDto.getImageUploadUrl();
+					if(url==null) {
+						noOfQuestionsNotAnswered++;
+					}
 				}
 				
 				
@@ -1239,7 +1253,45 @@ public class StudentController {
 				 				 */
 				 				break;
 				 			}
+				 			if(type != null && type.equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 				questionInstanceDto.getQuestionMapperInstance().setSubjective(true);
+				 				questionInstanceDto.getQuestionMapperInstance().setImageUploadUrl(currentQuestion.getImageUploadUrl());
+				 				/**
+				 				 * Question level persistence code added
+				 				 */
+				 				sectionInstanceService.saveOrUpdateAnswer(questionInstanceDto.getQuestionMapperInstance());
+				 				/**
+				 				 * End Question level persistence
+				 				 */
+				 				break;
+				 			}
 				 			
+				 			if(type != null && type.equals(QuestionType.VIDEO_UPLOAD_BY_USER.getType())){
+				 				questionInstanceDto.getQuestionMapperInstance().setSubjective(true);
+				 				questionInstanceDto.getQuestionMapperInstance().setVideoUploadUrl(currentQuestion.getVideoUploadUrl());
+				 				/**
+				 				 * Question level persistence code added
+				 				 */
+				 				sectionInstanceService.saveOrUpdateAnswer(questionInstanceDto.getQuestionMapperInstance());
+				 				/**
+				 				 * End Question level persistence
+				 				 */
+				 				break;
+				 			}
+				 			
+				 			if(type != null && type.equals(QuestionType.SUBJECTIVE_TEXT.getType())){
+				 				questionInstanceDto.getQuestionMapperInstance().setSubjective(true);
+				 				questionInstanceDto.getQuestionMapperInstance().setSubjectiveText(currentQuestion.getQuestionMapperInstance().getSubjectiveText());
+				 				
+				 				/**
+				 				 * Question level persistence code added
+				 				 */
+				 				sectionInstanceService.saveOrUpdateAnswer(questionInstanceDto.getQuestionMapperInstance());
+				 				/**
+				 				 * End Question level persistence
+				 				 */
+				 				break;
+				 			}
 				 			
 				 			/**
 				 			 * End Add code for evaluating coding engine Q
@@ -1650,7 +1702,7 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 	 }
 	 
 	 @RequestMapping(value = "/nextQuestion", method = RequestMethod.POST)
-	  public ModelAndView nextQuestion(@RequestParam String questionId, @RequestParam String timeCounter,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("currentQuestion") QuestionInstanceDto currentQuestion) throws Exception {
+	  public ModelAndView nextQuestion(@RequestParam(name="imageVideoData", required=false) MultipartFile imageVideoData, @RequestParam String questionId, @RequestParam String timeCounter,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("currentQuestion") QuestionInstanceDto currentQuestion) throws Exception {
 		// ModelAndView model= new ModelAndView("test_cognizant");
 		 User user = (User) request.getSession().getAttribute("user");
 		 Test test = (Test) request.getSession().getAttribute("test");
@@ -1663,6 +1715,37 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 		 		model= new ModelAndView("test_cognizant");
 //		 		model= new ModelAndView("test_new");
 		 	}
+		 
+		 if(imageVideoData != null &&  imageVideoData.getSize() != 0){
+			 String baseFolder = "";
+			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 baseFolder = propertyConfig.getImageQuestionFolder();
+				 
+			 }
+			 else if(currentQuestion.getType().equals(QuestionType.VIDEO_UPLOAD_BY_USER.getType())){
+				 baseFolder = propertyConfig.getVideoQuestionFolder();
+			 }
+			 
+			 Long questionMapperId = currentQuestion.getQuestionMapperId();
+			 QuestionMapper mapper = questionMapperRep.findById(questionMapperId).get();
+			 
+			 baseFolder += File.separator+user.getEmail()+File.separator+"test"+test.getId()+"qid"+mapper.getQuestion().getId(); 
+			 //+File.separator+imageVideoData.getName()
+			 File file = new File(baseFolder);
+			 file.mkdirs();
+			 File actual = new File(baseFolder+File.separator+imageVideoData.getOriginalFilename());
+			 FileUtils.copyInputStreamToFile(imageVideoData.getInputStream(), actual);
+			 
+			
+			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 currentQuestion.setImageUploadUrl(propertyConfig.getFileServerWebUrl()+"/images/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
+			 }
+			 else{
+				 currentQuestion.setVideoUploadUrl(propertyConfig.getFileServerWebUrl()+"/videos/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
+			 }
+			 
+			// FileUtils.
+		 }
 		 
 		 List<SectionInstanceDto> sectionInstanceDtos = (List<SectionInstanceDto>) request.getSession().getAttribute("sectionInstanceDtos");
 		 model.addObject("sectionInstanceDtos", sectionInstanceDtos);
@@ -2048,7 +2131,7 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 	 
 	 
 	 @RequestMapping(value = "/prevQuestion", method = RequestMethod.POST)
-	  public ModelAndView prevQuestion(@RequestParam String questionId, @RequestParam String timeCounter,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("currentQuestion") QuestionInstanceDto currentQuestion) throws Exception {
+	  public ModelAndView prevQuestion(@RequestParam(name="imageVideoData", required=false) MultipartFile imageVideoData,@RequestParam String questionId, @RequestParam String timeCounter,HttpServletRequest request, HttpServletResponse response,@ModelAttribute("currentQuestion") QuestionInstanceDto currentQuestion) throws Exception {
 		 //ModelAndView model= new ModelAndView("test_cognizant");
 		 User user = (User) request.getSession().getAttribute("user");
 		 Test test = (Test) request.getSession().getAttribute("test");
@@ -2061,6 +2144,37 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 		 		model= new ModelAndView("test_cognizant");
 //		 		model= new ModelAndView("test_new");
 		 	}
+		 
+		 if(imageVideoData != null &&  imageVideoData.getSize() != 0){
+			 String baseFolder = "";
+			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 baseFolder = propertyConfig.getImageQuestionFolder();
+				 
+			 }
+			 else if(currentQuestion.getType().equals(QuestionType.VIDEO_UPLOAD_BY_USER.getType())){
+				 baseFolder = propertyConfig.getVideoQuestionFolder();
+			 }
+			 
+			 Long questionMapperId = currentQuestion.getQuestionMapperId();
+			 QuestionMapper mapper = questionMapperRep.findById(questionMapperId).get();
+			 
+			 baseFolder += File.separator+user.getEmail()+File.separator+"test"+test.getId()+"qid"+mapper.getQuestion().getId(); 
+			 //+File.separator+imageVideoData.getName()
+			 File file = new File(baseFolder);
+			 file.mkdirs();
+			 File actual = new File(baseFolder+File.separator+imageVideoData.getOriginalFilename());
+			 FileUtils.copyInputStreamToFile(imageVideoData.getInputStream(), actual);
+			 
+			
+			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 currentQuestion.setImageUploadUrl(propertyConfig.getFileServerWebUrl()+"/images/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
+			 }
+			 else{
+				 currentQuestion.setVideoUploadUrl(propertyConfig.getFileServerWebUrl()+"/videos/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
+			 }
+			 
+			// FileUtils.
+		 }
 		 
 		 List<SectionInstanceDto> sectionInstanceDtos = (List<SectionInstanceDto>) request.getSession().getAttribute("sectionInstanceDtos");
 		 model.addObject("sectionInstanceDtos", sectionInstanceDtos);
@@ -2132,8 +2246,8 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			}
 			else {
 				//Save test and generate result
-				model= new ModelAndView("intro");
-//				model= new ModelAndView("intro_new");
+				//model= new ModelAndView("intro");
+				model= new ModelAndView("intro_new");
 				putMiscellaneousInfoInModel(model, request);
 				return model;
 			}
@@ -2183,7 +2297,7 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 	 }
 	 
 	 @RequestMapping(value = "/submitTest", method = RequestMethod.POST)
-	  public ModelAndView submitTest(@RequestParam String questionId, @RequestParam String timeCounter, HttpServletRequest request, HttpServletResponse response,@ModelAttribute("currentQuestion") QuestionInstanceDto currentQuestion) {
+	  public ModelAndView submitTest(@RequestParam(name="imageVideoData", required=false) MultipartFile imageVideoData, @RequestParam String questionId, @RequestParam String timeCounter, HttpServletRequest request, HttpServletResponse response,@ModelAttribute("currentQuestion") QuestionInstanceDto currentQuestion) throws IOException {
 //		 Boolean submitted = (Boolean) request.getSession().getAttribute("submitted");
 //		 	if(submitted != null && (submitted)){
 //		 		request.getSession().invalidate();
@@ -2204,6 +2318,37 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 		 List<SectionInstanceDto> sectionInstanceDtos = (List<SectionInstanceDto>) request.getSession().getAttribute("sectionInstanceDtos");
 		 model.addObject("sectionInstanceDtos", sectionInstanceDtos);
 		 SectionInstanceDto currentSection = (SectionInstanceDto) request.getSession().getAttribute("currentSection");
+		 
+		 if(imageVideoData != null &&  imageVideoData.getSize() != 0){
+			 String baseFolder = "";
+			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 baseFolder = propertyConfig.getImageQuestionFolder();
+				 
+			 }
+			 else if(currentQuestion.getType().equals(QuestionType.VIDEO_UPLOAD_BY_USER.getType())){
+				 baseFolder = propertyConfig.getVideoQuestionFolder();
+			 }
+			 
+			 Long questionMapperId = currentQuestion.getQuestionMapperId();
+			 QuestionMapper mapper = questionMapperRep.findById(questionMapperId).get();
+			 
+			 baseFolder += File.separator+user.getEmail()+File.separator+"test"+test.getId()+"qid"+mapper.getQuestion().getId(); 
+			 //+File.separator+imageVideoData.getName()
+			 File file = new File(baseFolder);
+			 file.mkdirs();
+			 File actual = new File(baseFolder+File.separator+imageVideoData.getOriginalFilename());
+			 FileUtils.copyInputStreamToFile(imageVideoData.getInputStream(), actual);
+			 
+			
+			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+				 currentQuestion.setImageUploadUrl(propertyConfig.getFileServerWebUrl()+"/images/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
+			 }
+			 else{
+				 currentQuestion.setVideoUploadUrl(propertyConfig.getFileServerWebUrl()+"/videos/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
+			 }
+			 
+			// FileUtils.
+		 }
 		 //if(currentQuestion.getQuestionMapperInstance().getQuestionMapper().getQuestion().getQuestionType() != null && currentQuestion.getQuestionMapperInstance().getQuestionMapper().getQuestion().getQuestionType().getType().equals(QuestionType.CODING.getType())){
 		 	//	currentQuestion.setCode(currentQuestion.getQuestionMapperInstance().getQuestionMapper().getQuestion().getInputCode().replaceAll("\\r\\n|\\r|\\n", "<br />"));
 //			if(currentQuestion.getCode() != null){
@@ -2245,6 +2390,7 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 		 			 
 		 		}
 		 	}
+		 	
 		 	DecimalFormat df = new DecimalFormat("##.##");
 		 	if(test.getConsiderConfidence() != null && test.getConsiderConfidence()){
 		 		confidencePercent = df.format(100 * ((float)totConfidence/totQs));
@@ -2258,6 +2404,28 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			userTestSession.setTest(test);
 			userTestSession.setTestName(test.getTestName());
 			userTestSession.setComplete(true);
+			userTestSession.setCollegeName(user.getCollegeName());
+			userTestSession.setGrade(user.getGrade());
+			userTestSession.setClassifier(user.getClassifier());
+			userTestSession.setFirstName(user.getFirstName());
+			userTestSession.setLastName(user.getLastName());
+			
+			/**
+		 	 * Add subjective type to usertestsession
+		 	 */
+		 	
+			 	for(SectionInstanceDto sectionInstanceDto : sectionInstanceDtos) {
+			 		for(QuestionInstanceDto dto : sectionInstanceDto.getQuestionInstanceDtos()){
+			 			String tp = dto.getQuestionMapperInstance().getQuestionMapper().getQuestion().getQuestionType().getType();
+			 			if(tp.equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType()) || tp.equals(QuestionType.VIDEO_UPLOAD_BY_USER.getType()) || tp.equals(QuestionType.SUBJECTIVE_TEXT.getType())){
+			 				userTestSession.setSubjective(true);
+			 			}
+			 		}
+			 	}
+		 	/**
+		 	 * End Add subjective type to usertestsession
+		 	 */
+			
 			
 			/**
 			 * Store sectio results in user test session
@@ -2294,8 +2462,23 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			 //Float testWeightedScore = questionMapperInstaceService.getWeightedTestScore(user.getEmail(), test.getTestName(), user.getCompanyId());
 			// userTestSession.setWeightedScorePercentage(testWeightedScore);
 			// that code in userTestSessionService.saveOrUpdate method now
+			
 			 /**
 			  * End set weighted score
+			  */
+			 /**
+			  * Save no of non compliances on UserTestSession object
+			  */
+			 
+			 UserNonCompliance nonCompliance = userNonComplianceService.findNonCompliance(user.getEmail(), test.getTestName(), user.getCompanyId());
+			 	if(nonCompliance == null){
+			 		userTestSession.setNoOfNonCompliances(0);
+			 	}
+			 	else{
+			 		userTestSession.setNoOfNonCompliances(nonCompliance.getNoOfNonCompliances() == null?0:nonCompliance.getNoOfNonCompliances());
+			 	}
+			 /**
+			  * End Save no of non compliances on UserTestSession object
 			  */
 			 userTestSession = userTestSessionService.saveOrUpdate(userTestSession);
 			
@@ -2354,6 +2537,7 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 		}
 		 return model;
 	 }
+	 
 	 
 	 private ModelAndView getTraitsForUserForTest(String user, String companyId, String testName, ModelAndView model){
 		 List<UserTrait> traits = reportsService.getUserTraits(companyId, testName, user);

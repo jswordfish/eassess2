@@ -546,9 +546,9 @@ public class TestController {
 			request.getSession().invalidate();
 			mav = new ModelAndView("index");
 			user = new User();
-			user.setEmail("system@iiht.com");
+			user.setEmail("admin@eassess.in");
 			user.setPassword("1234");
-			user.setCompanyName("IIHT");
+			user.setCompanyName("E-Assess");
 			mav.addObject("user", user);
 			return mav;
 		}
@@ -1042,9 +1042,9 @@ public class TestController {
 			request.getSession().invalidate();
 			mav = new ModelAndView("index");
 			user = new User();
-			user.setEmail("system@iiiht.com");
+			user.setEmail("admin@eassess.in");
 			user.setPassword("1234");
-			user.setCompanyName("IIHT");
+			user.setCompanyName("E-Assess");
 			mav.addObject("user", user);
 			return mav;
 		}
@@ -1303,8 +1303,11 @@ public class TestController {
 	public ModelAndView searchQByQualifier1(@RequestParam String qualifier1, HttpServletRequest request,
 			HttpServletResponse response) {
 		String referer = request.getHeader("Referer");
-		ModelAndView mav = new ModelAndView("add_test_step2_new3");
 		User user = (User) request.getSession().getAttribute("user");
+		ModelAndView mav = new ModelAndView("add_test_step2_new3");
+		if(user.getUserType().equals(UserType.LMS_ADMIN)) {
+			mav.setViewName("lms_add_test_step2_new3");
+		}
 
 		Test test = (Test) request.getSession().getAttribute("test");
 		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
@@ -1326,6 +1329,9 @@ public class TestController {
 		String referer = request.getHeader("Referer");
 		ModelAndView mav = new ModelAndView("add_test_step2_new3");
 		User user = (User) request.getSession().getAttribute("user");
+		if(user.getUserType().equals(UserType.LMS_ADMIN)) {
+			mav.setViewName("lms_add_test_step2_new3");
+		}
 		List<Question> questions = questionService.findQuestionsByQualifier2(user.getCompanyId(),
 				qualifier1, qualifier2);
 		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
@@ -1346,6 +1352,9 @@ public class TestController {
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("add_test_step2_new3");
 		User user = (User) request.getSession().getAttribute("user");
+		if(user.getUserType().equals(UserType.LMS_ADMIN)) {
+			mav.setViewName("lms_add_test_step2_new3");
+		}
 		List<Question> questions = questionService.findQuestionsByQualifier3(user.getCompanyId(),
 				qualifier1, qualifier2, qualifier3);
 		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
@@ -1367,6 +1376,9 @@ public class TestController {
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("add_test_step2_new3");
 		User user = (User) request.getSession().getAttribute("user");
+		if(user.getUserType().equals(UserType.LMS_ADMIN)) {
+			mav.setViewName("lms_add_test_step2_new3");
+		}
 		List<Question> questions = questionService.findQuestionsByQualifier4(user.getCompanyId(),
 				qualifier1, qualifier2, qualifier3, qualifier4);
 		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
@@ -1388,6 +1400,9 @@ public class TestController {
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("add_test_step2_new3");
 		User user = (User) request.getSession().getAttribute("user");
+		if(user.getUserType().equals(UserType.LMS_ADMIN)) {
+			mav.setViewName("lms_add_test_step2_new3");
+		}
 		List<Question> questions = questionService.findQuestionsByQualifier5(user.getCompanyId(),
 				qualifier1, qualifier2, qualifier3, qualifier4, qualifier5);
 		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
@@ -1407,6 +1422,9 @@ public class TestController {
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("add_test_step2_new3");
 		User user = (User) request.getSession().getAttribute("user");
+		if(user.getUserType().equals(UserType.LMS_ADMIN)) {
+			mav.setViewName("lms_add_test_step2_new3");
+		}
 		List<Question> questions = questionService.searchQuestions(user.getCompanyId(), searchText);
 		Test test = (Test) request.getSession().getAttribute("test");
 		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
@@ -1448,7 +1466,7 @@ public class TestController {
 			welcomeMailData = welcomeMailData.replace("{TEST_NAME}", testName);
 			welcomeMailData = welcomeMailData.replace("{URL}", url);
 			EmailGenericMessageThread client = new EmailGenericMessageThread(email,
-					"Test Link - " + testName + " Sent by IIHT", welcomeMailData,
+					"Test Link - " + testName + " Sent by E-Assess", welcomeMailData,
 					propertyConfig);
 			// client.setEmailSentCC(emailSentCC);
 			// client.setSetStatus(true);
@@ -1494,7 +1512,7 @@ public class TestController {
 			welcomeMailData = welcomeMailData.replace("{TEST_NAME}", testName);
 			welcomeMailData = welcomeMailData.replace("{URL}", url);
 			EmailGenericMessageThread client = new EmailGenericMessageThread(email,
-					"Test Link - " + testName + " Sent by IIHT", welcomeMailData,
+					"Test Link - " + testName + " Sent by E-Assess", welcomeMailData,
 					propertyConfig);
 			// client.setSetStatus(true);
 			Thread th = new Thread(client);
@@ -1546,6 +1564,7 @@ public class TestController {
 		Page<Test> tests = testService.findByCompanyId(user.getCompanyId(), 0);
 		mav.addObject("tests", testService.populateWithPublicUrl(tests.getContent()));
 		// mav.addObject("tests", tests);
+		CommonUtil.setCommonAttributesOfPagination(tests, mav.getModelMap(), 0, "testlist", null);
 		return mav;
 	}
 
@@ -1566,7 +1585,7 @@ public class TestController {
 			welcomeMailData = welcomeMailData.replace("{TEST_NAME}", test.getTestName());
 			welcomeMailData = welcomeMailData.replace("{URL}", url);
 			EmailGenericMessageThread client = new EmailGenericMessageThread(email,
-					"Test Link - " + test.getTestName() + " Sent by IIHT",
+					"Test Link - " + test.getTestName() + " Sent by E-Assess",
 					welcomeMailData, propertyConfig, fileStatusService);
 			client.setSetStatus(true);
 			Thread th = new Thread(client);

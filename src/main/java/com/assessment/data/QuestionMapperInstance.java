@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,128 +12,147 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.bouncycastle.util.encoders.Base64Encoder;
 /**
  * Primary key - questionMapper & companyId
+ * 
  * @author jsutaria
  *
  */
 @Entity
-public class QuestionMapperInstance extends Base{
+public class QuestionMapperInstance extends Base {
 	@ManyToOne
 	QuestionMapper questionMapper;
-	
-	
+
 	String userChoices;
-	
+
 	Boolean correct = false;
-	
+
 	Boolean answered = false;
-	
-	@Column(length=2000)
+
+	@Column(length = 2000)
 	String questionText;
-	
-	
+
 	@Transient
 	String encodedQuestionText;
-	
+
 	@javax.validation.constraints.NotNull
 	String testName;
-	
+
 	@javax.validation.constraints.NotNull
 	String sectionName;
-	
+
 	@javax.validation.constraints.NotNull
 	String user;
-	
+
 	String codingOuputBySystemTestCase;
-	
+
 	@Lob
 	String codeByUser;
-	
+
 	@Lob
 	String reviewerComments;
-	
-	@Column(length=400)
+
+	@Column(length = 400)
 	String workspaceUrl;
-	
+
 	@Transient
 	String encodedUrl;
-	
-	@Column(length=200)
+
+	@Column(length = 200)
 	String workSpaceId;
-	
-	@Column(length=400)
+
+	@Column(length = 400)
 	String usageDocumentUrl;
-	
+
 	@Column
 	Boolean workspaceSubmitted;
-	
+
 	@Transient
 	String uerFullName;
-	//Long userTestSessionId;
-	
+	// Long userTestSessionId;
+
 	@Transient
 	String workspaceDateOfSubmission;
-	
+
 	Boolean confidence;
-	
+
 	Boolean codeCompilationErrors;
-	
+
 	Boolean codeRunTimeErrors;
-	
+
 	Boolean testCaseInputPositive;
-	
+
 	Boolean testCaseInputNegative;
-	
+
 	Boolean testCaseMinimalValue;
-	
+
 	Boolean testCaseMaximumValue;
-	
+
 	Boolean testCaseInvalidData;
-	
+
 	Integer noOfTestCases;
-	
+
 	Integer noOfTestCasesPassed;
-	
+
 	Integer functionalTestCases;
 	Integer boundaryTestCases;
 	Integer exceptionTestCases;
-	
+
 	Integer functionalTestCasesPassed;
 	Integer boundaryTestCasesPassed;
 	Integer exceptionTestCasesPassed;
-	
+
 	String courseName;
-	
+
 	String moduleName;
-	
+
 	String learningPathName;
-	
+
 	@Transient
 	String lastDate;
-	
+
 	@Transient
 	String[] fillInBlanksAnswer;
-	
-	
-	
+
 	String matchRight1;
-	
+
 	String matchRight2;
-	
+
 	String matchRight3;
-	
+
 	String matchRight4;
-	
+
 	String matchRight5;
-	
+
 	String matchRight6;
-	
+
 	@Lob
 	String testCasesResultXml;
-	
+
 	Long testId;
+
+	@Column(length = 1000)
+	String imageUploadUrl;
+
+	@Column(length = 1000)
+	String videoUploadUrl;
+
+	@Column(length = 5000)
+	String subjectiveText;
+
+	Boolean subjective = false;
+
+	Boolean markComplete;
+
+	Integer marksAssignedInPercentIncaseSubjective;
+
+	String reviewedBy;
+
+	@Transient
+	String style;
+
+	@Column(length = 1000)
+	String reviewerCommentsForSubjectiveQuestion;
 
 	public QuestionMapper getQuestionMapper() {
 		return questionMapper;
@@ -141,8 +161,6 @@ public class QuestionMapperInstance extends Base{
 	public void setQuestionMapper(QuestionMapper questionMapper) {
 		this.questionMapper = questionMapper;
 	}
-
-
 
 	public Boolean getCorrect() {
 		return correct;
@@ -166,34 +184,33 @@ public class QuestionMapperInstance extends Base{
 
 	public void setUserChoices(String userChoices) {
 		this.userChoices = userChoices;
-		if(this.userChoices != null){
-			if(userChoices.length() > 0) {
+		if (this.userChoices != null) {
+			if (userChoices.length() > 0) {
 				setAnswered(true);
 				String choices = getQuestionMapper().getQuestion().getRightChoices();
 				String correct[] = choices.split("-");
 				String userC[] = userChoices.split("-");
-				//String correct[] = choices.split("-");
-				//String userC[] = userChoices.split("-");
-				if(Arrays.equals(correct, userC)) {
+				// String correct[] = choices.split("-");
+				// String userC[] = userChoices.split("-");
+				if (Arrays.equals(correct, userC)) {
 					setCorrect(true);
 				}
-			}
-			else {
+			} else {
 				setAnswered(false);
 			}
-		}
-		else{
+		} else {
 			String type = getQuestionMapper().getQuestion().getQuestionType().getType();
-			if(type.equals(QuestionType.CODING.getType()) || type.equals(QuestionType.FILL_BLANKS_MCQ.getType()) || type.equals(QuestionType.MATCH_FOLLOWING_MCQ.getType()) || type.equals(QuestionType.FULL_STACK_JAVA.getType()) || type.equals(QuestionType.FULLSTACK.getType())){
+			if (type.equals(QuestionType.CODING.getType())
+					|| type.equals(QuestionType.FILL_BLANKS_MCQ.getType())
+					|| type.equals(QuestionType.MATCH_FOLLOWING_MCQ.getType())
+					|| type.equals(QuestionType.FULL_STACK_JAVA.getType())
+					|| type.equals(QuestionType.FULLSTACK.getType())) {
 				setAnswered(true);
-			}
-			else{
+			} else {
 				setAnswered(false);
 			}
 		}
-			
-		
-		
+
 	}
 
 	public String getUser() {
@@ -233,25 +250,27 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public void setCodingOuputBySystemTestCase(String codingOuputBySystemTestCase) {
-		codingOuputBySystemTestCase = codingOuputBySystemTestCase == null?"":(codingOuputBySystemTestCase.trim());
+		codingOuputBySystemTestCase = codingOuputBySystemTestCase == null ? ""
+				: (codingOuputBySystemTestCase.trim());
 		this.codingOuputBySystemTestCase = codingOuputBySystemTestCase;
-		
-		
-			if(getCodeCompilationErrors()){
-				setCorrect(false);
-			}
-			
-			//System.out.println("in codingOuputBySystemTestCase "+codingOuputBySystemTestCase);
-		//	System.out.println("in codingOuputBySystemTestCase2 "+getQuestionMapper().getQuestion().getHiddenOutputNegative());
-		
-		if(getQuestionMapper().getQuestion().getHiddenOutputNegative().equalsIgnoreCase(codingOuputBySystemTestCase == null?"":codingOuputBySystemTestCase)){
-			setTestCaseInputNegative(true);
-			//System.out.println("in setCodingOuputBySystemTestCase "+true);
-			setCorrect(true);
+
+		if (getCodeCompilationErrors()) {
+			setCorrect(false);
 		}
-		else{
+
+		// System.out.println("in codingOuputBySystemTestCase
+		// "+codingOuputBySystemTestCase);
+		// System.out.println("in codingOuputBySystemTestCase2
+		// "+getQuestionMapper().getQuestion().getHiddenOutputNegative());
+
+		if (getQuestionMapper().getQuestion().getHiddenOutputNegative().equalsIgnoreCase(
+				codingOuputBySystemTestCase == null ? "" : codingOuputBySystemTestCase)) {
+			setTestCaseInputNegative(true);
+			// System.out.println("in setCodingOuputBySystemTestCase "+true);
+			setCorrect(true);
+		} else {
 			setTestCaseInputNegative(false);
-			//System.out.println("in setCodingOuputBySystemTestCase "+false);
+			// System.out.println("in setCodingOuputBySystemTestCase "+false);
 			setCorrect(false);
 		}
 		setAnswered(true);
@@ -316,16 +335,14 @@ public class QuestionMapperInstance extends Base{
 	public String getWorkspaceDateOfSubmission() {
 		String pattern = "dd-MMM-yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		if(getUpdateDate() == null) {
-			if(getCreateDate() == null) {
+		if (getUpdateDate() == null) {
+			if (getCreateDate() == null) {
 				return "Not Available";
-			}
-			else {
+			} else {
 				return simpleDateFormat.format(getCreateDate());
 			}
-			
-		}
-		else {
+
+		} else {
 			return simpleDateFormat.format(getUpdateDate());
 		}
 	}
@@ -343,7 +360,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getTestCaseInputPositive() {
-		if(this.testCaseInputPositive == null){
+		if (this.testCaseInputPositive == null) {
 			return false;
 		}
 		return testCaseInputPositive;
@@ -354,7 +371,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getTestCaseInputNegative() {
-		if(this.testCaseInputNegative == null){
+		if (this.testCaseInputNegative == null) {
 			return false;
 		}
 		return testCaseInputNegative;
@@ -365,7 +382,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getTestCaseMinimalValue() {
-		if(this.testCaseMinimalValue == null){
+		if (this.testCaseMinimalValue == null) {
 			return false;
 		}
 		return testCaseMinimalValue;
@@ -376,7 +393,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getTestCaseMaximumValue() {
-		if(this.testCaseMaximumValue == null){
+		if (this.testCaseMaximumValue == null) {
 			return false;
 		}
 		return testCaseMaximumValue;
@@ -387,7 +404,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getTestCaseInvalidData() {
-		if(this.testCaseInvalidData == null){
+		if (this.testCaseInvalidData == null) {
 			return false;
 		}
 		return testCaseInvalidData;
@@ -398,7 +415,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getCodeCompilationErrors() {
-		if(this.codeCompilationErrors == null){
+		if (this.codeCompilationErrors == null) {
 			return false;
 		}
 		return codeCompilationErrors;
@@ -409,9 +426,9 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public Boolean getCodeRunTimeErrors() {
-			if(this.codeRunTimeErrors == null){
-				return false;
-			}
+		if (this.codeRunTimeErrors == null) {
+			return false;
+		}
 		return codeRunTimeErrors;
 	}
 
@@ -420,8 +437,8 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public String getEncodedUrl() {
-		
-		if(getWorkspaceUrl() == null || getWorkspaceUrl().trim().length() == 0){
+
+		if (getWorkspaceUrl() == null || getWorkspaceUrl().trim().length() == 0) {
 			return "";
 		}
 		return URLEncoder.encode(Base64.getEncoder().encodeToString(getWorkspaceUrl().getBytes()));
@@ -432,7 +449,7 @@ public class QuestionMapperInstance extends Base{
 	}
 
 	public String getEncodedQuestionText() {
-		if(getQuestionText() == null){
+		if (getQuestionText() == null) {
 			return "";
 		}
 		return new org.apache.commons.codec.binary.Base64().encodeAsString(getQuestionText().getBytes());
@@ -610,10 +627,87 @@ public class QuestionMapperInstance extends Base{
 		this.testId = testId;
 	}
 
-	
-	
-	
-	
-	
-	
+	public String getImageUploadUrl() {
+		return imageUploadUrl;
+	}
+
+	public void setImageUploadUrl(String imageUploadUrl) {
+		this.imageUploadUrl = imageUploadUrl;
+	}
+
+	public String getVideoUploadUrl() {
+		return videoUploadUrl;
+	}
+
+	public void setVideoUploadUrl(String videoUploadUrl) {
+		this.videoUploadUrl = videoUploadUrl;
+	}
+
+	public String getSubjectiveText() {
+		return subjectiveText;
+	}
+
+	public void setSubjectiveText(String subjectiveText) {
+		this.subjectiveText = subjectiveText;
+	}
+
+	public Boolean getSubjective() {
+		return subjective;
+	}
+
+	public void setSubjective(Boolean subjective) {
+		this.subjective = subjective;
+	}
+
+	public Boolean getMarkComplete() {
+		return markComplete;
+	}
+
+	public void setMarkComplete(Boolean markComplete) {
+		this.markComplete = markComplete;
+	}
+
+	public Integer getMarksAssignedInPercentIncaseSubjective() {
+		return marksAssignedInPercentIncaseSubjective;
+	}
+
+	public void setMarksAssignedInPercentIncaseSubjective(Integer marksAssignedInPercentIncaseSubjective) {
+		this.marksAssignedInPercentIncaseSubjective = marksAssignedInPercentIncaseSubjective;
+	}
+
+	public String getReviewedBy() {
+		return reviewedBy;
+	}
+
+	public void setReviewedBy(String reviewedBy) {
+		this.reviewedBy = reviewedBy;
+	}
+
+	@Transient
+	public String getTimeOfAnswer() {
+		Date dt = getUpdateDate() == null ? getCreateDate() : getUpdateDate();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+		if (dt != null) {
+			return dateFormat.format(dt);
+		} else {
+			return "NA";
+		}
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	public String getReviewerCommentsForSubjectiveQuestion() {
+		return reviewerCommentsForSubjectiveQuestion;
+	}
+
+	public void setReviewerCommentsForSubjectiveQuestion(String reviewerCommentsForSubjectiveQuestion) {
+		this.reviewerCommentsForSubjectiveQuestion = reviewerCommentsForSubjectiveQuestion;
+	}
+
 }

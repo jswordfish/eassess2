@@ -119,6 +119,12 @@ public class ModuleServiceImpl implements ModuleService{
 		Module module2 = moduleRep.findById(id).get();
 		moduleRep.deleteById(id);
 	}
+
+	@Override
+	public Page<Module> findByLicenseNamesIn(List<String> licenseName, String companyId, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return moduleRep.findByLicenseNamesInAndCompanyId(licenseName, companyId, pageable);
+	}
 	
 
 }

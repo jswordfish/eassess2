@@ -394,7 +394,7 @@ body * {
 </head>
 <body id="top" class="has-header-search" onload="setTimeOnLoad()">
 	<form:form id="testForm" name="testForm" method="POST"
-		modelAttribute="currentQuestion">
+		modelAttribute="currentQuestion" enctype="multipart/form-data">
 		<!--header start-->
 		<header id="header" class="header tt-nav nav-border-bottom"
 			style="height: auto;">
@@ -497,7 +497,7 @@ body * {
 									</div>
 								</div>
 							</div>
-
+							
 							<c:choose>
 								<c:when
 									test="${currentQuestion.questionMapperInstance.questionMapper.question.type=='MCQ' || currentQuestion.questionMapperInstance.questionMapper.question.type ==null}">
@@ -829,13 +829,6 @@ body * {
 								<c:when test="${currentQuestion.questionMapperInstance.questionMapper.question.type=='FILL_BLANKS_MCQ'}">
 						
 						<div class="queanscenter" id="section1_content">
-							<div class="queprogress">
-								<span style="float: left; width: 100%;">${noAnswered} of ${totalQuestions} answered</span>
-								<div class="progressing">
-									<span style="width: ${percentage}%;"></span>
-								</div>
-								<span class="quepercent">${percentage}%</span>
-							</div>
 
 							<div class="questionname">
 								<div class="verticalline"></div>
@@ -885,13 +878,7 @@ body * {
 							
 						
 						<div class="queanscenter" id="section1_content">
-							<div class="queprogress">
-								<span style="float: left; width: 100%;">${noAnswered} of ${totalQuestions} answered</span>
-								<div class="progressing">
-									<span style="width: ${percentage}%;"></span>
-								</div>
-								<span class="quepercent">${percentage}%</span>
-							</div>
+							 
 
 							<div class="questionname">
 								<div class="verticalline"></div>
@@ -973,6 +960,41 @@ body * {
 						</div>
 						
 						</c:when>
+						<c:when test="${currentQuestion.questionMapperInstance.questionMapper.question.type=='IMAGE_UPLOAD_BY_USER' || currentQuestion.questionMapperInstance.questionMapper.question.type=='VIDEO_UPLOAD_BY_USER'}">
+						<div class="queno">
+																<span>${currentQuestion.position}</span>
+															</div>
+<h3 class="qname">${currentQuestion.questionMapperInstance.questionMapper.question.questionText}</h3>
+						<div class="mcq mt-3">
+							<div class="formfield">
+						<label class="quetestcases">Upload ${currentQuestion.questionMapperInstance.questionMapper.question.type=='IMAGE_UPLOAD_BY_USER'?'Image':'Video'}</label>
+                                        
+                       <input type="file" name="imageVideoData" id="imageVideoData" > 
+					   <form:hidden path = "type" value = "${currentQuestion.questionMapperInstance.questionMapper.question.type}" />
+					   
+					   <form:hidden path = "questionMapperId" value = "${currentQuestion.questionMapperInstance.questionMapper.id}" />
+					   
+					  <!--  <form:input type="file" path="imageVideoData" id="imageVideoData" accept="image/*" />-->
+						</div>
+						
+						</div>
+					</c:when>
+	<c:when test="${currentQuestion.questionMapperInstance.questionMapper.question.type=='SUBJECTIVE_TEXT'}">
+					<div class="queno">
+																<span>${currentQuestion.position}</span>
+															</div>
+<h3 class="qname">${currentQuestion.questionMapperInstance.questionMapper.question.questionText}</h3>
+						<div >
+							
+						<label > Answer the question</label><br/>
+                               <form:textarea path="questionMapperInstance.subjectiveText" rows="7" cols="30" />         
+                        
+						</div>
+						
+<!-- 						</div> -->
+					</c:when>
+						
+						
 							</c:choose>
 
 						</div>
@@ -1801,7 +1823,6 @@ body * {
 			var noOfConfiguredChoices = '${currentQuestion.questionMapperInstance.questionMapper.question.rightChoices}'.split(',').length;
 			var correctNo = ('${currentQuestion.questionMapperInstance.questionMapper.question.rightChoices}'.match(/-/g) || []).length  + 1;
 			
-
 			//console.log('${currentQuestion.questionMapperInstance.questionMapper.question.rightChoices}');
 			//console.log('correct choices'+correctNo);
 			//console.log('no of chosen choices'+count);
@@ -1820,12 +1841,12 @@ body * {
 	
 	if(qType == 'CODING'){
 		var textarea = document.getElementById('codeOfEditor');
- 		edt = editor.getSession().getValue();
+		edt = editor.getSession().getValue();
 		textarea.value = edt;
 	}
 	
 	setMtfValues(qType);
- 
+	
 //edt.value = editor.getSession().getValue();
 	var linktext=document.getElementById('next').text;
 		if(linktext == 'Finish Test'){
@@ -1834,9 +1855,8 @@ body * {
 		else{
 		document.testForm.action = "nextQuestion?questionId=${currentQuestion.questionMapperInstance.questionMapper.id}&timeCounter="+timeCounter;
 		storeTimeLocal();
-	 document.testForm.submit();
+		document.testForm.submit();
 		}
-	
 	}
 	
 	
