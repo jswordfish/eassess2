@@ -6446,3 +6446,114 @@ Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to
 2020-06-21 09:55:12 INFO  GenericApplicationContext:993 - Closing org.springframework.context.support.GenericApplicationContext@74a10858: startup date [Sun Jun 21 09:51:51 IST 2020]; root of context hierarchy
 2020-06-21 09:55:12 INFO  ThreadPoolTaskScheduler:208 - Shutting down ExecutorService 'scheduler'
 2020-06-21 09:55:12 INFO  LocalContainerEntityManagerFactoryBean:597 - Closing JPA EntityManagerFactory for persistence unit 'V2CRM_PersistenceUnit'
+2020-07-04 17:22:56 INFO  DefaultTestContextBootstrapper:248 - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2020-07-04 17:22:56 INFO  DefaultTestContextBootstrapper:177 - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@687080dc, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@23d2a7e8, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@7a9273a8, org.springframework.test.context.support.DirtiesContextTestExecutionListener@26a7b76d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4abdb505, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@7ce6a65d]
+2020-07-04 17:22:57 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [appContext.xml]
+2020-07-04 17:22:59 INFO  GenericApplicationContext:590 - Refreshing org.springframework.context.support.GenericApplicationContext@1786f9d5: startup date [Sat Jul 04 17:22:59 IST 2020]; root of context hierarchy
+2020-07-04 17:23:00 INFO  AutowiredAnnotationBeanPostProcessor:154 - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2020-07-04 17:23:00 INFO  MLog:212 - MLog clients using slf4j logging.
+2020-07-04 17:23:02 INFO  C3P0Registry:212 - Initializing c3p0-0.9.5.2 [built 08-December-2015 22:06:04 -0800; debug? true; trace: 10]
+2020-07-04 17:23:02 INFO  LocalContainerEntityManagerFactoryBean:361 - Building JPA container EntityManagerFactory for persistence unit 'V2CRM_PersistenceUnit'
+2020-07-04 17:23:02 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [
+	name: V2CRM_PersistenceUnit
+	...]
+2020-07-04 17:23:03 INFO  Version:37 - HHH000412: Hibernate Core {5.1.3.Final}
+2020-07-04 17:23:03 INFO  Environment:213 - HHH000206: hibernate.properties not found
+2020-07-04 17:23:03 INFO  Environment:317 - HHH000021: Bytecode provider name : javassist
+2020-07-04 17:23:03 INFO  Version:66 - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2020-07-04 17:23:04 INFO  AbstractPoolBackedDataSource:212 - Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 180000, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, contextClassLoaderSource -> caller, dataSourceName -> 1hgeby9ab74fp1r1j55oxr|5a9d6f02, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, extensions -> {}, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, forceSynchronousCheckins -> false, forceUseNamedDriverClass -> false, identityToken -> 1hgeby9ab74fp1r1j55oxr|5a9d6f02, idleConnectionTestPeriod -> 60, initialPoolSize -> 3, jdbcUrl -> jdbc:mysql://localhost:3306/assessment2?createDatabaseIfNotExist=true, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 10, maxIdleTime -> 180, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 25, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 6, numHelperThreads -> 3, preferredTestQuery -> SELECT 1, privilegeSpawnedThreads -> false, properties -> {user=******, password=******}, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> true, testConnectionOnCheckout -> true, unreturnedConnectionTimeout -> 0, userOverrides -> {}, usesTraditionalReflectiveProxies -> false ]
+2020-07-04 17:23:04 WARN  BasicResourcePool:220 - Bad pool size config, start 3 < min 6. Using 6 as start.
+2020-07-04 17:23:04 INFO  Dialect:156 - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-07-04 17:23:06 INFO  Version:30 - HV000001: Hibernate Validator 5.4.0.Final
+2020-07-04 17:23:10 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: AdaptiveAssessment
+2020-07-04 17:23:10 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: AdaptiveAssessment
+2020-07-04 17:23:11 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: AdaptiveAssessment_Skill
+2020-07-04 17:23:11 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: AdaptiveAssessment_Skill
+2020-07-04 17:23:12 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CandidateProfileParams
+2020-07-04 17:23:12 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CandidateProfileParams
+2020-07-04 17:23:12 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CheCluster
+2020-07-04 17:23:13 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CheCluster
+2020-07-04 17:23:13 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CodeMetrics
+2020-07-04 17:23:13 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CodeMetrics
+2020-07-04 17:23:13 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Company
+2020-07-04 17:23:13 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Company
+2020-07-04 17:23:14 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Course
+2020-07-04 17:23:14 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Course
+2020-07-04 17:23:14 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CourseModule
+2020-07-04 17:23:14 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: CourseModule
+2020-07-04 17:23:14 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Enrollment
+2020-07-04 17:23:14 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Enrollment
+2020-07-04 17:23:15 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: FileStatus
+2020-07-04 17:23:15 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: FileStatus
+2020-07-04 17:23:16 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: hibernate_sequence
+2020-07-04 17:23:16 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: hibernate_sequence
+2020-07-04 17:23:20 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: JobDescription
+2020-07-04 17:23:20 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: JobDescription
+2020-07-04 17:23:21 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: JobDescriptionSkill
+2020-07-04 17:23:21 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: JobDescriptionSkill
+2020-07-04 17:23:21 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LearnersProfileParam
+2020-07-04 17:23:21 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LearnersProfileParam
+2020-07-04 17:23:22 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LearningPath
+2020-07-04 17:23:22 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LearningPath
+2020-07-04 17:23:23 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LearningPath_Course
+2020-07-04 17:23:23 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LearningPath_Course
+2020-07-04 17:23:23 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: License
+2020-07-04 17:23:23 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: License
+2020-07-04 17:23:23 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LMSUserModuleMapping
+2020-07-04 17:23:23 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: LMSUserModuleMapping
+2020-07-04 17:23:24 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Module
+2020-07-04 17:23:24 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Module
+2020-07-04 17:23:24 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: ModuleItem
+2020-07-04 17:23:24 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: ModuleItem
+2020-07-04 17:23:25 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Person
+2020-07-04 17:23:25 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Person
+2020-07-04 17:23:25 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Pet
+2020-07-04 17:23:25 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Pet
+2020-07-04 17:23:26 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Question
+2020-07-04 17:23:26 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Question
+2020-07-04 17:23:26 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: QuestionMapper
+2020-07-04 17:23:26 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: QuestionMapper
+2020-07-04 17:23:27 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: QuestionMapperInstance
+2020-07-04 17:23:27 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: QuestionMapperInstance
+2020-07-04 17:23:27 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Section
+2020-07-04 17:23:27 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Section
+2020-07-04 17:23:28 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: SectionInstance
+2020-07-04 17:23:28 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: SectionInstance
+2020-07-04 17:23:28 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Skill
+2020-07-04 17:23:28 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Skill
+2020-07-04 17:23:29 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Tenant
+2020-07-04 17:23:29 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Tenant
+2020-07-04 17:23:29 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Test
+2020-07-04 17:23:29 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Test
+2020-07-04 17:23:30 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Test_Skill
+2020-07-04 17:23:30 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: Test_Skill
+2020-07-04 17:23:31 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestDomainMapping
+2020-07-04 17:23:31 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestDomainMapping
+2020-07-04 17:23:31 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestLinkTime
+2020-07-04 17:23:31 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestLinkTime
+2020-07-04 17:23:31 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestProgram
+2020-07-04 17:23:31 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestProgram
+2020-07-04 17:23:32 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestScheduler
+2020-07-04 17:23:32 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestScheduler
+2020-07-04 17:23:32 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestScheduler_userEmails
+2020-07-04 17:23:32 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: TestScheduler_userEmails
+2020-07-04 17:23:32 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: User
+2020-07-04 17:23:32 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: User
+2020-07-04 17:23:33 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserNonCompliance
+2020-07-04 17:23:33 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserNonCompliance
+2020-07-04 17:23:33 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserOtp
+2020-07-04 17:23:33 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserOtp
+2020-07-04 17:23:34 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserTestMapping
+2020-07-04 17:23:34 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserTestMapping
+2020-07-04 17:23:35 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserTestSession
+2020-07-04 17:23:35 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserTestSession
+2020-07-04 17:23:35 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserTestTimeCounter
+2020-07-04 17:23:35 INFO  InformationExtractorJdbcDatabaseMetaDataImpl:395 - HHH000262: Table not found: UserTestTimeCounter
+2020-07-04 17:23:53 INFO  LocalContainerEntityManagerFactoryBean:415 - Initialized JPA EntityManagerFactory for persistence unit 'V2CRM_PersistenceUnit'
+2020-07-04 17:23:55 INFO  QueryTranslatorFactoryInitiator:47 - HHH000397: Using ASTQueryTranslatorFactory
+2020-07-04 17:23:58 INFO  ThreadPoolTaskScheduler:171 - Initializing ExecutorService  'scheduler'
+2020-07-04 17:23:59 INFO  TransactionContext:107 - Began transaction (1) for test context [DefaultTestContext@58701e8c testClass = TestModule, testInstance = com.test.TestModule@951461a, testMethod = testFindModules@TestModule, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2f0e7008 testClass = TestModule, locations = '{classpath:appContext.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextCustomizers = set[[empty]], contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]], attributes = map[[empty]]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@446fb72e]; rollback [false]
+2020-07-04 17:23:59 INFO  TransactionContext:139 - Committed transaction for test: [DefaultTestContext@58701e8c testClass = TestModule, testInstance = com.test.TestModule@951461a, testMethod = testFindModules@TestModule, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@2f0e7008 testClass = TestModule, locations = '{classpath:appContext.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextCustomizers = set[[empty]], contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]], attributes = map[[empty]]]
+2020-07-04 17:23:59 INFO  GenericApplicationContext:993 - Closing org.springframework.context.support.GenericApplicationContext@1786f9d5: startup date [Sat Jul 04 17:22:59 IST 2020]; root of context hierarchy
+2020-07-04 17:23:59 INFO  ThreadPoolTaskScheduler:208 - Shutting down ExecutorService 'scheduler'
+2020-07-04 17:23:59 INFO  LocalContainerEntityManagerFactoryBean:597 - Closing JPA EntityManagerFactory for persistence unit 'V2CRM_PersistenceUnit'

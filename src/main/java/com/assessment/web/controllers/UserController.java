@@ -973,6 +973,8 @@ public class UserController {
 			}
 		}
 		mav.addObject("licenses", lics);
+		List<Module> freeModules = moduleService.findFreeModules(user.getCompanyId());
+		mav.addObject("freeModules", freeModules);
 		return mav;
 
 	}
@@ -984,7 +986,7 @@ public class UserController {
 			HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		User user = (User) request.getSession().getAttribute("user");
 		String all = "<div class=\"colorlib-classes colorlib-light-grey\"  >		\n\t		<div class=\"container\">				\n\t\t					<div class=\"row\">													{MODULES}																							</div>	\n\t\t			</div>	\n\t		</div>";
-		String mod = "<div class=\"col-md-3 animate-box\">		\n\t	<div class=\"classes\">			\n\t\t	<div class=\"classes-img\" style=\"background-image: url(./resources/userprofile/images/elearning.jpg);\">			\n\t\t\t		<span class=\"price text-center\"><small>{LICENSE}</small></span>	\n\t\t			</div>		\n\t\t		<div class=\"desc\">			\n\t\t\t		<h3><a href=\"javascript:showModule('{MOD_NAME}')\">{MOD_NAME}</a></h3>			\n\t\t\t		<p>{MOD_DESC}</p>	\n\t\t\t				<p><a href=\"javascript:showItems('MOD_NAME_ENC')\" class=\"btn-learn\">Click to Preview Items </a>\n\t\t\t</p>			\n\t\t	</div>		\n\t	</div>	\n	</div>";
+		String mod = "<div class=\"col-md-3 animate-box\">		\n\t	<div class=\"classes\">			\n\t\t	<div class=\"classes-img\" style=\"background-image: url(./resources/userprofile/images/elearning.jpg);\">			\n\t\t\t		<span class=\"price text-center\"><small>{LICENSE}</small></span>	\n\t\t			</div>		\n\t\t		<div class=\"desc\">			\n\t\t\t		<h3><a href=\"javascript:showModule('{MOD_NAME}')\">{MOD_NAME} (Click to Share)</a></h3>			\n\t\t\t		<p>{MOD_DESC}</p>	\n\t\t\t				<p><a href=\"javascript:showItems('MOD_NAME_ENC')\" class=\"btn-learn\">Click to Preview Items </a>\n\t\t\t</p>			\n\t\t	</div>		\n\t	</div>	\n	</div>";
 		List<Module> modules = moduleService.findModulesByLicense(licname, user.getCompanyId());
 		all = all.replace("{LICENSE}", licname);
 		String tempModAll = "";

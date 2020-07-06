@@ -32,5 +32,7 @@ public interface SectionService {
 	public void changeSectionNameAndPercent(Section section, String newSectionName, Integer percent, Integer totalQuestions);
 	
 	Section findByPrimaryKey(String testName, String sectionName,  String companyId);
+	
+	public void disassociateQuestionsFromSection(String sectionName, String testName, String companyId);
 
 }

@@ -759,6 +759,24 @@ public class StudentController {
 					}
 				}
 				
+				if(qType.equalsIgnoreCase(QuestionType.SUBJECTIVE_TEXT.getType())){
+					if(!(questionInstanceDto.getQuestionMapperInstance().getSubjectiveText() != null && questionInstanceDto.getQuestionMapperInstance().getSubjectiveText().trim().length() > 0 )){
+						noOfQuestionsNotAnswered ++;
+					}
+				}
+				
+				if(qType.equalsIgnoreCase(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
+					if(!(questionInstanceDto.getQuestionMapperInstance().getImageUploadUrl() != null && questionInstanceDto.getQuestionMapperInstance().getImageUploadUrl().trim().length() > 0 )){
+						noOfQuestionsNotAnswered ++;
+					}
+				}
+				
+				if(qType.equalsIgnoreCase(QuestionType.VIDEO_UPLOAD_BY_USER.getType())){
+					if(!(questionInstanceDto.getQuestionMapperInstance().getVideoUploadUrl() != null && questionInstanceDto.getQuestionMapperInstance().getVideoUploadUrl().trim().length() > 0 )){
+						noOfQuestionsNotAnswered ++;
+					}
+				}
+				
 				if(qType.equalsIgnoreCase(QuestionType.MATCH_FOLLOWING_MCQ.getType())){
 					//always answered//later work on it
 					MTFdto mtFdto = questionInstanceDto.getMtf();
@@ -787,18 +805,6 @@ public class StudentController {
 						}
 				}
 				
-				if(qType.equalsIgnoreCase(QuestionType.SUBJECTIVE_TEXT.getType())) {
-					String txt=questionInstanceDto.getSubjectiveText();
-					if(txt==null) {
-						noOfQuestionsNotAnswered++;
-					}
-				}
-				if(qType.equalsIgnoreCase(QuestionType.VIDEO_UPLOAD_BY_USER.getType())||qType.equalsIgnoreCase(QuestionType.IMAGE_UPLOAD_BY_USER.getType())) {
-					String url=questionInstanceDto.getImageUploadUrl();
-					if(url==null) {
-						noOfQuestionsNotAnswered++;
-					}
-				}
 				
 				
 				
@@ -1731,12 +1737,14 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			 
 			 baseFolder += File.separator+user.getEmail()+File.separator+"test"+test.getId()+"qid"+mapper.getQuestion().getId(); 
 			 //+File.separator+imageVideoData.getName()
+			 System.out.println("Uploading file on fileserver start");
+			 logger.info("Uploading file on fileserver start");
 			 File file = new File(baseFolder);
 			 file.mkdirs();
 			 File actual = new File(baseFolder+File.separator+imageVideoData.getOriginalFilename());
 			 FileUtils.copyInputStreamToFile(imageVideoData.getInputStream(), actual);
-			 
-			
+			 System.out.println("Uploading file on fileserver start end");
+			 logger.info("Uploading file on fileserver start end");
 			 if(currentQuestion.getType().equals(QuestionType.IMAGE_UPLOAD_BY_USER.getType())){
 				 currentQuestion.setImageUploadUrl(propertyConfig.getFileServerWebUrl()+"/images/"+user.getEmail()+"/test"+test.getId()+"qid"+mapper.getQuestion().getId()+"/"+imageVideoData.getOriginalFilename());
 			 }
@@ -2629,7 +2637,8 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			 html = html.replace("{PASS_PERCENTAGE}", ""+test.getPassPercent());
 			 html = html.replace("{RESULT_PERCENTAGE}", ""+userTestSession.getPercentageMarksRecieved());
 			 html = html.replace("{WEIGHTED_RESULT_PERCENTAGE}", userTestSession.getFormattedWeightedScore());
-			 html = html.replace("{STATUS}", test.getPassPercent() > userTestSession.getPercentageMarksRecieved()?"Fail":"Success");
+			 html = html.replace("{STATUS}", test.getPassPercent() > (userTestSession.getWeightedScorePercentage()==null?0:userTestSession.getWeightedScorePercentage())?"Fail":"Success");
+
 			 String rows = "";
 			 List<SectionInstanceDto> sectionInstanceDtos = (List<SectionInstanceDto>) request.getSession().getAttribute("sectionInstanceDtos");
 			 DecimalFormat df = new DecimalFormat("##.##");

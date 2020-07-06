@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.assessment.data.Module;
 
@@ -22,6 +23,8 @@ public interface ModuleService {
 	void deleteModule(Long id);
 	
 	 Page<Module>findByLicenseNamesIn(List<String> licenseName,String companyId,Pageable pageable);
+	 
+	 public List<Module> findFreeModules(String companyId);
 
 
 }

@@ -125,6 +125,12 @@ public class ModuleServiceImpl implements ModuleService{
 		// TODO Auto-generated method stub
 		return moduleRep.findByLicenseNamesInAndCompanyId(licenseName, companyId, pageable);
 	}
+
+	@Override
+	public List<Module> findFreeModules(String companyId) {
+		// TODO Auto-generated method stub
+		return moduleRep.findFreeModules(companyId);
+	}
 	
 
 }

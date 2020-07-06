@@ -1026,142 +1026,130 @@ public class TestController {
 	}
 
 	@RequestMapping(value = "/saveSection", method = RequestMethod.GET)
-	@Transactional
-	public ModelAndView saveSection(@RequestParam String sectionTopic, @RequestParam String percentage,
-			HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("test") Test test) {
-		ModelAndView mav = new ModelAndView("add_test_step2");
-		User user = (User) request.getSession().getAttribute("user");
-		mav.addObject("user", user);
-
-		test = (Test) request.getSession().getAttribute("test");
-
-		if (!(user.getUserType().getType().equals(UserType.ADMIN.getType())
-				|| user.getUserType().getType().equals(UserType.SUPER_ADMIN.getType())
-				|| user.getUserType().getType().equals(UserType.LMS_ADMIN.getType()))) {
-			request.getSession().invalidate();
-			mav = new ModelAndView("index");
-			user = new User();
-			user.setEmail("admin@eassess.in");
-			user.setPassword("1234");
-			user.setCompanyName("E-Assess");
-			mav.addObject("user", user);
-			return mav;
-		}
-
-		SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
-		String oldSectionName = sectionDto.getSectionName();
-		for (SectionDto dto : test.getSectionDtos()) {
-			if (dto.getSectionName().equals(sectionDto.getSectionName())) {
-				dto.setSectionName(sectionTopic);
-				dto.setPercentQuestionsAsked(Integer.parseInt(percentage));
+	 @Transactional
+	 public ModelAndView saveSection(@RequestParam String sectionTopic, @RequestParam String percentage, HttpServletRequest request, HttpServletResponse response,  @ModelAttribute("test") Test test) {
+		 	ModelAndView mav = new ModelAndView("add_test_step2");
+		 	 User user = (User) request.getSession().getAttribute("user");
+		 	 mav.addObject("user", user);
+		 	
+		 	 test = (Test)request.getSession().getAttribute("test");
+		 	 
+		 	if(!(user.getUserType().getType().equals(UserType.ADMIN.getType()) || user.getUserType().getType().equals(UserType.SUPER_ADMIN.getType()) || user.getUserType().getType().equals(UserType.LMS_ADMIN.getType()))) {
+	    		request.getSession().invalidate();
+	    		mav = new ModelAndView("index");
+	    	    user = new User();
+	    	    user.setEmail("system@iiiht.com");
+	    	    user.setPassword("1234");
+	    	    user.setCompanyName("IIHT");
+	    	    mav.addObject("user", user);
+	    	    return mav;
+	    	}
+		 	 
+			SectionDto sectionDto = (SectionDto) request.getSession().getAttribute("sectionDTO");
+			String oldSectionName = sectionDto.getSectionName();
+			for(SectionDto dto : test.getSectionDtos()) {
+				if(dto.getSectionName().equals(sectionDto.getSectionName())) {
+					dto.setSectionName(sectionTopic);
+					dto.setPercentQuestionsAsked(Integer.parseInt(percentage));
+				}
 			}
-		}
-
-		sectionDto.setSectionName(sectionTopic);
-		sectionDto.setPercentQuestionsAsked(Integer.parseInt(percentage));
-		Section section = null;
-		// List<Question> qs = questionService.findQuestions(user.getCompanyId());
-		List<Question> qs = questionService.getAllLevel1Questions(user.getCompanyId());
-
-		boolean edit = questionMapperInstanceService.canEditTest(sectionTopic, test.getTestName(),
-				user.getCompanyId());
-		if (!edit) {
-			mav.addObject("sectionDto", sectionDto);
-			mav.addObject("qs", process(qs, sectionDto));
-			mav.addObject("test", test);
-			mav.addObject("message",
-					"Users have started taking this test. You can't edit the test now!");// later
-												// put
-												// it
-												// as
-												// label
-			mav.addObject("msgtype", "Information");
-			return mav;
-		}
-
-		if (sectionDto.getSectionId() == null) {
-			// create section first
-			// Section existing = sectionService.findByPrimaryKey(test.getTestName(),
-			// sectionDto.getSectionName(), user.getCompanyId());
-			// if(existing != null) {
-			if (checkMultipleSectionWithSameNames(sectionDto.getSectionName(), request)) {
-				mav.addObject("sectionDto", sectionDto);
-				mav.addObject("qs", process(qs, sectionDto));
-				mav.addObject("test", test);
-				mav.addObject("message", "Section - " + sectionDto.getSectionName()
-						+ " already exists for the given Test. Use a different name");// later
-													// put
-													// it
-													// as
-													// label
-				mav.addObject("msgtype", "Information");
-				return mav;
-			}
-			section = new Section();
-			section.setCompanyId(user.getCompanyId());
-			section.setCompanyName(user.getCompanyName());
-			section.setTestName(test.getTestName());
+			
+			sectionDto.setSectionName(sectionTopic);
+			sectionDto.setPercentQuestionsAsked(Integer.parseInt(percentage));
+			Section section = null;
+			//List<Question> qs = questionService.findQuestions(user.getCompanyId());
+			    List<Question> qs = questionService.getAllLevel1Questions(user.getCompanyId());
+			/**
+			 * Allow qs add to test after sesssions taken
+			 */
+//			boolean edit = questionMapperInstanceService.canEditTest(sectionTopic, test.getTestName(), user.getCompanyId());
+//				if(!edit) {
+//					mav.addObject("sectionDto", sectionDto);
+//					mav.addObject("qs", process(qs,  sectionDto));
+//			  		mav.addObject("test", test);
+//			  		mav.addObject("message", "Users have started taking this test. You can't edit the test now!" );// later put it as label
+//					mav.addObject("msgtype", "Information");
+//					return mav;
+//				}
+			/**
+			 * End Allow qs add to test after sesssions taken
+			 */
+			
+				if(sectionDto.getSectionId() == null) {
+					//create section first
+					//Section existing = sectionService.findByPrimaryKey(test.getTestName(), sectionDto.getSectionName(), user.getCompanyId());
+						//if(existing != null) {
+					if(checkMultipleSectionWithSameNames(sectionDto.getSectionName(), request)) {
+							mav.addObject("sectionDto", sectionDto);
+							mav.addObject("qs", process(qs,  sectionDto));
+					  		mav.addObject("test", test);
+					  		mav.addObject("message", "Section - "+sectionDto.getSectionName()+" already exists for the given Test. Use a different name" );// later put it as label
+							mav.addObject("msgtype", "Information");
+							return mav;
+						}
+					section = new Section();
+					section.setCompanyId(user.getCompanyId());
+					section.setCompanyName(user.getCompanyName());
+					section.setTestName(test.getTestName());
+					section.setSectionName(sectionTopic);
+					section.setPercentQuestionsAsked(sectionDto.getPercentQuestionsAsked());
+					sectionService.createSection(section);
+					sectionDto.setSectionId(section.getId());
+				}
+				else {
+					//Section existing = sectionService.findByPrimaryKey(test.getTestName(), sectionDto.getSectionName(), user.getCompanyId());
+					//if(existing != null) {
+					if(checkMultipleSectionWithSameNames(sectionDto.getSectionName(), request)) {
+						mav.addObject("sectionDto", sectionDto);
+						mav.addObject("qs", process(qs,  sectionDto));
+				  		mav.addObject("test", test);
+				  		mav.addObject("message", "Section - "+sectionDto.getSectionName()+" already exists for the given Test. Use a different name" );// later put it as label
+						mav.addObject("msgtype", "Information");
+						return mav;
+					}
+					
+					
+					section = sectionService.getSectionById(sectionDto.getSectionId());
+				}
+				
+				//oldSectionName
+			//sectionService.removeQuestionsFromSection(section.getSectionName(), section.getTestName(), user.getCompanyId());
+			/**
+			 * To make sure we dis-associate old questions (for tests where sessions have been taken)
+			 */
+				boolean edit = questionMapperInstanceService.canEditTest(sectionTopic, test.getTestName(), user.getCompanyId());
+					if(edit){
+						//no user sessions has been taken
+						sectionService.removeQuestionsFromSection(oldSectionName, section.getTestName(), user.getCompanyId());
+					}
+					else{
+						sectionService.disassociateQuestionsFromSection(oldSectionName, section.getTestName(), user.getCompanyId());
+					}
+				
+				
+			/**
+			 * V. Imp
+			 */
 			section.setSectionName(sectionTopic);
 			section.setPercentQuestionsAsked(sectionDto.getPercentQuestionsAsked());
-			sectionService.createSection(section);
-			sectionDto.setSectionId(section.getId());
-		} else {
-			// Section existing = sectionService.findByPrimaryKey(test.getTestName(),
-			// sectionDto.getSectionName(), user.getCompanyId());
-			// if(existing != null) {
-			if (checkMultipleSectionWithSameNames(sectionDto.getSectionName(), request)) {
-				mav.addObject("sectionDto", sectionDto);
-				mav.addObject("qs", process(qs, sectionDto));
-				mav.addObject("test", test);
-				mav.addObject("message", "Section - " + sectionDto.getSectionName()
-						+ " already exists for the given Test. Use a different name");// later
-													// put
-													// it
-													// as
-													// label
-				mav.addObject("msgtype", "Information");
-				return mav;
+			sectionService.changeSectionNameAndPercent(section, sectionTopic, sectionDto.getPercentQuestionsAsked(), sectionDto.getQuestions().size());
+			Set<Question> questions = sectionDto.getQuestions();
+			for(Question question : questions) {
+				
+				sectionService.addQuestionToSection(question, section, 1);
 			}
-
-			section = sectionService.getSectionById(sectionDto.getSectionId());
-		}
-
-		// oldSectionName
-		// sectionService.removeQuestionsFromSection(section.getSectionName(),
-		// section.getTestName(), user.getCompanyId());
-		sectionService.removeQuestionsFromSection(oldSectionName, section.getTestName(),
-				user.getCompanyId());
-
-		/**
-		 * V. Imp
-		 */
-		section.setSectionName(sectionTopic);
-		section.setPercentQuestionsAsked(sectionDto.getPercentQuestionsAsked());
-		sectionService.changeSectionNameAndPercent(section, sectionTopic,
-				sectionDto.getPercentQuestionsAsked(), sectionDto.getQuestions().size());
-		Set<Question> questions = sectionDto.getQuestions();
-		for (Question question : questions) {
-
-			sectionService.addQuestionToSection(question, section, 1);
-		}
-		Integer totMarks = testService.computeTestTotalMarksAndSave(test);
-		test.setTotalMarks(totMarks);
-		request.getSession().setAttribute("test", test);
-		sectionDto.setNoOfQuestions(sectionDto.getQuestions().size());
-		mav.addObject("sectionDto", sectionDto);
-		mav.addObject("qs", process(qs, sectionDto));
-		mav.addObject("test", test);
-		mav.addObject("message", "Section - " + sectionDto.getSectionName()
-				+ " has been renamed and the entire section has been saved successfully.");// later
-												// put
-												// it
-												// as
-												// label
-		mav.addObject("msgtype", "Information");
-		return mav;
-
-	}
+			Integer totMarks = testService.computeTestTotalMarksAndSave(test);
+			test.setTotalMarks(totMarks);
+			request.getSession().setAttribute("test", test);
+			sectionDto.setNoOfQuestions(sectionDto.getQuestions().size());
+			mav.addObject("sectionDto", sectionDto);
+			mav.addObject("qs", process(qs,  sectionDto));
+	  		mav.addObject("test", test);
+	  		mav.addObject("message", "Section - "+sectionDto.getSectionName()+" has been renamed and the entire section has been saved successfully.");// later put it as label
+			mav.addObject("msgtype", "Information");
+			return mav;
+			
+		  }
 
 	private boolean checkMultipleSectionWithSameNames(String sectionName, HttpServletRequest request) {
 		Test test = (Test) request.getSession().getAttribute("test");

@@ -23,4 +23,8 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
 	
 	@Query(value="SELECT m FROM Module m WHERE m.companyId=:companyId and upper(m.licenseNames) LIKE %:licenseName% ")
 	public List<Module> findModulesByLicense(@Param("companyId") String companyId, @Param("licenseName") String licenseName);
+	
+	
+	@Query(value="SELECT m FROM Module m WHERE m.companyId=:companyId and m.free='free'")
+	public List<Module> findFreeModules(@Param("companyId") String companyId);
 }

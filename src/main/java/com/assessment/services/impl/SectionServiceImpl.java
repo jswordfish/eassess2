@@ -158,5 +158,16 @@ public class SectionServiceImpl implements SectionService{
 	public Section findByPrimaryKey(String testName, String sectionName,  String companyId) {
 		return sectionRepository.findByPrimaryKey(testName, sectionName, companyId);
 	}
+	
+	@Override
+	public void disassociateQuestionsFromSection(String sectionName, String testName, String companyId) {
+		// TODO Auto-generated method stub
+		List<QuestionMapper> mappers = questionMapperRepository.getQuestionsForSection(testName, sectionName, companyId);
+		for(QuestionMapper mapper : mappers) {
+			mapper.setSectionName(sectionName+"- deleted at "+System.currentTimeMillis());
+			questionMapperRepository.save(mapper);
+		}
+	}
+
 
 }

@@ -43,6 +43,10 @@ public class Module extends Base{
 	@Transient
 	List<String> lics;
 	
+	
+	String category;
+	String free = "no";
+	
 	public Module(){
 		
 	}
@@ -130,6 +134,24 @@ public class Module extends Base{
 		return "Module [moduleName=" + moduleName + ", moduleDescription=" + moduleDescription + ", imageUrl="
 				+ imageUrl + ", videoUrl=" + videoUrl + ", items=" + items + ", licenseNames="
 				+ licenseNames + ", lics=" + lics + "]";
+	}
+
+	
+
+	public String getFree() {
+		return free;
+	}
+
+	public void setFree(String free) {
+		this.free = free;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	

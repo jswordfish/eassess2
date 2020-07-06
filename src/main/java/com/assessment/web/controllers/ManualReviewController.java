@@ -56,7 +56,7 @@ public class ManualReviewController {
 	@RequestMapping(value = "/showManualReviewResults", method = RequestMethod.GET)
 	public ModelAndView showManualReviewResults(@RequestParam(required = false) String status,
 			@RequestParam(required = false) String classifierall, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, String message) {
 		ModelAndView mav = new ModelAndView("lmsadmin_review_tests");
 		User user = (User) request.getSession().getAttribute("user");
 		List<UserTestSession> sessions = new ArrayList<UserTestSession>();
@@ -96,6 +96,10 @@ public class ManualReviewController {
 			mav.addObject("classifierall", classifierall);
 		}
 
+		if(message != null){
+			mav.addObject("message", message);// later put it as label
+			mav.addObject("msgtype", "Information");
+		}
 		mav.addObject("sessions", sessions);
 		mav.addObject("classifiers", classifiers);
 		List<String> statuses = new ArrayList<>();
@@ -111,7 +115,8 @@ public class ManualReviewController {
 		User user = (User) request.getSession().getAttribute("user");
 		UserTestSession session = userTestSessionservice.findSessinById(userSessionId);
 		session.setMarkComplete(true);
-		userTestSessionservice.saveOrUpdate(session);
+		session = userTestSessionservice.saveOrUpdate(session);
+		String message = "";
 		try {
 			String html = FileUtils.readFileToString(
 					new File(propertyConfig.getSendTestResultInfoSubjective()));
@@ -157,12 +162,14 @@ public class ManualReviewController {
 					propertyConfig);
 			Thread thread = new Thread(emailGenericMessageThread);
 			thread.start();
+			message = "Test Review Complete. Results shared by Email to Learner";
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			message = "Problem in Test Marking Process.";
 		}
-		return showManualReviewResults(null, null, request, response);
+		return showManualReviewResults(null, null, request, response, message);
 	}
 
 	@RequestMapping(value = "/markAnswer", method = RequestMethod.GET)
@@ -279,6 +286,6 @@ public class ManualReviewController {
 	@RequestMapping(value = "/cancelShowManualReviewQuestions", method = RequestMethod.GET)
 	public ModelAndView cancelShowManualReviewQuestions(HttpServletRequest request,
 			HttpServletResponse response) {
-		return showManualReviewResults(null, null, request, response);
+		return showManualReviewResults(null, null, request, response, null);
 	}
 }
