@@ -381,6 +381,7 @@ public class LMSAdminController {
 				}
 
 			}
+			System.out.println("charts::::::::::::    "+chart1s);
 			for (Map.Entry<String, Integer> val : qualifier3.entrySet()) {
 				PieChart2 chart2 = new PieChart2();
 				for (Map.Entry<String, Integer> val2 : correct2.entrySet()) {
