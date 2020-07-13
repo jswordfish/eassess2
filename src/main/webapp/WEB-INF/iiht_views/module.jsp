@@ -36,6 +36,17 @@
 <style>
 .checkbox, .radio {
 	color: black;
+	height: 70%;
+}
+
+input[type="checkbox" i] {
+    background-color: initial;
+    cursor: default;
+    -webkit-appearance: checkbox !important;
+    box-sizing: border-box !important;
+    margin: 3px 3px 3px 4px !important;
+    padding: initial;
+    border: initial;
 }
 </style>
 </head>
@@ -155,6 +166,32 @@
 									</div>
 								</div>
 							</div>
+							
+							<div class="col-md-12">
+								<div class="row formfields">
+									<div class="col-md-4">
+										<label class="fieldtitle">Module Category </label>
+									</div>
+									<div class="col-md-8">
+										<div class="input-field">
+							<form:input path="module.category" name="category" id="category" />
+							
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+								<div class="row formfields">
+									<div class="col-md-4">
+										<label class="fieldtitle">If Free, type free </label>
+									</div>
+									<div class="col-md-8">
+									<form:input path="module.free" name="free" id="free" />	
+									</div>
+								</div>
+							</div>
+							
 							<div class="col-md-12">
 								<div class="row formfields">
 									<div class="col-md-8">

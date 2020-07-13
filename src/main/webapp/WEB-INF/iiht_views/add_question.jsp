@@ -365,7 +365,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="input-field">
-										<label for="inputCode">Enter comma separated blank answers</label><br>
+										<label for="inputCode">Enter correct answers for FIB separated by a new line character (Enter)</label><br>
 										<form:textarea path="question.fillInBlankOptions" name="fillInBlankOptions" id="fillInBlankOptions" style="height:150px;overflow-y: scroll" />
 									</div>
 								</div>

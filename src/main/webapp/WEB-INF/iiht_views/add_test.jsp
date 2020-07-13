@@ -203,7 +203,7 @@ function doSomething(val)
 																		</div>
 																		<div class="col-md-8">
 																				<div class="input-field">
-																						<form:input path="test.qualifier1" name="qualifier1" id="qualifier1" required="true"
+																						<form:input path="test.qualifier1" name="qualifier1" id="qualifier1" 
 																								placeholder="Category" />
 																				</div>
 																		</div>

@@ -94,6 +94,8 @@ public class PropertyConfig {
 	
 	String subjectiveScoring = "no";
 	
+	String companyName;
+	
 	public String getBaseUrl() {
 		return baseUrl;
 	}
@@ -391,6 +393,14 @@ public class PropertyConfig {
 
 	public void setSendTestResultInfoSubjective(String sendTestResultInfoSubjective) {
 		this.sendTestResultInfoSubjective = sendTestResultInfoSubjective;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	

@@ -130,7 +130,7 @@
 
 							<div class="search-form">
 								<form action="searchTests" method="get">
-									<input type="text" placeholder="Search a question" name="searchText" id="searchText">
+									<input type="text" placeholder="Search a Test" name="searchText" id="searchText">
 									<button type="submit" id="search">
 										<i class="fa fa-search"></i>
 									</button>

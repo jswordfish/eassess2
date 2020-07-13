@@ -113,7 +113,7 @@
 								<div class="col-md-6">
 										<div class="mb-30">
 												<h2 class="section-title">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAdd New
-														Skill</h2>
+														Link</h2>
 
 										</div>
 										<form name="tenantForm" method="post" modelAttribute="skill" action="saveTestLink">

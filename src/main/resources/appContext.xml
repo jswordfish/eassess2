@@ -72,6 +72,8 @@
 		<property name="moduleItemsVideoLocation" value="E:\My NEW\STS Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\file-server\AssessmentApp\reports\modules\items\videos"></property>
 		
 		<property name="subjectiveScoring" value="yes"></property>
+		
+		<property name="companyName" value="IIHT"></property>
 
 	</bean>
 

@@ -185,7 +185,32 @@
 		<div id="moduleshowid"></div>
 
 
+		
+		
+		<div class="colorlib-classes colorlib-light-grey"  >		
 
+			<div class="container">		
+				<h2> Free Modules</h2>			
+				<div class="row">		
+				<c:forEach items="${freeModules}" var="freemod">
+					<div class="col-md-3 animate-box">	
+						<div class="classes">			
+							<div class="classes-img" style="background-image: url(./resources/userprofile/images/elearning.jpg);">	
+						
+							<span class="price text-center"><small>${freemod.category == null?"Category NA":freemod.category}</small></span>	
+							</div>		
+							<div class="desc">			
+								<h3><a href="javascript:showModule('${freemod.moduleName}')">${freemod.moduleName} (Click to Share)</a></h3>		
+								<p>${freemod.moduleDescription}</p>	
+								<p><a href="javascript:showItemsForFree('${freemod.moduleName}')" class="btn-learn">Click to Preview Items </a>
+								</p>			
+							</div>		
+						</div>	
+					</div>	
+					</c:forEach>
+				</div>	
+			</div>
+	</div>
 
 		<!-- modal -->
 		<div id="classModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
@@ -351,6 +376,17 @@
 				modName = encodeURIComponent(modName);
 				$('#classModal').modal('show')
 				document.getElementById('modName').value = modName;
+			}
+			
+			function showItemsForFree(modName) {
+				modName = encodeURIComponent(modName);
+				$.get("fetchModuleDataForPreviewForAdmin?mname=" + modName,
+						function(data, status) {
+							//  console.log(data);
+							$("#modalbodyid").empty();
+							$("#modalbodyid").append(data);
+							$("#myModalModules").modal("show");
+						});
 			}
 
 			function showItems(encModName) {

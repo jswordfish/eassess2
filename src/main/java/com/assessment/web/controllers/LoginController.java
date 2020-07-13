@@ -147,7 +147,7 @@ public class LoginController {
 			HttpServletRequest request, HttpServletResponse response) {
 		String token = "bG1zYWRtaW5AaWlodC5jb20=";
 		if (lmsadminuser == null || companyId == null) {
-			ModelAndView mav = new ModelAndView("login_new");
+			ModelAndView mav = new ModelAndView("login_new_2");
 			User user = new User();
 			mav.addObject("user", user);
 			return mav;
@@ -155,7 +155,7 @@ public class LoginController {
 			String usr = new String(Base64.getDecoder().decode(token.getBytes()));
 			User user = userService.findByPrimaryKey(usr, companyId);
 			if (user == null) {
-				ModelAndView mav = new ModelAndView("login_new");
+				ModelAndView mav = new ModelAndView("login_new_2");
 				User u = new User();
 				mav.addObject("user", u);
 				return mav;
@@ -178,7 +178,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("login_new");
+		ModelAndView mav = new ModelAndView("login_new_2");
 		User user = new User();
 		// user.setEmail("system@iiht.com");
 		// user.setPassword("1234");
@@ -418,7 +418,7 @@ public class LoginController {
 	public ModelAndView signoff(HttpServletRequest request, HttpServletResponse response) {
 		request.getSession().invalidate();
 		// ModelAndView mav = new ModelAndView("index");
-		ModelAndView mav = new ModelAndView("login_new");
+		ModelAndView mav = new ModelAndView("login_new_2");
 		User user = new User();
 		// user.setEmail("system@iiiht.com");
 		// user.setPassword("1234");
@@ -431,11 +431,12 @@ public class LoginController {
 	public ModelAndView authenticate(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("user") User user) {
 		ModelAndView mav = null;
-		user = userService.authenticate(user.getEmail(), user.getPassword(), user.getCompanyName());
+		String companyName = propertyConfig.getCompanyName();
+		user = userService.authenticate(user.getEmail(), user.getPassword(), companyName);
 		if (user == null) {
 			// navigate to exception page
 			// mav = new ModelAndView("index");
-			mav = new ModelAndView("login_new");
+			mav = new ModelAndView("login_new_2");
 			user = new User();
 			mav.addObject("user", user);
 			mav.addObject("message", "Invalid Credentials ");// later put it as label

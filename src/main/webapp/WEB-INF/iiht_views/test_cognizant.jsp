@@ -986,8 +986,8 @@ body * {
 <h3 class="qname">${currentQuestion.questionMapperInstance.questionMapper.question.questionText}</h3>
 						<div >
 							
-						<label > Answer the question</label><br/>
-                               <form:textarea path="questionMapperInstance.subjectiveText" rows="7" cols="30" />         
+						<label > This is a descriptive Question carrying ${currentQuestion.questionMapperInstance.questionMapper.question.questionWeight}. Write in accordance to the weight of the Question </label><br/>
+                               <form:textarea path="questionMapperInstance.subjectiveText" rows="3" cols="7" style="height:250px"  />         
                         
 						</div>
 						
