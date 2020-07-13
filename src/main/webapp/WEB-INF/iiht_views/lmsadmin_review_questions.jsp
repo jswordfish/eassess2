@@ -286,7 +286,7 @@
 	
 	<!-- Video popup it will open image as well -->
 		<div class="modal fade" id="myModalvideo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document" style="width:800px">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <iframe id="iframeYoutube" width="760" height="515"  src="" frameborder="0" allowfullscreen></iframe> 
@@ -325,13 +325,10 @@
 				url = document.getElementById("videoUrl").value;
 			}
 		
-		window.open(url, '_blank', 'location=yes,height=700,width=1400,scrollbars=auto,status=yes');
-		
-		//var iframe = document.getElementById("iframeYoutube");
-		//var url1 = 'https://www.google.ie/gwt/x?u='+url;
-		//iframe.src = url1;
+		var iframe = document.getElementById("iframeYoutube");
+		iframe.src = url;
 				
-		//$("#myModalvideo").modal("show");
+		$("#myModalvideo").modal("show");
 	}
 	
 	function reviewAnswer(questionText, testName, ansid, answer, imageurl, videourl, type){
@@ -449,4 +446,3 @@
 
 	</body>
 </html>
-

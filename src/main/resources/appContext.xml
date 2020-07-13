@@ -72,8 +72,6 @@
 		<property name="moduleItemsVideoLocation" value="E:\My NEW\STS Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\file-server\AssessmentApp\reports\modules\items\videos"></property>
 		
 		<property name="subjectiveScoring" value="yes"></property>
-		
-		<property name="companyName" value="IIHT"></property>
 
 	</bean>
 
@@ -91,7 +89,7 @@
 		<!-- <property name="password" value="Welcome@123" /> -->
 
 		<property name="jdbcUrl"
-		value="jdbc:mysql://localhost:3306/assessment2?createDatabaseIfNotExist=true" />
+		value="jdbc:mysql://localhost:3306/eassess?createDatabaseIfNotExist=true" />
 		<property name="user" value="root" />
 		<property name="password" value="" />
 

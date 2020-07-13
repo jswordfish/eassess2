@@ -33,3 +33,4 @@ public interface LearnersProfileParamRepository extends JpaRepository<LearnersPr
 			@Param("qualifier2") String qualifer2, @Param("qualifier3") String qualifer3,
 			@Param("qualifier4") String qualifer4, @Param("qualifier5") String qualifer5);
 }
+
