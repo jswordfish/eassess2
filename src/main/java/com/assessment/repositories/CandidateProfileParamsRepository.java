@@ -15,5 +15,7 @@ public interface CandidateProfileParamsRepository extends JpaRepository<Candidat
 
 	@Query(value="SELECT q FROM CandidateProfileParams q WHERE q.companyId=:companyId order by q.qualifier1")
 	public List<CandidateProfileParams> findCandidateProfileParamsByCompanyId(@Param("companyId") String companyId);
-
+	
+	@Query(value="SELECT q FROM CandidateProfileParams q WHERE q.qualifier1=:qualifier1 and q.qualifier2=:qualifier2 and q.qualifier3=:qualifier3 and q.qualifier4=:qualifier4 and q.qualifier5=:qualifier5 and q.companyId=:companyId")
+	public List<CandidateProfileParams> getNonUniqueCandidateProfileParams(@Param("companyId") String companyId, @Param("qualifier1") String qualifier1, @Param("qualifier2") String qualifier2, @Param("qualifier3") String qualifier3, @Param("qualifier4") String qualifier4, @Param("qualifier5") String qualifier5);
 }

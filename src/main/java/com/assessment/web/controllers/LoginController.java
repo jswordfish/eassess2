@@ -36,6 +36,7 @@ import com.assessment.data.LMSUserModuleMapping;
 import com.assessment.data.License;
 import com.assessment.data.Module;
 import com.assessment.data.ModuleItem;
+import com.assessment.data.ProspectMessage;
 import com.assessment.data.Question;
 import com.assessment.data.QuestionMapperInstance;
 import com.assessment.data.Test;
@@ -183,7 +184,9 @@ public class LoginController {
 		// user.setEmail("system@iiht.com");
 		// user.setPassword("1234");
 		// user.setCompanyName("IIHT");
+		ProspectMessage prospect = new ProspectMessage();
 		mav.addObject("user", user);
+		mav.addObject("prospect", prospect);
 		return mav;
 	}
 

@@ -718,7 +718,14 @@ public class UserController {
 		EmailGenericMessageThread client = new EmailGenericMessageThread(user.getEmail(),
 				"Sharing Training Module " + module.getModuleName(), html, propertyConfig);
 		String emails[] = new String[users.size()];
+			
 		emails = users.toArray(emails);
+		for(int i=0;i<emails.length;i++){
+			if(emails[i].contains("[")){
+				emails[i] = emails[i].substring(0, emails[i].indexOf("["));
+				System.out.println("email " +emails[i]);
+			}
+		}
 		client.setCcArray(emails);
 		Thread thread = new Thread(client);
 		thread.start();
@@ -734,7 +741,7 @@ public class UserController {
 		Module module = moduleService.findUniqueModule(mname, user.getCompanyId());
 		String container = "<div><div><label id=\"modulenameid\" style=\"width:100%\">{MODULE_NAME}</label>	<h6>Description - {MODULE_DESC}</h6>							<div class=\"progress\" style=\"float: left;width: 100%;\">									<div id=\"moduleprogressid\" class=\"progress-bar\" style=\"width:{TEST_PERCENT}%\"></div>									<span id=\"moduleprogressspanid\">{TEST_PERCENT}%</span>								</div> 																							</div>						</div>                         <div ><table class='table borderless'>{ROWS}	</table></div>";
 		String rows = "<tr class='borderless'><td class='borderless' style=\"color:blue;\">  {FIRST_COLUMN}  </td>									<td class='borderless' style=\"color:#ffcc66;\">{TEST_NAME}</td>									<td class='borderless'style=\"color:#cc3399;\" ><a href=\"javascript:startTest('{TEST_URL}')\">Click Start Test</a></td></tr>";
-		String imageAvailable = "<a href=\"javascript:changeVideo('{VIDEO_URL}')\"><img src=\"images/play1.png\"</img>Click to Open Video</a>";
+		String imageAvailable = "<a href=\"javascript:changeVideo('{VIDEO_URL}')\">Click to Open Video</a>";
 		String imageNotAvailable = "Video Not Available";
 		container = container.replace("{MODULE_NAME}", module.getModuleName());
 		container = container.replace("{MODULE_DESC}", module.getModuleDescription() == null ? "NA"
@@ -813,7 +820,7 @@ public class UserController {
 		Module module = moduleService.findUniqueModule(mname, user.getCompanyId());
 		String container = "<div><div><label id=\"modulenameid\" style=\"width:100%\"><b>Preview {MODULE_NAME}</b></label>	<h6>Description - {MODULE_DESC}</h6>																													</div> 																							</div>						</div>                         <div ><table class='table borderless'>{ROWS}	</table></div>";
 		String rows = "<tr class='borderless'><td class='borderless' style=\"color:blue;\">  {FIRST_COLUMN}  </td>									<td class='borderless' style=\"color:#ffcc66;\">{TEST_NAME}</td>									<td class='borderless'style=\"color:#cc3399;\" ><a href=\"javascript:startTest('{TEST_URL}')\">Click Start Test</a></td></tr>";
-		String imageAvailable = "<a href=\"javascript:changeVideo('{VIDEO_URL}')\"><img src=\"images/play1.png\"</img>Click to Open Video</a>";
+		String imageAvailable = "<a href=\"javascript:changeVideo('{VIDEO_URL}')\">Click to Open Video</a>";
 		String imageNotAvailable = "Video Not Available";
 		container = container.replace("{MODULE_NAME}", module.getModuleName());
 		container = container.replace("{MODULE_DESC}", module.getModuleDescription() == null ? "NA"
@@ -1002,6 +1009,13 @@ public class UserController {
 		}
 		all = all.replace("{MODULES}", tempModAll);
 		return all;
+	}
+	
+	
+	@RequestMapping(value = "/gotoprofile", method = RequestMethod.GET)
+	public ModelAndView gotoprofile(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView("profile_static");
+		return mav;
 	}
 
 }

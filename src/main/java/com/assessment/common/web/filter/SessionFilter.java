@@ -101,6 +101,9 @@ public class SessionFilter implements Filter {
 			else if(page.contains("metadata") || page.contains("yakshaspconsumerendpoint") || page.contains("yakshasplogoff") || page.contains("attrs") || page.contains("doLogin") || page.contains("bulkResults")){
 				chain.doFilter(request, response);
 			}
+			else if(page.contains("saveProspect") || page.contains("prospect") || page.contains("gotoprofile")){
+				chain.doFilter(request, response);
+			}
 			else {
 				 User user = (User) ((HttpServletRequest)request).getSession().getAttribute("user");
 				 	if(user == null) {

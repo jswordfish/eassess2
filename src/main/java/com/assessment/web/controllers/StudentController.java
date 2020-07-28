@@ -78,10 +78,14 @@ import com.assessment.services.UserTestSessionService;
 import com.assessment.services.UserTestTimeCounterService;
 import com.assessment.services.impl.CompilerService;
 import com.assessment.services.impl.ReportsService;
+import com.assessment.web.dto.CustomArgs;
 import com.assessment.web.dto.MTFdto;
+import com.assessment.web.dto.PayLoad;
 import com.assessment.web.dto.QuestionInstanceDto;
 import com.assessment.web.dto.SectionInstanceDto;
+import com.assessment.web.dto.TestSessionDTO;
 import com.assessment.web.forms.StudentTestForm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
@@ -150,6 +154,9 @@ public class StudentController {
 	
 	@Autowired
 	CheService cheService;
+	
+	@Autowired
+	TestController testController;
 	
 	
 	
@@ -2489,7 +2496,15 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			  * End Save no of non compliances on UserTestSession object
 			  */
 			 userTestSession = userTestSessionService.saveOrUpdate(userTestSession);
+			 
+			 /**
+			  * Send the results to message queue
+			  */
 			
+			 
+			 /**
+			  * end send results to message queue
+			  */
 		//	studentTestForm.setNoOfAttempts(userTestSession.getNoOfAttempts());
 		 
 		 putMiscellaneousInfoInModel(model, request);
@@ -2546,6 +2561,20 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 		 return model;
 	 }
 	 
+	 
+	 private void sendToIRIsEndPoint(String user, String testName, String companyId, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		 TestSessionDTO dto = testController.getRecommendationsForTestForLmS("QUERTY", testName, companyId, user, request, response);
+		 CustomArgs customArgs = (CustomArgs) request.getSession().getAttribute("customArguments");
+		 PayLoad payLoad = new PayLoad();
+		 payLoad.setCustomArgs(customArgs);
+		 payLoad.setResults(dto);
+		 payLoad.setTestName(testName);
+		 payLoad.setUser(user);
+		 ObjectMapper mapper = new ObjectMapper();
+		 String json = mapper.writeValueAsString(payLoad);
+		 String url = customArgs.getMessagingQueueUrl();
+		 
+	 }
 	 
 	 private ModelAndView getTraitsForUserForTest(String user, String companyId, String testName, ModelAndView model){
 		 List<UserTrait> traits = reportsService.getUserTraits(companyId, testName, user);

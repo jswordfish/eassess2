@@ -24,7 +24,17 @@ public class CandidateProfileParamsServiceImpl implements CandidateProfileParams
 	public CandidateProfileParams findUniqueCandidateProfileParams(String companyId, String qualifier1,
 			String qualifier2, String qualifier3, String qualifier4, String qualifier5) {
 		// TODO Auto-generated method stub
-		return repository.findUniqueCandidateProfileParams(companyId, qualifier1, qualifier2, qualifier3, qualifier4, qualifier5);
+		try {
+			return repository.findUniqueCandidateProfileParams(companyId, qualifier1, qualifier2, qualifier3, qualifier4, qualifier5);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			List<CandidateProfileParams> list = repository.getNonUniqueCandidateProfileParams(companyId, qualifier1, qualifier2, qualifier3, qualifier4, qualifier5);
+			for(CandidateProfileParams params : list){
+				repository.delete(params);
+			}
+		}
+		return null;
 	}
 
 	@Override
