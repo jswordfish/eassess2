@@ -55,7 +55,7 @@
                         <!--mega menu start-->
                         <ul class="menuzord-menu pull-right">
                           
-                             <li><a href="javascript:void(0)">Contact</a></li> 
+                             <li><a href="prospect">Contact</a></li> 
                             
                         </ul>
                         <!--mega menu end-->
@@ -769,6 +769,9 @@
         <script src="eAssess/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="eAssess/assets/materialize/js/materialize.min.js"></script>
         <script src="eAssess/assets/owl.carousel/owl.carousel.min.js"></script>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
+		
 
         <script>
           
@@ -793,6 +796,15 @@
         }
         
         </script>
+		
+		<c:if test="${message != null}">
+		 <script>
+		 bootbox.alert({
+			message: "${message}",
+			backdrop: true
+		});
+	      </script>
+	</c:if>
 
   </body>
   

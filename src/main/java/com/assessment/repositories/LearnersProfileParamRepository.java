@@ -12,6 +12,9 @@ public interface LearnersProfileParamRepository extends JpaRepository<LearnersPr
 
 	List<LearnersProfileParam> findByuserEmail(String email);
 
+	@Query(value = "from LearnersProfileParam lp where lp.userEmail=:userEmail and lp.qualifier2=:qualifier2")
+	List<LearnersProfileParam> getQValue(@Param("userEmail") String email, @Param("qualifier2") String qualifer2);
+	
 	@Query(value = "from LearnersProfileParam lp where lp.userEmail=:userEmail and lp.qualifier1=:qualifier1")
 	List<LearnersProfileParam> getQValue1(@Param("userEmail") String email, @Param("qualifier1") String qualifer1);
 

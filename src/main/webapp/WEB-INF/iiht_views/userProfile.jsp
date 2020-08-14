@@ -16,10 +16,6 @@
 
 
 <style>
-          text{
-              font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-          }
-
 body {
 	background-color: #fff;
 	height: auto;
@@ -261,25 +257,24 @@ body {
 
 		<div class="employyeprofile">
 			<div class="col-md-12">
-			<!--  Start Side Div-->
-				<div class="col-md-1 col-sm-6">
+				<div class="col-md-3 col-sm-6">
 					<div class="leftsideinfo">
-<!-- 						<div class="image text-center"> -->
-<!-- 							<img src="images/user.png"> -->
-<!-- 							<h5>Jatin Sutaria</h5> -->
-<!-- 							<h6>Senior Architect</h6> -->
-<!-- 						</div> -->
-<!-- 						<div class="charges text-center">Total Weighted eLearning -->
-<!-- 							Score: 78%</div> -->
-<!-- 						<div class="userinfo"> -->
-<!-- 							<h5>INFO</h5> -->
-<!-- 							<ul> -->
-<!-- 								<li><i class="fa fa-envelope"></i> -->
-<!-- 									jatin.sutaria@thev2technologies.com</li> -->
-<!-- 								<li><i class="fa fa-phone"></i> 0123456789</li> -->
-<!-- 								<li><i class="fa fa-map-marker"></i> Mumbai</li> -->
-<!-- 							</ul> -->
-<!-- 						</div> -->
+						<div class="image text-center">
+							<img src="images/user.png">
+							<h5>Jatin Sutaria</h5>
+							<h6>Senior Architect</h6>
+						</div>
+						<div class="charges text-center">Total Weighted eLearning
+							Score: 78%</div>
+						<div class="userinfo">
+							<h5>INFO</h5>
+							<ul>
+								<li><i class="fa fa-envelope"></i>
+									jatin.sutaria@thev2technologies.com</li>
+								<li><i class="fa fa-phone"></i> 0123456789</li>
+								<li><i class="fa fa-map-marker"></i> Mumbai</li>
+							</ul>
+						</div>
 
 						<table>
 							<c:forEach var="entry" items="${mapList}" varStatus="count">
@@ -324,13 +319,50 @@ body {
 								</tr>
 							</c:forEach>
 						</table>
-						 
- 
+
+
+						<ul>
+							<li class="nav-item"><a
+								class="nav-link collapsed text-truncate" href="#submenu1"
+								data-toggle="collapse" data-target="#submenu1"> <span
+									class="d-none d-sm-inline">Reports</span></a>
+								<div class="collapse" id="submenu1" aria-expanded="false">
+									<ul class="flex-column pl-2 nav">
+
+										<li class="nav-item"><a class="nav-link collapsed py-1"
+											href="#submenu1sub1" data-toggle="collapse"
+											data-target="#submenu1sub1"><span>Customers</span></a>
+											<div class="collapse" id="submenu1sub1" aria-expanded="false">
+
+												<ul class="flex-column nav pl-4">
+													<li class="nav-item"><a class="nav-link p-1" href="#">
+															Daily </a></li>
+													<li class="nav-item"><a class="nav-link p-1" href="#">
+															Dashboard </a></li>
+													<li class="nav-item"><a class="nav-link p-1" href="#">
+															Charts </a></li>
+													<li class="nav-item"><a class="nav-link p-1" href="#">
+															Areas </a></li>
+												</ul>
+											</div></li>
+									</ul>
+								</div></li>
+						</ul>
+
+
+						<!-- 						<div class="userinfo"> -->
+						<!-- 							<h5>Java</h5> -->
+						<!-- 							<ul> -->
+						<!-- 								<li><img src="images/user.png"> OOPS</li> -->
+						<!-- 								<li><img src="images/user.png"> File Handling</li> -->
+						<!-- 								<li><img src="images/user.png"> Networks and Multi -->
+						<!-- 									Threading</li> -->
+						<!-- 								<li><img src="images/user.png"> Design Patterns</li> -->
+						<!-- 							</ul> -->
+						<!-- 						</div> -->
+
 					</div>
-				</div> 
-				<!-- End Side Dive-->
-				
-				
+				</div>
 				<%-- 				${mapList} --%>
 				<%-- 				<c:forEach items="${mapList}" var="entry"> --%>
 				<%-- 				${entry.key}:	<c:forEach items="${entry.value}" var="entry2"> --%>
@@ -344,11 +376,47 @@ body {
 					<div class="rightsideinformation">
 						<div class="employeecosts">
 							<h4 class="heading">eProfiler Report</h4>
-							<div class="col-md-8 col-sm-6">
-								<div id="piechart" style="width: 1000px; height: 500px;"></div>
-							</div>
 							<div class="col-md-4 col-sm-6">
-								<div id="piechart2" style="width: 700px; height: 500px;"></div>
+								<ul>
+									<li>
+										<div class="costcolor" style="background-color: #3366cc;"></div>
+										<div class="costinfo">
+											<h6>100 %</h6>
+											<p>Java</p>
+										</div>
+									</li>
+									<li>
+										<div class="costcolor" style="background-color: #dc3912;"></div>
+										<div class="costinfo">
+											<h6>50 %</h6>
+											<p>Big Data</p>
+										</div>
+									</li>
+									<li>
+										<div class="costcolor" style="background-color: #ff9900;"></div>
+										<div class="costinfo">
+											<h6>22 %</h6>
+											<p>Python</p>
+										</div>
+									</li>
+									<li>
+										<div class="costcolor" style="background-color: #109618;"></div>
+										<div class="costinfo">
+											<h6>77 %</h6>
+											<p>Machine Learning</p>
+										</div>
+									</li>
+									<li>
+										<div class="costcolor" style="background-color: #990099;"></div>
+										<div class="costinfo">
+											<h6>88 %</h6>
+											<p>Security</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="col-md-8 col-sm-6">
+								<div id="piechart"></div>
 							</div>
 						</div>
 						<div class="employeecosts">
@@ -382,92 +450,27 @@ body {
 			'packages' : [ 'corechart' ]
 		});
 		google.charts.setOnLoadCallback(drawChart);
-// 		google.charts.setOnLoadCallback(drawChart2);
+
 		// Draw the chart and set the chart values
 		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+					[ 'Topic', 'Score' ], [ 'Java', 100 ], [ 'Big Data', 50 ],
+					[ 'Python', 22 ], [ 'Machine Learning', 77 ],
+					[ 'Security', 88 ] ]);
+
+			// Optional; add a title and set the width and height of the chart
 			var options = {
-			          title: 'Skills',
-// 			          colors: ['#888', 'orange'],
-			          is3D: true,
-			        };
-				var email = '${email}';
-				console.log(email);
-				$.ajax({
-							url:"getChart1?email="+email,
-							datatype:"json",
-							type:"GET",
-				            contentType: "application/json; charset=utf-8",
-				            success: function (data) {
-				                var arrValues = [['Skill', 'Score']];        // DEFINE AN ARRAY.
-				                var iCnt = 0;
-				                console.log(data.chart);
-				                console.log(data.email);
-				                var data=$.parseJSON(data.chart);
-				                jQuery.each(data, function(index, value){
-				                    console.log(value.percent);
-				                    arrValues.push([value.qualifier2, value.percent]);
-				                    	iCnt += 1;
-				                });
+				'title' : '',
+				'width' : 600,
+				'height' : 350
+			};
 
-				                function selectHandler() {
-					                var x = '${param.email}';
-					                console.log(x);
-				                    var selectedItem = chart.getSelection()[0];
-				                    if (selectedItem) {
-				                      var topping = data.getValue(selectedItem.row, 0);
-// 				                      alert('The user selected ' + x);
-				                      drawChart2(topping);
-				                      getParam(topping);
-				                    }
-				                  }
-
-									        
-			var data = google.visualization.arrayToDataTable(arrValues);
+			// Display the chart inside the <div> element with id="piechart"
 			var chart = new google.visualization.PieChart(document
 					.getElementById('piechart'));
-				                  google.visualization.events.addListener(chart, 'select', selectHandler);    
 			chart.draw(data, options);
-				            }
-					});
 		}
 
-		function drawChart2(qualifier2) {
-			var options = {
-			          title:qualifier2,
-			          pieHole: 0.4,
-
-			        };
-				var email = '${email}';
-				console.log(email);
-				$.ajax({
-							url:"getChart2?email="+email+"&qualifier2="+qualifier2,
-							datatype:"json",
-							type:"GET",
-				            contentType: "application/json; charset=utf-8",
-				            success: function (data) {
-				                var arrValues = [['Skill', 'Score']];        // DEFINE AN ARRAY.
-				                var iCnt = 0;
-				                console.log(data.chart);
-				                console.log(data.email);
-				                var data=$.parseJSON(data.chart);
-				                jQuery.each(data, function(index, value){
-				                    console.log(value.percent);
-				                    arrValues.push([value.qualifier3, value.percent]);
-				                    	iCnt += 1;
-				                });
-
-									        
-			var data = google.visualization.arrayToDataTable(arrValues);
-			var chart = new google.visualization.PieChart(document
-					.getElementById('piechart2'));
-// 				                  google.visualization.events.addListener(chart, 'select', selectHandler);    
-			chart.draw(data, options);
-				            }
-					});
-		}
-
-		
-		
 		function getParam(val) {
 			console.log(val);
 			var email='${email}';

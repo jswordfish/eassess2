@@ -178,12 +178,19 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showLogin(@RequestParam(required = false, name = "moduleName") String moduleName, @RequestParam(required = false, name = "meetingUrl") String meetingUrl, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("login_new_2");
 		User user = new User();
 		// user.setEmail("system@iiht.com");
 		// user.setPassword("1234");
 		// user.setCompanyName("IIHT");
+			if(moduleName != null){
+				request.getSession().setAttribute("sharedModule", moduleName);
+			}
+			
+			if(meetingUrl != null){
+				request.getSession().setAttribute("sharedMeetingUrl", meetingUrl);
+			}
 		ProspectMessage prospect = new ProspectMessage();
 		mav.addObject("user", user);
 		mav.addObject("prospect", prospect);
@@ -192,7 +199,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView showRoot(HttpServletRequest request, HttpServletResponse response) {
-		return showLogin(request, response);
+		return showLogin(null, null, request, response);
 	}
 
 //	  @RequestMapping(value = "/publicTest", method = RequestMethod.GET)
@@ -512,6 +519,8 @@ public class LoginController {
 			List<LMSUserModuleMapping> mappings = mappingService
 					.getAllModulesForUser(user.getCompanyId(), user.getEmail());
 			List<ModuleDTO> modules = new ArrayList<ModuleDTO>();
+			String sharedModule = (String) request.getSession().getAttribute("sharedModule");
+			String meetLink = (String) request.getSession().getAttribute("sharedMeetingUrl");
 			for (LMSUserModuleMapping mapping : mappings) {
 				Module module = moduleService.findUniqueModule(mapping.getModuleName(),
 						user.getCompanyId());
@@ -533,6 +542,16 @@ public class LoginController {
 				moduleDTO.setSharedDate(dt);
 				moduleDTO.setLearnerEmail(user.getEmail());
 				moduleDTO.setLearnerFullName(user.getFirstName() + " " + user.getLastName());
+					if(sharedModule != null && sharedModule.trim().equals(module.getModuleName().trim())){
+						moduleDTO.setStyle("color: #E91E63;");
+						
+						if(meetLink != null){
+							moduleDTO.setMeetingLink(meetLink);
+							moduleDTO.setMeetMessage("Attend Meeting");
+						}
+					}
+					
+					
 				modules.add(moduleDTO);
 				for (ModuleItem item : module.getItems()) {
 					String testName = item.getTestName();

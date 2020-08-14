@@ -222,7 +222,7 @@ public class StudentController {
 //    }
 	
 	 @RequestMapping(value = "/startTestSession", method = RequestMethod.GET)
-	  public ModelAndView studentHome2(@RequestParam String startDate, @RequestParam String endDate, @RequestParam(required=false) String sharedDirect,@RequestParam(required=false) String inviteSent, @RequestParam String userId, @RequestParam String companyId, @RequestParam String testId, HttpServletRequest request, HttpServletResponse response) {
+	  public ModelAndView studentHome2( @RequestParam(required=false) String trainer ,@RequestParam String startDate, @RequestParam String endDate, @RequestParam(required=false) String sharedDirect,@RequestParam(required=false) String inviteSent, @RequestParam String userId, @RequestParam String companyId, @RequestParam String testId, HttpServletRequest request, HttpServletResponse response) {
 		 /**
 		  * Add code begin for test link time verification
 		  */
@@ -281,6 +281,9 @@ public class StudentController {
 	    	}
 	    	request.getSession().setAttribute("dontCheckTimeValidity", null);   
 		 
+	    	if(trainer != null){
+	    		request.getSession().setAttribute("trainer", trainer);
+	    	}
 		 
 		 StudentTestForm studentTest= new StudentTestForm();
 		 userId=decodeUserId((String)request.getParameter("userId"));
@@ -2773,7 +2776,19 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 				 	else{
 				 		email = user.getEmail();
 				 	}
-				 String cc[] = { email};
+				 	
+			 	String eml = (String) request.getSession().getAttribute("trainer");
+			 
+			 	List<String> list = new ArrayList<>();
+			 	list.add(email);
+			 	if(eml != null){
+			 		list.add(eml);
+			 	}
+				 	
+				// String cc[] = { email};
+				 String cc[] = new String[list.size()];
+				 cc = list.toArray(cc);
+				 System.out.println("cc is "+cc);
 				 EmailGenericMessageThread client = new EmailGenericMessageThread(test.getCreatedBy(), "Test Results for "+user.getFirstName()+" "+user.getLastName()+" for test- "+test.getTestName(), html, email, propertyConfig, file, user.getFirstName()+" "+user.getLastName()+"-"+test.getTestName());
 						if(test.getSentToStudent() != null && test.getSentToStudent()){
 							client.setCcArray(cc);
@@ -2791,7 +2806,18 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 				 	else{
 				 		email = user.getEmail();
 				 	}
-				 String cc[] = {email};
+				 	String eml = (String) request.getSession().getAttribute("trainer");
+					 
+				 	List<String> list = new ArrayList<>();
+				 	list.add(email);
+				 	if(eml != null){
+				 		list.add(eml);
+				 	}
+					 	
+					// String cc[] = { email};
+					 String cc[] = new String[list.size()];
+					 cc = list.toArray(cc);
+					 System.out.println("cc is "+cc);
 				 EmailGenericMessageThread client = new EmailGenericMessageThread(test.getCreatedBy(), "Test Results for "+user.getFirstName()+" "+user.getLastName()+" for test- "+test.getTestName(), html, propertyConfig);
 					client.setCcArray(cc);
 				 	Thread th = new Thread(client);
@@ -2799,7 +2825,18 @@ questionInstanceDto.getQuestionMapperInstance().setTestCaseInvalidData(questionI
 			 }
 			 else{
 				 EmailGenericMessageThread client = new EmailGenericMessageThread(test.getCreatedBy(), "Test Results for "+user.getFirstName()+" "+user.getLastName()+" for test- "+test.getTestName(), html, propertyConfig);
-					
+				 List<String> list = new ArrayList<>();
+				 String eml = (String) request.getSession().getAttribute("trainer");
+				 if(eml != null){
+			 		list.add(eml);
+			 	 }
+				 
+				 if(list.size() > 0){
+					 String cc[] = new String[list.size()];
+					 cc = list.toArray(cc); 
+					 client.setCcArray(cc);
+				 }
+				 
 				 	Thread th = new Thread(client);
 					th.start();
 			 }

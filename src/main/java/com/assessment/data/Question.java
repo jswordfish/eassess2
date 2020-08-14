@@ -248,6 +248,9 @@ public class Question extends Base{
 	@Lob
 	String testcasesXml;
 	
+	@Lob
+	String fullTextText;
+	
 	
 	public String getQualifier1() {
 		return qualifier1;
@@ -1152,6 +1155,12 @@ public class Question extends Base{
 	}
 	public void setTestcasesXml(String testcasesXml) {
 		this.testcasesXml = testcasesXml;
+	}
+	public String getFullTextText() {
+		return fullTextText;
+	}
+	public void setFullTextText(String fullTextText) {
+		this.fullTextText = fullTextText;
 	}
 	
 	

@@ -153,6 +153,32 @@ public class LMSAdminController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/lmsRemovemoduleitem", method = RequestMethod.POST)
+	public ModelAndView removemoduleitem(@ModelAttribute("module") Module module,
+			@RequestParam(name = "moduleItemId", required = true) Long moduleItemId,
+			HttpServletRequest request, HttpServletResponse response) {
+		Set<ModuleItem> items = (Set<ModuleItem>) request.getSession().getAttribute("moduleItems");
+		for (ModuleItem item : items) {
+			if (item.getId().equals(moduleItemId)) {
+				items.remove(item);
+				break;
+			}
+		}
+		request.getSession().setAttribute("moduleItems", items);
+		// Module module = (Module)request.getSession().getAttribute("module");
+		module.setItems(items);
+		request.getSession().setAttribute("module", module);
+		ModelAndView mav = new ModelAndView("lms_module");
+		User user = (User) request.getSession().getAttribute("user");
+		List<String> licenses = licenseService.getLicensesInString(user.getCompanyId());
+		mav.addObject("module", module);
+		mav.addObject("licenses", licenses);
+		mav.addObject("message", "Module Item deleted");// later put it as label
+		mav.addObject("msgtype", "Information");
+		return mav;
+
+	}
+	
 	@RequestMapping(value = "/lmsModuleItem", method = RequestMethod.POST)
 	public ModelAndView lmsModuleItem(@ModelAttribute("module") Module module, @RequestParam(name = "moduleItemId", required = false) Long moduleItemId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModuleItem moduleItem = null;
@@ -284,7 +310,22 @@ public class LMSAdminController {
 			pageNumber = 0;
 		}
 		List<UserTestSession> listUser = userTestSessionService.findByCompanyIdAndCollegeName(user.getCompanyId(), user.getCollegeName());
-		mav.addObject("listUser", listUser);
+		List<UserTestSession> listusers2 = new ArrayList<UserTestSession>();
+
+		Set<String> emails = new HashSet<>();
+		for (UserTestSession user2 : listUser) {
+			emails.add(user2.getUser().replaceAll("\\[.*", ""));
+		}
+		for (String ee : emails) {
+			for (UserTestSession userr : listUser) {
+				if (ee.equals(userr.getUser())) {
+					listusers2.add(userr);
+					break;
+				}
+			}
+		}
+
+		mav.addObject("listUser", listusers2);
 		return mav;
 	}
 
@@ -315,12 +356,26 @@ public class LMSAdminController {
 	public Map<String, Object> calculateProfileParam() {
 		Map<String, Object> map1 = new HashMap<>();
 		List<User> listusers = userRepository.findByUserType();
-		List<UserTestSession> listUserTestSession = new ArrayList<UserTestSession>();
+		List<User> listusers2 = new ArrayList<>();
+
+		Set<String> emails = new HashSet<>();
+		for (User user : listusers) {
+			emails.add(user.getEmail().replaceAll("\\[.*", ""));
+		}
+		for (String ee : emails) {
+			for (User userr : listusers) {
+				if (ee.equals(userr.getEmail())) {
+					listusers2.add(userr);
+					break;
+				}
+			}
+		}
 		List<LearnersProfileParam> listParam = new ArrayList<LearnersProfileParam>();
 		List<PieChart1> chart1s = new ArrayList<>();
 		List<PieChart2> chart2s = new ArrayList<>();
-		for (User user : listusers) {
-			List<UserTestSession> userTestSessions = userTestSessionService.findTestListForUser("e-assess", user.getEmail().replace("\\[.*", ""));
+		for (User user : listusers2) {
+			List<UserTestSession> userTestSessions = userTestSessionService.findTestListForUser("e-assess", user.getEmail().replaceAll("\\[.*", ""));
+			List<UserTestSession> listUserTestSession = new ArrayList<UserTestSession>();
 			for (UserTestSession session : userTestSessions) {
 				listUserTestSession.add(session);
 			}
@@ -332,7 +387,7 @@ public class LMSAdminController {
 			Map<CandidateProfileParams, List<QuestionMapperInstance>> map = new HashMap<>();
 			List<QuestionMapperInstance> answers = new ArrayList<QuestionMapperInstance>();
 			for (UserTestSession testSession : listUserTestSession) {
-				List<QuestionMapperInstance> answers2 = questionMapperInstanceService.findQuestionMapperInstancesForUserForTest(testSession.getTestName(), testSession.getUser(), testSession.getCompanyId());
+				List<QuestionMapperInstance> answers2 = questionMapperInstanceService.findQuestionMapperInstancesForUserForTest(testSession.getTestName(), testSession.getUser().replaceAll("\\[.*", "").replaceAll("\\[.*", ""), testSession.getCompanyId());
 				for (QuestionMapperInstance instance : answers2) {
 					answers.add(instance);
 				}
@@ -644,69 +699,19 @@ public class LMSAdminController {
 	@GetMapping("getRecom")
 	@ResponseBody
 	public Map<String, String> getRecom(@RequestParam("param") String param, @RequestParam("email") String email, HttpServletRequest request) {
-
-//		User user = (User) request.getSession().getAttribute("user");
-		String[] paramArray = param.split("-");
-		List<LearnersProfileParam> paramVal;
 		Map<String, String> map = new HashMap<>();
-//		String QValue = "";
-		if (paramArray.length == 1) {
-			paramVal = profileParamRepository.getQValue1(email, paramArray[0]);
-			for (LearnersProfileParam li : paramVal) {
-				if (li.getQualifier5() != null) {
-					map.put(li.getQualifier5(), li.getQparamValue());
-				} else if (li.getQualifier4() != null && li.getQualifier5() == null) {
-					map.put(li.getQualifier4(), li.getQparamValue());
-				} else if (li.getQualifier3() != null && li.getQualifier4() == null) {
-					map.put(li.getQualifier3(), li.getQparamValue());
-				} else if (li.getQualifier2() != null && li.getQualifier3() == null) {
-					map.put(li.getQualifier2(), li.getQparamValue());
-				} else if (li.getQualifier1() != null && li.getQualifier2() == null) {
-					map.put(li.getQualifier1(), li.getQparamValue());
-				}
-			}
-		} else if (paramArray.length == 2) {
-			paramVal = profileParamRepository.getQValue2(email, paramArray[0], paramArray[1]);
-			for (LearnersProfileParam li : paramVal) {
-				if (li.getQualifier5() != null) {
-					map.put(li.getQualifier5(), li.getQparamValue());
-				} else if (li.getQualifier4() != null && li.getQualifier5() == null) {
-					map.put(li.getQualifier4(), li.getQparamValue());
-				} else if (li.getQualifier3() != null && li.getQualifier4() == null) {
-					map.put(li.getQualifier3(), li.getQparamValue());
-				} else if (li.getQualifier2() != null && li.getQualifier3() == null) {
-					map.put(li.getQualifier2(), li.getQparamValue());
-				}
-			}
-		} else if (paramArray.length == 3) {
-			paramVal = profileParamRepository.getQValue3(email, paramArray[0], paramArray[1], paramArray[2]);
-			for (LearnersProfileParam li : paramVal) {
-				if (li.getQualifier5() != null) {
-					map.put(li.getQualifier5(), li.getQparamValue());
-				} else if (li.getQualifier4() != null && li.getQualifier5() == null) {
-					map.put(li.getQualifier4(), li.getQparamValue());
-				} else if (li.getQualifier3() != null && li.getQualifier4() == null) {
-					map.put(li.getQualifier3(), li.getQparamValue());
-				}
-			}
-		} else if (paramArray.length == 4) {
-			paramVal = profileParamRepository.getQValue4(email, paramArray[0], paramArray[1], paramArray[2], paramArray[3]);
-			for (LearnersProfileParam li : paramVal) {
-				if (li.getQualifier5() != null) {
-					map.put(li.getQualifier5(), li.getQparamValue());
-				} else if (li.getQualifier4() != null && li.getQualifier5() == null) {
-					map.put(li.getQualifier4(), li.getQparamValue());
-				}
-			}
-		} else {
-			paramVal = profileParamRepository.getQValue5(email, paramArray[0], paramArray[1], paramArray[2], paramArray[3], paramArray[4]);
-			for (LearnersProfileParam li : paramVal) {
-				if (li.getQualifier5() != null) {
-					map.put(li.getQualifier5(), li.getQparamValue());
-				}
-			}
+		List<LearnersProfileParam> paramVal = profileParamRepository.getQValue(email, param);
+		for (LearnersProfileParam li : paramVal) {
+			if (li.getQualifier5() != null) {
+				map.put(li.getQualifier5(), li.getQparamValue());
+			} else if (li.getQualifier4() != null && li.getQualifier5() == null) {
+				map.put(li.getQualifier4(), li.getQparamValue());
+			} else if (li.getQualifier3() != null && li.getQualifier4() == null) {
+				map.put(li.getQualifier3(), li.getQparamValue());
+			} else if (li.getQualifier2() != null && li.getQualifier3() == null) {
+				map.put(li.getQualifier2(), li.getQparamValue());
+			} 
 		}
-		System.out.println("test: " + map);
 		return map;
 	}
 

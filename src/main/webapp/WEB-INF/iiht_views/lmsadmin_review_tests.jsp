@@ -176,8 +176,9 @@
 	<button type="button" class="btn btn-primary"  onClick="javascript:fetchResultsByClassifierAndStatus();">
           Fetch Results
         </button>
-			
-		</div>
+		</div>	
+		
+		<div>	
 				<table class="table">
 				<thead>
 				  <tr>
@@ -282,3 +283,4 @@
 
 	</body>
 </html>
+

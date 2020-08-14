@@ -15,7 +15,13 @@ public class ModuleDTO {
 	String learnerEmail;
 	
 	String sharedDate;
+	
+	String style="color:#337ab7;";
+	
+	String meetingLink="";
 
+	
+	String meetMessage="";
 	public Module getModule() {
 		return module;
 	}
@@ -62,6 +68,30 @@ public class ModuleDTO {
 
 	public void setSharedDate(String sharedDate) {
 		this.sharedDate = sharedDate;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	public String getMeetingLink() {
+		return meetingLink;
+	}
+
+	public void setMeetingLink(String meetingLink) {
+		this.meetingLink = meetingLink;
+	}
+
+	public String getMeetMessage() {
+		return meetMessage;
+	}
+
+	public void setMeetMessage(String meetMessage) {
+		this.meetMessage = meetMessage;
 	}
 	
 	

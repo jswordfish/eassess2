@@ -688,8 +688,14 @@ public class UserController {
 				cs);
 		// Module module = moduleRepository.findById(moduleId).get();
 		Module module = moduleService.findUniqueModule(moduleName, user.getCompanyId());
+		
+		
 		String html = FileUtils.readFileToString(new File(propertyConfig.getShareModuleoStudent()));
-		html = html.replace("{BASE_URL}", propertyConfig.getBaseUrl());
+		
+		
+		moduleName = URLEncoder.encode(moduleName);
+		String murl = URLEncoder.encode(meetingid);
+		html = html.replace("{BASE_URL}", propertyConfig.getBaseUrl()+"login?moduleName="+moduleName+"&meetingUrl="+murl);
 		html = html.replace("{CONTEXT}", classifier);
 		html = html.replace("{TRAINER}", user.getFirstName() + " " + user.getLastName());
 		html = html.replace("{MODULE_NAME}", module.getModuleName());
@@ -699,6 +705,8 @@ public class UserController {
 		} else {
 			html = html.replace("{MEETING_ID}", "NA");
 		}
+		
+		
 
 		for (String email : users) {
 			LMSUserModuleMapping lmsUserModuleMapping = mappingService.getByPrimaryKey(email,
@@ -765,6 +773,11 @@ public class UserController {
 			percent = (int) (100.0f * testsAppeared / totalTests);
 		}
 		container = container.replace("{TEST_PERCENT}", "" + percent);
+		
+		LMSUserModuleMapping mapping = mappingService.getByPrimaryKey(user.getEmail(), module.getId(), user.getCompanyId());
+		 String lastSharedBy = mapping.getCreatedBy();
+		
+		
 
 		String allrows = "";
 		String temp = "";
@@ -803,7 +816,7 @@ public class UserController {
 			String eDate = Base64.getEncoder().encodeToString(("" + d2.getTime()).getBytes());
 			sDate = URLEncoder.encode(sDate);
 			eDate = URLEncoder.encode(eDate);
-			testurl += "&startDate=" + sDate + "&endDate=" + eDate;
+			testurl += "&startDate=" + sDate + "&endDate=" + eDate+"&trainer="+URLEncoder.encode(lastSharedBy != null?lastSharedBy:"na@na.com");
 			temp = temp.replace("{TEST_URL}", testurl);
 			allrows += temp;
 		}
