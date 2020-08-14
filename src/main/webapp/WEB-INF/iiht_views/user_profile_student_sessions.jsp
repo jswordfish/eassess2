@@ -79,6 +79,12 @@
 	<script src="./resources/userprofile/js/jquery.countTo.js"></script>
 	<!-- Main -->
 	<script src="./resources/userprofile/js/main.js"></script>
+
+	 <script src="eAssess/assets/materialize/js/materialize.min.js"></script>
+        <script src="eAssess/assets/owl.carousel/owl.carousel.min.js"></script>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
+
 	
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
@@ -131,13 +137,13 @@
 						</div>
 						<div class="col-md-10 text-right menu-1">
 							<ul>
-								<li class="active"><a href="showLearnerUserDashboard">Home</a></li>
+								<li><a href="showLearnerUserDashboard">Home</a></li>
 								
-								<li><a href="showUserTests">My Tests</a></li>
+								<li class="active"><a href="showUserTests">My Tests</a></li>
 								
-								<li><a href="user_profile_student_profile?email=${email}">My Profile</a></li>
-								<li><a href="signoff">Log Off</a></li>
-							</ul>
+								 <li ><a href="javascript:nextRelease()">My Profile</a></li> 
+								<li><a href="signoff">Log Off</a></li>	
+						</ul>
 						</div>
 					</div>
 				</div>
@@ -151,8 +157,8 @@
 		<div id="colorlib-services">
 			<div class="container">
 				<table class="table">
-				<thead>
-				  <tr>
+				<thead style="color:#0033cc">
+				  <tr style="color: cadetblue;">
 					<th>Test Name</th>
 					<th>Date & Time</th>
 					<th>Total Marks</th>
@@ -165,7 +171,7 @@
 				</thead>
 				<tbody>
 					 <c:forEach  items="${sessions}" var="sess" >  
-					<tr class="${sess.style}">
+					<tr class="${sess.style}" style="color: cadetblue;">
 						<td>${sess.testName}</td>
 						<td>${sess.dateofTest}</td>
 						<td>${sess.totalMarks}</td>
@@ -192,7 +198,20 @@
 	
 	<script>
 
-	
+		function nextRelease(){
+			bootbox.alert({
+			message: "<b style='color: darkblue;'>This Feature, along with access to detailed user profile, will be enabled in production releases.</b>",
+			backdrop: true
+			});
+
+		}
+
+		function getTestDetails(){
+			 bootbox.alert({
+			message: "<b style='color: darkblue;'>This Feature, along with access to detailed user profile, will be enabled in production releases.</b>",
+			backdrop: true
+			});
+		}	
 		
 	
 		function notify(messageType, message){

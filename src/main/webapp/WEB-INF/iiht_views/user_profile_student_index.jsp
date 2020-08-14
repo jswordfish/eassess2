@@ -79,6 +79,11 @@
 	<script src="./resources/userprofile/js/jquery.countTo.js"></script>
 	<!-- Main -->
 	<script src="./resources/userprofile/js/main.js"></script>
+
+	<script src="eAssess/assets/materialize/js/materialize.min.js"></script>
+        <script src="eAssess/assets/owl.carousel/owl.carousel.min.js"></script>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
 	
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
@@ -99,6 +104,42 @@
 	.borderless tr {
 		border-bottom: 1pt solid #003cff;
 	}
+
+.colorlib-nav .top-menu {
+    padding: 3px;
+    background-color: #3982e6;
+    font-size: 44px;
+}
+
+a {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: large;
+}
+
+.colorlib-nav ul li a {
+    position: relative;
+    font-size: 14px;
+    padding: 30px 11px;
+    font-weight: 700;
+    color: #7efff5;
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.services {
+    margin-bottom: 16px;
+    position: relative;
+    background: #051865;
+    padding: 20px 10px;
+    z-index: 0;
+    border-radius: 20px;
+    border: 5px solid white;
+    width: 300px;
+    height: 150px;
+    margin-top: 48px;
+}
+
 
 	</style>
 
@@ -135,7 +176,7 @@
 								
 								<li><a href="showUserTests">My Tests</a></li>
 								
-								<li><a href="showUserTests">My Profile</a></li>
+								 <li ><a href="javascript:nextRelease()">My Profile</a></li> 
 								<li><a href="signoff">Log Off</a></li>
 							</ul>
 						</div>
@@ -158,7 +199,9 @@
 								<i class="flaticon-books"></i>
 							</span>
 							<div class="desc">
-								<h3><a href="javascript:showModuleDetails('${dto.module.moduleName}')">${dto.module.moduleName}</a></h3>
+								<h3><a href="javascript:showModuleDetails('${dto.module.moduleName}')" style="${dto.style}">${dto.module.moduleName}</a>
+								<p> <a href="${dto.meetingLink}" target="_blank">${dto.meetMessage} </a></p>
+								</h3>
 								<p>${dto.module.moduleDescription}</p>
 							</div>
 						</div>
@@ -221,13 +264,25 @@
 	$("#myModalModules").modal("hide");
 	
 		function changeVideo(vId) {
-				var iframe = document.getElementById("iframeYoutube");
-				iframe.src = "https://www.youtube.com/embed/yUXGIbE0Uu4";
+				//var iframe = document.getElementById("iframeYoutube");
+				//iframe.src = "https://www.youtube.com/embed/yUXGIbE0Uu4";
 				
-				$("#myModalvideo").modal("show");
-				
+				//$("#myModalvideo").modal("show");
+			window.open(vId, '_blank', 'location=yes,height=600,width=1000,scrollbars=auto,status=yes');	
 			}
 	
+
+
+		function nextRelease(){
+			bootbox.alert({
+			message: "<b style='color: darkblue;'>This Feature, along with access to detailed user profile, will be enabled in production releases.</b>",
+			backdrop: true
+			});
+
+		}
+
+
+
 		function hideDialog(){
 			  $("#myModalModules").modal("hide");
 			}
